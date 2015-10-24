@@ -92,6 +92,22 @@ LoopyList GenerateRandom()
 
 bool HasLoop(Node* head)
 {
+	if (!head || !head->Next) return false;
+
+	Node* dbl = head;
+	Node* sng = head;
+	
+	while (dbl && dbl->Next) {
+		dbl = dbl->Next;
+		if (dbl == sng) return true;
+
+		dbl = dbl->Next;
+		if (dbl == sng) return true;
+
+		sng = sng->Next;
+	}
+	
+	
 	return false;
 }
 
@@ -100,15 +116,31 @@ Node* GetLoopNode(Node *head)
 	return nullptr;
 }
 
+template<typename T>
+void DisplayResult(const T& result, const T& expected) {
+	std::cout << "\33[7";
+	if (result != expected) {
+		std::cout << ";31";
+	}
+	std::cout << "m";
+	std::cout << "Result: " << result;
+	std::cout << "  Expected: " << expected;
+	std::cout << "\33[0m";
+	std::cout << std::endl;
+}
+
+void TestLoop()
+{
+	LoopyList ll = GenerateRandom();
+	bool hasLoop = HasLoop(ll.Head);
+	bool expected = ll.Loop != nullptr;
+	DisplayResult(hasLoop, expected);
+}
+
 int main()
 {
-	GenerateRandom();
-	GenerateRandom();
-	GenerateRandom();
-	GenerateRandom();
-	GenerateRandom();
-	GenerateRandom();
-	GenerateRandom();
-	GenerateRandom();
+	for (int i = 0; i < 100; ++i) {
+		TestLoop();
+	}
 }
 
