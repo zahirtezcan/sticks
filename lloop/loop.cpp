@@ -113,7 +113,38 @@ bool HasLoop(Node* head)
 
 Node* GetLoopNode(Node *head)
 {
-	return nullptr;
+	if (!head || !head->Next) return nullptr;
+
+	Node* dbl = head;
+	Node* sng = head;
+	int counter = 0;
+	
+	while (dbl && dbl->Next) {
+		dbl = dbl->Next;
+		++counter;	
+		if (dbl == sng) break;
+
+		dbl = dbl->Next;
+		++counter;	
+		if (dbl == sng) break;
+
+		sng = sng->Next;
+	}
+
+	if (!dbl || !dbl->Next) return nullptr;
+
+	if (counter % 2 == 0) {
+		sng = sng->Next;
+	}
+
+	sng = sng->Next;
+	
+	while (head != sng) {
+		head = head->Next;
+		sng = sng->Next;
+	}	
+	
+	return head;
 }
 
 template<typename T>
@@ -137,10 +168,17 @@ void TestLoop()
 	DisplayResult(hasLoop, expected);
 }
 
+void TestLoopNode()
+{
+	LoopyList ll = GenerateRandom();
+	Node* loopNode = GetLoopNode(ll.Head);
+	DisplayResult(loopNode, ll.Loop);
+}
+
 int main()
 {
 	for (int i = 0; i < 100; ++i) {
-		TestLoop();
+		TestLoopNode();
 	}
 }
 
