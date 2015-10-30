@@ -1,4 +1,4 @@
-#include "FindPartitionPoint.h"
+#include <stx/algorithm/FindPartitionPoint.h>
 #include <iostream>
 #include <algorithm>
 #include <vector>
