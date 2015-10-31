@@ -20,11 +20,17 @@ ObjDir=_obj_test
 
 all: tests
 
-tests: outputDirectories TestFindPartitionPoint
+tests: outputDirectories TestFindPartitionPoint TestCount
 
 outputDirectories:
 	$(MKDIR) $(ObjDir)
 	$(MKDIR) $(BinDir)
+
+TestCount: TestCount.o
+	$(LINK.o)
+
+TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h
+	$(COMPILE.cpp) $<
 
 TestFindPartitionPoint: TestFindPartitionPoint.o 
 	$(LINK.o)

@@ -6,19 +6,19 @@
 namespace stx {
 
 template<typename Iterator>
-IteratorValue=typename std::iterator_traits<Iterator>::value_type;
+using IteratorValue=typename std::iterator_traits<Iterator>::value_type;
 
 template<typename Iterator>
-IteratorDifference=typename std::iterator_traits<Iterator>::difference_type;
+using IteratorDifference=typename std::iterator_traits<Iterator>::difference_type;
 
 template<typename Iterator>
-IteratorReference=typename std::iterator_traits<Iterator>::reference;
+using IteratorReference=typename std::iterator_traits<Iterator>::reference;
 
 template<typename Iterator>
-IteratorPointer=typename std::iterator_traits<Iterator>::pointer;
+using IteratorPointer=typename std::iterator_traits<Iterator>::pointer;
 
 template<typename Iterator>
-IteratorCategory=typename std::iterator_traits<Iterator>::iterator_category;
+using IteratorCategory=typename std::iterator_traits<Iterator>::iterator_category;
 
 }
 
