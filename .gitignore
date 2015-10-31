@@ -25,6 +25,10 @@ $RECYCLE.BIN/
 #vim backups
 *~
 
+#build folders
+_bin*
+_obj*
+
 # =========================
 # Operating System Files
 # =========================
