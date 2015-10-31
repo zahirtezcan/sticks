@@ -6,6 +6,12 @@ CXXFLAGS=-std=c++11 -Wall -Wextra -Werror
 COMPILER_OUTPUT=-o $(ObjDir)/$@
 COMPILE.cpp=$(CXX) -c $(COMPILER_OUTPUT) $(CPPFLAGS) $(CXXFLAGS)
 
+ifdef COMSPEC
+  EXE:=.exe
+else
+  EXE:=
+endif
+
 LINKER_INPUT=$(addprefix $(ObjDir)/,$^)
 LINKER_OUTPUT=-o $(BinDir)/$@
 LDLIBS+=-lstdc++
@@ -18,26 +24,29 @@ BinDir=_bin_test
 ObjDir=_obj_test
 
 
+vpath %.o $(ObjDir)
+vpath %$(EXE) $(BinDir)
+
 all: tests
 
-tests: outputDirectories TestFindPartitionPoint TestCount
+tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE)
 
 outputDirectories:
-	$(MKDIR) $(ObjDir)
-	$(MKDIR) $(BinDir)
+	@$(MKDIR) $(ObjDir)
+	@$(MKDIR) $(BinDir)
 
-TestCount: TestCount.o
+TestCount$(EXE): TestCount.o
 	$(LINK.o)
 
 TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h
 	$(COMPILE.cpp) $<
 
-TestFindPartitionPoint: TestFindPartitionPoint.o 
+TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
 	$(LINK.o)
 
 TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h
 	$(COMPILE.cpp) $<
 
 clean:
-	$(RM) $(ObjDir)
-	$(RM) $(BinDir)
+	@$(RM) $(ObjDir)
+	@$(RM) $(BinDir)
