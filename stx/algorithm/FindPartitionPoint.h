@@ -11,18 +11,20 @@ Iterator FindPartitionPoint(Iterator begin, Iterator end, UnaryPredicate check)
 	using std::distance;
 	using std::advance;
 
-	if (begin == end) return end;
+	while (begin != end) {
+		auto dist = distance(begin, end);
+		auto mid = begin;
+		advance(mid, dist / 2);
 
-	auto dist = distance(begin, end);
-	auto mid = begin;
-	advance(mid, dist / 2);
-
-	if (check(*mid)) {
-		advance(mid, 1);
-		return FindPartitionPoint(mid, end, check);
-	} else {
-		return FindPartitionPoint(begin, mid, check);
+		if (check(*mid)) {
+			advance(mid, 1);
+			begin = mid;
+		} else {
+			end = mid;
+		}
 	}
+
+	return end;
 }
 
 }
