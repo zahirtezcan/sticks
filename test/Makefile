@@ -44,13 +44,15 @@ TestGenerate.o: algorithm/TestGenerate.cpp ../stx/algorithm/Generate.h
 TestCount$(EXE): TestCount.o
 	$(LINK.o)
 
-TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h
+TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h ../stx/algorithm/Generate.h
+
 	$(COMPILE.cpp) $<
 
 TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
 	$(LINK.o)
 
-TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h
+TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Generate.h
+
 	$(COMPILE.cpp) $<
 
 clean:

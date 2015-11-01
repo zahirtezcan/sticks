@@ -1,4 +1,5 @@
 #include <stx/algorithm/FindPartitionPoint.h>
+#include <stx/algorithm/Generate.h>
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -6,7 +7,7 @@
 void Generate(std::vector<int>& v, int n, int r)
 {
 	v.resize(n);
-	std::iota(v.begin(), v.end(), 0);
+	stx::GenerateIncrement(v.begin(), v.end(), 0);
 	std::rotate(v.begin(), v.begin() + r, v.end());
 }
 

@@ -1,12 +1,12 @@
 #include <stx/algorithm/Count.h>
-#include <algorithm>
+#include <stx/algorithm/Generate.h>
 #include <vector>
 #include <iostream>
 
 void Generate(std::vector<int>& list, int n, int v, int vcount)
 {
 	list.resize(n);
-	std::iota(list.begin(), list.end(), 0);
+	stx::GenerateIncrement(list.begin(), list.end(), 0);
 	if (vcount == 0) {
 		list.erase(list.begin() + v);
 	} else if (vcount > 1) {
