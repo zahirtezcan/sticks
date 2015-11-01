@@ -29,11 +29,17 @@ vpath %$(EXE) $(BinDir)
 
 all: tests
 
-tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE)
+tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
 	@$(MKDIR) $(BinDir)
+
+TestGenerate$(EXE): TestGenerate.o
+	$(LINK.o)
+
+TestGenerate.o: algorithm/TestGenerate.cpp ../stx/algorithm/Generate.h
+	$(COMPILE.cpp) $<
 
 TestCount$(EXE): TestCount.o
 	$(LINK.o)
