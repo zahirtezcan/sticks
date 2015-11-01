@@ -21,8 +21,9 @@ void Generate(std::vector<int>& list, int n, int v, int vcount)
 	}
 }
 
-int main()
+int TestCountValue()
 {
+	std::cout << "Testing CountValue...";
 	std::vector<int> list;
 	for (int i = 0; i < 100; ++i) {
 		for (int v = 0; v < i; ++v) {
@@ -41,6 +42,41 @@ int main()
 		}
 	}
 
+	std::cout << "OK\n";
+	return 0;
+}
+
+int TestCount()
+{
+	std::cout << "Testing Count...";
+	std::vector<int> list;
+	for (int i = 0; i < 100; ++i) {
+		for (int v = 0; v < i; ++v) {
+			Generate(list, i, v, 1);
+			auto count = stx::Count(list.begin(), list.end(), [=](int x) { return x < i; });
+			if (count != i) {
+				std::cerr << "Invalid count: " << count 
+					  << " found for n: " << i
+					  << " value: " << v
+					  << std::endl;
+				return -1;
+			}
+		}
+	}
+	std::cout << "OK\n";
+	return 0;
+
+}
+
+int main()
+{
+	if (TestCountValue() != 0) {
+		return -1;
+	}
+	if (TestCount() != 0) {
+		return -1;
+	}
+	
 	return 0;
 }
 
