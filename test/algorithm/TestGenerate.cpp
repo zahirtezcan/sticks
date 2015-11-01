@@ -1,4 +1,5 @@
 #include <stx/algorithm/Generate.h>
+#include <numeric>
 #include <vector>
 #include <iostream>
 
@@ -13,17 +14,48 @@ bool ElementsEqual(const Container& c1, const Container& c2) {
 	return true;
 }
 
-int main()
+int TestGenerateBasic()
 {
+	std::cout << "Testing Generate...";
+
 	std::vector<int> base, generated;
 	base.assign(100, 13);
 	generated.resize(base.size());
 	stx::Generate(generated.begin(), generated.end(), [&]() { return base[0]; });
 
 	if (!ElementsEqual(base, generated)) {
-		std::cerr << "Generate failed!" << std::endl;
+		std::cerr << "Generate basic failed!" << std::endl;
 		return -1;
 	}
+
+	std::cout << "OK\n";
+	return 0;
+}
+
+int TestGenerateIndexed()
+{
+	std::cout << "Testing GenerateIndexed...";
+
+	std::vector<int> base, generated;
+	base.resize(100);
+	std::iota(base.begin(), base.end(), 13);
+
+	generated.resize(base.size());
+	stx::GenerateIndexed(generated.begin(), generated.end(), [&](int i) { return base[i]; });
+
+	if (!ElementsEqual(base, generated)) {
+		std::cerr << "GenerateIndex failed!" << std::endl;
+		return -1;
+	}
+
+	std::cout << "OK\n";
+	return 0;
+}
+
+int main()
+{
+	if (TestGenerateBasic() != 0) return -1;
+	if (TestGenerateIndexed() != 0) return -1;
 
 	return 0;
 }
