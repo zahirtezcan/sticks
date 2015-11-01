@@ -24,6 +24,7 @@ $RECYCLE.BIN/
 
 #vim backups
 *~
+*.swp
 
 #build folders
 _bin*

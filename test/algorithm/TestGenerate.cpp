@@ -1,5 +1,4 @@
 #include <stx/algorithm/Generate.h>
-#include <numeric>
 #include <vector>
 #include <iostream>
 
@@ -38,7 +37,7 @@ int TestGenerateIndexed()
 
 	std::vector<int> base, generated;
 	base.resize(100);
-	std::iota(base.begin(), base.end(), 13);
+	stx::GenerateIncrement(base.begin(), base.end(), 13);
 
 	generated.resize(base.size());
 	stx::GenerateIndexed(generated.begin(), generated.end(), [&](int i) { return base[i]; });
