@@ -29,11 +29,17 @@ vpath %$(EXE) $(BinDir)
 
 all: tests
 
-tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE) TestReverse$(EXE)
+tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE) TestReverse$(EXE) TestRotate$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
 	@$(MKDIR) $(BinDir)
+
+TestRotate$(EXE): TestRotate.o
+	$(LINK.o)
+
+TestRotate.o: algorithm/TestRotate.cpp ../stx/algorithm/Rotate.h ../stx/algorithm/IterSwap.h
+	$(COMPILE.cpp) $<
 
 TestReverse$(EXE): TestReverse.o
 	$(LINK.o)
