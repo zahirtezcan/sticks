@@ -29,11 +29,17 @@ vpath %$(EXE) $(BinDir)
 
 all: tests
 
-tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
+tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE) TestReverse$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
 	@$(MKDIR) $(BinDir)
+
+TestReverse$(EXE): TestReverse.o
+	$(LINK.o)
+
+TestReverse.o: algorithm/TestReverse.cpp ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
+	$(COMPILE.cpp) $<
 
 TestGenerate$(EXE): TestGenerate.o
 	$(LINK.o)
@@ -45,14 +51,12 @@ TestCount$(EXE): TestCount.o
 	$(LINK.o)
 
 TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h ../stx/algorithm/Generate.h
-
 	$(COMPILE.cpp) $<
 
 TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
 	$(LINK.o)
 
 TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Generate.h
-
 	$(COMPILE.cpp) $<
 
 clean:
