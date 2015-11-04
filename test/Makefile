@@ -1,8 +1,8 @@
 CC=gcc
 CXX=$(CC)
 
-CPPFLAGS=-I"../"
-CXXFLAGS=-std=c++11 -Wall -Wextra -Werror
+CPPFLAGS=-I"../" -I"../gtest/include/"
+CXXFLAGS=-std=gnu++11 -Wall -Wextra -Werror
 COMPILER_OUTPUT=-o $(ObjDir)/$@
 COMPILE.cpp=$(CXX) -c $(COMPILER_OUTPUT) $(CPPFLAGS) $(CXXFLAGS)
 
@@ -15,6 +15,7 @@ endif
 LINKER_INPUT=$(addprefix $(ObjDir)/,$^)
 LINKER_OUTPUT=-o $(BinDir)/$@
 LDLIBS+=-lstdc++
+LDFLAGS=-L"../gtest/lib/"
 LINK.o=$(CC) $(LINKER_OUTPUT) $(LINKER_INPUT) $(LDLIBS) $(LDFLAGS)
 
 MKDIR=mkdir -p
@@ -36,7 +37,7 @@ outputDirectories:
 	@$(MKDIR) $(BinDir)
 
 TestRotate$(EXE): TestRotate.o
-	$(LINK.o)
+	$(LINK.o) -lgtest_main -lgtest -lstdc++
 
 TestRotate.o: algorithm/TestRotate.cpp ../stx/algorithm/Rotate.h ../stx/algorithm/IterSwap.h
 	$(COMPILE.cpp) $<
