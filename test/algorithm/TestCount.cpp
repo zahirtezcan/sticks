@@ -1,82 +1,81 @@
 #include <stx/algorithm/Count.h>
-#include <stx/algorithm/Generate.h>
-#include <vector>
-#include <iostream>
+#include <gtest/gtest.h>
 
-void Generate(std::vector<int>& list, int n, int v, int vcount)
+TEST(CountValue, Empty)
 {
-	list.resize(n);
-	stx::GenerateIncrement(list.begin(), list.end(), 0);
-	if (vcount == 0) {
-		list.erase(list.begin() + v);
-	} else if (vcount > 1) {
-		auto iter = list.begin();
-		while (vcount > 1) {
-			iter = list.insert(iter, v);
-			if (iter != list.end()) {
-				++iter;
-			}
-			--vcount;
-		}
-	}
+	int a[] = {};
+
+	auto result = stx::CountValue(a, a, 0);
+
+	EXPECT_EQ(0, result);
 }
 
-int TestCountValue()
+TEST(CountValue, None)
 {
-	std::cout << "Testing CountValue...";
-	std::vector<int> list;
-	for (int i = 0; i < 100; ++i) {
-		for (int v = 0; v < i; ++v) {
-			for (int c = 0; c < 10; ++c) {
-				Generate(list, i, v, c);
-				auto count = stx::CountValue(list.begin(), list.end(), v);
-				if (count != c) {
-					std::cerr << "Invalid count: " << count 
-					          << " found for n: " << i
-					          << " value: " << v
-						  << " count: " << c
-						  << std::endl;
-					return -1;
-				}
-			}
-		}
-	}
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
 
-	std::cout << "OK\n";
-	return 0;
+	auto result = stx::CountValue(a, a + count, 0);
+
+	EXPECT_EQ(0, result);
 }
 
-int TestCount()
+TEST(CountValue, One)
 {
-	std::cout << "Testing Count...";
-	std::vector<int> list;
-	for (int i = 0; i < 100; ++i) {
-		for (int v = 0; v < i; ++v) {
-			Generate(list, i, v, 1);
-			auto count = stx::Count(list.begin(), list.end(), [=](int x) { return x < i; });
-			if (count != i) {
-				std::cerr << "Invalid count: " << count 
-					  << " found for n: " << i
-					  << " value: " << v
-					  << std::endl;
-				return -1;
-			}
-		}
-	}
-	std::cout << "OK\n";
-	return 0;
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
 
+	auto result = stx::CountValue(a, a + count, 2);
+
+	EXPECT_EQ(1, result);
 }
 
-int main()
+TEST(CountValue, Some)
 {
-	if (TestCountValue() != 0) {
-		return -1;
-	}
-	if (TestCount() != 0) {
-		return -1;
-	}
-	
-	return 0;
+	int a[] = { 1, 2, 3, 2 };
+	auto count = sizeof(a) / sizeof(a[0]);
+
+	auto result = stx::CountValue(a, a + count, 2);
+
+	EXPECT_EQ(2, result);
+}
+
+TEST(Count, Empty)
+{
+	int a[] = {};
+
+	auto result = stx::Count(a, a, [](int x) { return x == 0; });
+
+	EXPECT_EQ(0, result);
+}
+
+TEST(Count, None)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+
+	auto result = stx::Count(a, a + count, [](int x) { return x == 0; });
+
+	EXPECT_EQ(0, result);
+}
+
+TEST(Count, One)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+
+	auto result = stx::Count(a, a + count, [](int x) { return x == 2; });
+
+	EXPECT_EQ(1, result);
+}
+
+TEST(Count, Some)
+{
+	int a[] = { 1, 2, 3, 2 };
+	auto count = sizeof(a) / sizeof(a[0]);
+
+	auto result = stx::Count(a, a + count, [](int x) { return x == 2; });
+
+	EXPECT_EQ(2, result);
 }
 

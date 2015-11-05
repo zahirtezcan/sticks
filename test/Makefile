@@ -55,7 +55,7 @@ TestGenerate.o: algorithm/TestGenerate.cpp ../stx/algorithm/Generate.h
 	$(COMPILE.cpp) $<
 
 TestCount$(EXE): TestCount.o
-	$(LINK.o)
+	$(LINK.o) -lgtest_main -lgtest -lstdc++
 
 TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h ../stx/algorithm/Generate.h
 	$(COMPILE.cpp) $<
