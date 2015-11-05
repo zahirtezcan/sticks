@@ -1,33 +1,37 @@
 #include <stx/algorithm/Reverse.h>
-#include <iostream>
+#include <gtest/gtest.h>
 
-bool AreEqual(int* a, int* b, int count)
+testing::AssertionResult AreEqual(int* a, int* b, int count)
 {
 	for (int i = 0; i < count; ++i) {
 		if (a[i] != b[i]) {
-			return false;
+			return testing::AssertionFailure() << " mismatch at index " << i;
 		}
 	}
 
-	return true;
+	return testing::AssertionSuccess();
 }
 
-int main() 
+TEST(Reverse, Basic)
 {
-	int a[] = { 1, 2, 3, 4, 5 };
-	int b[] = { 5, 4, 3, 2, 1 };
+	int a[] = { 1, 2, 3 };
+	int b[] = { 3, 2, 1 };
+	int count = sizeof(a) / sizeof(a[0]);
 
-	if (AreEqual(a, b, 5)){
-		std::cerr << "AreEqual method failed!" << std::endl;
-		return -1;
-	}
+	stx::Reverse(a, a + count);
 
-	stx::Reverse(std::begin(a), std::end(a));
-	
-	if (!AreEqual(a, b, 5)){
-		std::cerr << "Reverse method failed!" << std::endl;
-		return -1;
-	}
-	
-	std::cout << "OK" << std::endl;
+	EXPECT_TRUE(AreEqual(a, b, count));
 }
+
+TEST(Reverse, DoubleReverse)
+{
+	int a[] = { 1, 2, 3 };
+	int b[] = { 1, 2, 3 };
+	int count = sizeof(a) / sizeof(a[0]);
+
+	stx::Reverse(a, a + count);
+	stx::Reverse(a, a + count);
+
+	EXPECT_TRUE(AreEqual(a , b, count));
+}
+

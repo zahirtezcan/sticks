@@ -43,7 +43,7 @@ TestRotate.o: algorithm/TestRotate.cpp ../stx/algorithm/Rotate.h ../stx/algorith
 	$(COMPILE.cpp) $<
 
 TestReverse$(EXE): TestReverse.o
-	$(LINK.o)
+	$(LINK.o) -lgtest_main -lgtest -lstdc++
 
 TestReverse.o: algorithm/TestReverse.cpp ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
 	$(COMPILE.cpp) $<
