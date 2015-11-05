@@ -1,3 +1,4 @@
+make tests run under gtest
 
 iter_swap
 
