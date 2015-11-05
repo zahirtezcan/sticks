@@ -39,7 +39,7 @@ outputDirectories:
 TestRotate$(EXE): TestRotate.o
 	$(LINK.o) -lgtest_main -lgtest -lstdc++
 
-TestRotate.o: algorithm/TestRotate.cpp ../stx/algorithm/Rotate.h ../stx/algorithm/IterSwap.h
+TestRotate.o: algorithm/TestRotate.cpp ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
 	$(COMPILE.cpp) $<
 
 TestReverse$(EXE): TestReverse.o
@@ -57,13 +57,13 @@ TestGenerate.o: algorithm/TestGenerate.cpp ../stx/algorithm/Generate.h
 TestCount$(EXE): TestCount.o
 	$(LINK.o) -lgtest_main -lgtest -lstdc++
 
-TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h ../stx/algorithm/Generate.h
+TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h
 	$(COMPILE.cpp) $<
 
 TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
-	$(LINK.o)
+	$(LINK.o) -lgtest_main -lgtest -lstdc++
 
-TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Generate.h
+TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Rotate.h
 	$(COMPILE.cpp) $<
 
 clean:

@@ -1,32 +1,65 @@
 #include <stx/algorithm/FindPartitionPoint.h>
-#include <stx/algorithm/Generate.h>
-#include <iostream>
-#include <algorithm>
-#include <vector>
+#include <stx/algorithm/Rotate.h>
+#include <gtest/gtest.h>
 
-void Generate(std::vector<int>& v, int n, int r)
+TEST(FindPartitionPoint, Empty)
 {
-	v.resize(n);
-	stx::GenerateIncrement(v.begin(), v.end(), 0);
-	std::rotate(v.begin(), v.begin() + r, v.end());
+	int a[] = {};
+	auto end = a;
+	auto found = stx::FindPartitionPoint(a, end, [](int x) { return x == 0; });
+
+	EXPECT_EQ(end, found);
 }
 
-int main()
+TEST(FindPartitionPoint, All)
 {
-	std::vector<int> v;
-	for (int i = 0; i < 100; ++i) {
-		for (int r = 0; r <= i; ++r) {
-			Generate(v, i, r);
-			auto found = stx::FindPartitionPoint(v.begin(), v.end(),
-			[&] (int x) {
-				return x >= v[0];
-			});
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
 
-			auto dist = std::distance(v.begin(), found);
+	auto found = stx::FindPartitionPoint(a, end, [](int x) { return x < 999; });
 
-			if ( (i == r && found != v.end()) || (i != r && dist != (i - r))) {
-				std::cout << "Error on i: " << i << " r:" << r << std::endl;
-			}
-		}
+	EXPECT_EQ(end, found);
+}
+
+TEST(FindPartitionPoint, None)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto begin = a;
+	auto end = a + count;
+
+	auto found = stx::FindPartitionPoint(begin, end, [](int x) { return x > 999; });
+
+	EXPECT_EQ(begin, found);
+}
+
+TEST(FindPartitionPoint, Mid)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto begin = a;
+	auto end = a + count;
+
+	auto found = stx::FindPartitionPoint(begin, end, [=](int x) { return x < a[count / 2]; });
+
+	EXPECT_EQ(begin + count / 2, found);
+
+}
+
+TEST(FindPartitionPoint, Regress)
+{
+	for (size_t i = 0; i < 100; ++i) {
+		int a[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+		auto count = sizeof(a) / sizeof(a[0]);
+		if (i > count) break;
+
+		stx::Rotate(a, a + i, a + count);
+		auto expected = a + count - (i == count ? 0 : i);
+
+		auto result = stx::FindPartitionPoint(a, a + count,[=](int x) { return x >= a[0]; });
+
+		EXPECT_EQ(expected, result);
 	}
 }
+
