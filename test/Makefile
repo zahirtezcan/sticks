@@ -49,7 +49,7 @@ TestReverse.o: algorithm/TestReverse.cpp ../stx/algorithm/Reverse.h ../stx/algor
 	$(COMPILE.cpp) $<
 
 TestGenerate$(EXE): TestGenerate.o
-	$(LINK.o)
+	$(LINK.o) -lgtest_main -lgtest -lstdc++
 
 TestGenerate.o: algorithm/TestGenerate.cpp ../stx/algorithm/Generate.h
 	$(COMPILE.cpp) $<
