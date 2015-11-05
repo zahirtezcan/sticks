@@ -14,6 +14,8 @@ endif
 
 LINKER_INPUT=$(addprefix $(ObjDir)/,$^)
 LINKER_OUTPUT=-o $(BinDir)/$@
+LDLIBS+=-lgtest_main
+LDLIBS+=-lgtest
 LDLIBS+=-lstdc++
 LDFLAGS=-L"../gtest/lib/"
 LINK.o=$(CC) $(LINKER_OUTPUT) $(LINKER_INPUT) $(LDLIBS) $(LDFLAGS)
@@ -37,31 +39,31 @@ outputDirectories:
 	@$(MKDIR) $(BinDir)
 
 TestRotate$(EXE): TestRotate.o
-	$(LINK.o) -lgtest_main -lgtest -lstdc++
+	$(LINK.o)
 
 TestRotate.o: algorithm/TestRotate.cpp ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
 	$(COMPILE.cpp) $<
 
 TestReverse$(EXE): TestReverse.o
-	$(LINK.o) -lgtest_main -lgtest -lstdc++
+	$(LINK.o)
 
 TestReverse.o: algorithm/TestReverse.cpp ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
 	$(COMPILE.cpp) $<
 
 TestGenerate$(EXE): TestGenerate.o
-	$(LINK.o) -lgtest_main -lgtest -lstdc++
+	$(LINK.o)
 
 TestGenerate.o: algorithm/TestGenerate.cpp ../stx/algorithm/Generate.h
 	$(COMPILE.cpp) $<
 
 TestCount$(EXE): TestCount.o
-	$(LINK.o) -lgtest_main -lgtest -lstdc++
+	$(LINK.o)
 
 TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h
 	$(COMPILE.cpp) $<
 
 TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
-	$(LINK.o) -lgtest_main -lgtest -lstdc++
+	$(LINK.o)
 
 TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Rotate.h
 	$(COMPILE.cpp) $<
