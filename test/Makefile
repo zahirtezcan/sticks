@@ -32,41 +32,40 @@ vpath %$(EXE) $(BinDir)
 
 all: tests
 
-tests: outputDirectories TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE) TestReverse$(EXE) TestRotate$(EXE)
+tests: outputDirectories TestAll$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE) TestReverse$(EXE) TestRotate$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
 	@$(MKDIR) $(BinDir)
 
-TestRotate$(EXE): TestRotate.o
+%$(EXE) : %.o
 	$(LINK.o)
 
-TestRotate.o: algorithm/TestRotate.cpp ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
+%.o : algorithm/%.cpp
 	$(COMPILE.cpp) $<
+
+TestAll$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o
+	$(LINK.o)
+
+TestRotate$(EXE): TestRotate.o
+TestRotate.o: algorithm/TestRotate.cpp 
+TestRotate.o: ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
 
 TestReverse$(EXE): TestReverse.o
-	$(LINK.o)
-
-TestReverse.o: algorithm/TestReverse.cpp ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
-	$(COMPILE.cpp) $<
+TestReverse.o: algorithm/TestReverse.cpp
+TestReverse.o: ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
 
 TestGenerate$(EXE): TestGenerate.o
-	$(LINK.o)
-
-TestGenerate.o: algorithm/TestGenerate.cpp ../stx/algorithm/Generate.h
-	$(COMPILE.cpp) $<
+TestGenerate.o: algorithm/TestGenerate.cpp
+TestGenerate.o: ../stx/algorithm/Generate.h
 
 TestCount$(EXE): TestCount.o
-	$(LINK.o)
-
-TestCount.o: algorithm/TestCount.cpp ../stx/algorithm/Count.h ../stx/Iterator.h
-	$(COMPILE.cpp) $<
+TestCount.o: algorithm/TestCount.cpp
+TestCount.o: ../stx/algorithm/Count.h ../stx/Iterator.h
 
 TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
-	$(LINK.o)
-
-TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Rotate.h
-	$(COMPILE.cpp) $<
+TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp
+TestFindPartitionPoint.o: ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Rotate.h
 
 clean:
 	@$(RM) $(ObjDir)
