@@ -13,7 +13,7 @@ void Reverse(Iterator begin, Iterator end)
 	}
 
 	while (begin != end) {
-		stx::IterSwap(begin, end);
+		stx::SwapPointee(begin, end);
 		++begin;
 		if (begin != end) {
 			--end;
