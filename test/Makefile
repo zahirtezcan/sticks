@@ -12,7 +12,7 @@ else
   EXE:=
 endif
 
-LINKER_INPUT=$(addprefix $(ObjDir)/,$^)
+LINKER_INPUT=$(patsubst %,$(ObjDir)/%,$(patsubst $(ObjDir)/%,%,$^))
 LINKER_OUTPUT=-o $(BinDir)/$@
 LDLIBS+=-lgtest_main
 LDLIBS+=-lgtest
@@ -32,7 +32,8 @@ vpath %$(EXE) $(BinDir)
 
 all: tests
 
-tests: outputDirectories TestAll$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE) TestReverse$(EXE) TestRotate$(EXE)
+tests: outputDirectories TestAllAlgorithms$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
+tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -44,8 +45,12 @@ outputDirectories:
 %.o : algorithm/%.cpp
 	$(COMPILE.cpp) $<
 
-TestAll$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o
+TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o TestAll.o
 	$(LINK.o)
+
+TestAll$(EXE): TestAll.o
+TestAll.o: algorithm/TestAll.cpp
+TestAll.o: ../stx/algorithm/All.h
 
 TestRotate$(EXE): TestRotate.o
 TestRotate.o: algorithm/TestRotate.cpp 
