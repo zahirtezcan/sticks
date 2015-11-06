@@ -49,11 +49,11 @@ TestAll$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o
 
 TestRotate$(EXE): TestRotate.o
 TestRotate.o: algorithm/TestRotate.cpp 
-TestRotate.o: ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
+TestRotate.o: ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/SwapPointee.h
 
 TestReverse$(EXE): TestReverse.o
 TestReverse.o: algorithm/TestReverse.cpp
-TestReverse.o: ../stx/algorithm/Reverse.h ../stx/algorithm/IterSwap.h
+TestReverse.o: ../stx/algorithm/Reverse.h ../stx/algorithm/SwapPointee.h
 
 TestGenerate$(EXE): TestGenerate.o
 TestGenerate.o: algorithm/TestGenerate.cpp

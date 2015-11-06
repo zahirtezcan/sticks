@@ -1,7 +1,7 @@
 #ifndef STX_ALGORITHM_REVERSE_H
 #define STX_ALGORITHM_REVERSE_H
 
-#include <stx/algorithm/IterSwap.h>
+#include <stx/algorithm/SwapPointee.h>
 
 namespace stx {
 
