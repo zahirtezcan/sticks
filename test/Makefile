@@ -33,7 +33,7 @@ vpath %$(EXE) $(BinDir)
 all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
-tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE)
+tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -45,8 +45,12 @@ outputDirectories:
 %.o : algorithm/%.cpp
 	$(COMPILE.cpp) $<
 
-TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o TestAll.o
+TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o TestAll.o TestAny.o
 	$(LINK.o)
+
+TestAny$(EXE): TestAny.o
+TestAny.o: algorithm/TestAny.cpp
+TestAny.o: ../stx/algorithm/Any.h
 
 TestAll$(EXE): TestAll.o
 TestAll.o: algorithm/TestAll.cpp
