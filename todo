@@ -1,6 +1,4 @@
 
-all_of
-any_of
-none_of
-equals
+mismatch
+find*
 
