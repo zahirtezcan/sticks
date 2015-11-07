@@ -33,7 +33,7 @@ vpath %$(EXE) $(BinDir)
 all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
-tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE)
+tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -45,7 +45,7 @@ outputDirectories:
 %.o : algorithm/%.cpp
 	$(COMPILE.cpp) $<
 
-TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o TestAll.o TestAny.o TestAllEqual.o
+TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -79,6 +79,10 @@ TestCount.o: ../stx/algorithm/Count.h ../stx/Iterator.h
 TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
 TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp
 TestFindPartitionPoint.o: ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Rotate.h
+
+TestMismatch$(EXE): TestMismatch.o
+TestMismatch.o: algorithm/TestMismatch.cpp
+TestMismatch.o: ../stx/algorithm/Mismatch.h
 
 clean:
 	@$(RM) $(ObjDir)
