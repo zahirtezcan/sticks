@@ -53,7 +53,7 @@ Iterator FindAny(Iterator begin, Iterator end,
 template<typename Iterator, typename ValueIterator, typename BinaryPredicate>
 Iterator FindAny(Iterator begin, Iterator end,
                  ValueIterator valueBegin, ValueIterator valueEnd,
-		 BinaryPredicate equals)
+                 BinaryPredicate equals)
 {
 	while (begin != end) {
 		auto valueIter = valueBegin;
@@ -62,6 +62,62 @@ Iterator FindAny(Iterator begin, Iterator end,
 				return begin;
 			}
 			++valueIter;
+		}
+
+		++begin;
+	}
+
+	return end;
+}
+
+template<typename Iterator, typename ValueIterator>
+Iterator FindSequence(Iterator begin, Iterator end,
+                      ValueIterator seqBegin, ValueIterator seqEnd)
+{
+	/* known as "search" in STL */
+	while (begin != end) {
+		auto srcIter = begin;
+		
+		auto seqIter = seqBegin;
+		while (true) {
+			if (seqIter == seqEnd) {
+				return begin;
+			} else if (srcIter == end) {
+				return end;
+			} else if (*srcIter != *seqIter) {
+				break;
+			}
+
+			++seqIter;
+			++srcIter;
+		}
+
+		++begin;
+	}
+
+	return end;
+}
+
+template<typename Iterator, typename ValueIterator, typename BinaryPredicate>
+Iterator FindSequence(Iterator begin, Iterator end,
+                      ValueIterator seqBegin, ValueIterator seqEnd,
+                      BinaryPredicate equals)
+{
+	while (begin != end) {
+		auto srcIter = begin;
+		
+		auto seqIter = seqBegin;
+		while (true) {
+			if (seqIter == seqEnd) {
+				return begin;
+			} else if (srcIter == end) {
+				return end;
+			} else if (!equals(*srcIter, *seqIter)) {
+				break;
+			}
+
+			++seqIter;
+			++srcIter;
 		}
 
 		++begin;

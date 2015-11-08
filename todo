@@ -1,4 +1,6 @@
 
-find*
+findlastsequence
+findadjacentequal (can be implemented in terms of mismatch so... we may not need)
+
 rotate is void
 
