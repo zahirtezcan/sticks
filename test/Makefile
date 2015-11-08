@@ -34,6 +34,7 @@ all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
+tests: TestFind$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -45,7 +46,8 @@ outputDirectories:
 %.o : algorithm/%.cpp
 	$(COMPILE.cpp) $<
 
-TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o
+TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o
+TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -83,6 +85,10 @@ TestFindPartitionPoint.o: ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm
 TestMismatch$(EXE): TestMismatch.o
 TestMismatch.o: algorithm/TestMismatch.cpp
 TestMismatch.o: ../stx/algorithm/Mismatch.h
+
+TestFind$(EXE): TestFind.o
+TestFind.o: algorithm/TestFind.cpp
+TestFind.o: ../stx/algorithm/Find.h
 
 clean:
 	@$(RM) $(ObjDir)
