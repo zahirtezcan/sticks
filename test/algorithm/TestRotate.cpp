@@ -41,7 +41,7 @@ TEST(Rotate, ReverseEmpty)
 {
 	int a[] = { 1, 2, 3 };
 	auto count = sizeof(a) / sizeof(a[0]);
-
+	
 	stx::Rotate(a, a + count, a + count);
 	
 	EXPECT_TRUE(RangeEquals(a, { 1, 2, 3 }));
@@ -67,5 +67,17 @@ TEST(Rotate, NTimes)
 	}
 	
 	EXPECT_TRUE(RangeEquals(a, { 1, 2, 3 }));
+}
+
+TEST(Rotate, CheckReturnValue)
+{
+	int a[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	auto count = sizeof(a) / sizeof(a[0]);
+
+	auto first = stx::Rotate(a, a + 7, a + count);
+	
+	EXPECT_TRUE(RangeEquals(a, { 7, 8, 9, 0, 1, 2, 3, 4, 5, 6 }));
+	EXPECT_EQ(0, *first);
+
 }
 
