@@ -108,6 +108,7 @@ Iterator FindLastSequence(Iterator begin, Iterator end,
                           ValueIterator seqBegin, ValueIterator seqEnd,
                           BinaryPredicate equals)
 {
+	/*TODO: If iterators are bidirectional, we can just use one FindSequence with reverese iterators*/
 	if (seqBegin == seqEnd) {
 		return end;
 	}

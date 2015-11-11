@@ -34,7 +34,7 @@ all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
-tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) 
+tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -48,7 +48,7 @@ outputDirectories:
 
 TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
-TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o 
+TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -99,6 +99,9 @@ TestTransform$(EXE): TestTransform.o
 TestTransform.o: algorithm/TestTransform.cpp
 TestTransform.o: ../stx/algorithm/Transform.h ../stx/Iterator.h
 
+TestRemove$(EXE): TestRemove.o
+TestRemove.o: algorithm/TestRemove.cpp
+TestRemove.o: ../stx/algorithm/Remove.h
 
 clean:
 	@$(RM) $(ObjDir)
