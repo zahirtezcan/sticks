@@ -18,6 +18,7 @@ Iterator Remove(Iterator begin, Iterator end, UnaryPredicate check)
 	++begin;
 	while (begin != end) {
 		if (!check(*begin)) {
+			/*TODO: what about std::move*/
 			*iter = *begin;
 			++iter;
 		}
@@ -42,6 +43,7 @@ Iterator RemoveValue(Iterator begin, Iterator end, const T& value)
 	++begin;
 	while (begin != end) {
 		if (*begin != value) {
+			/*TODO: what about std::move*/
 			*iter = *begin;
 			++iter;
 		}

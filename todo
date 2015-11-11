@@ -1,4 +1,5 @@
 
-replace
 removeduplicates aka unique
+_copy versions of current algorithms (replace_copy, remove_copy etc.)
+copy, move and fill algorithms (without type traits, just basically)
 
