@@ -34,7 +34,7 @@ all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
-tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE)
+tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -48,7 +48,7 @@ outputDirectories:
 
 TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
-TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o
+TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o 
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -90,6 +90,10 @@ TestMismatch.o: ../stx/algorithm/Mismatch.h
 TestFind$(EXE): TestFind.o
 TestFind.o: algorithm/TestFind.cpp
 TestFind.o: ../stx/algorithm/Find.h
+
+TestReplace$(EXE): TestReplace.o
+TestReplace.o: algorithm/TestReplace.cpp
+TestReplace.o: ../stx/algorithm/Replace.h
 
 TestForEach$(EXE): TestForEach.o
 TestForEach.o: algorithm/TestForEach.cpp
