@@ -3,6 +3,32 @@
 
 namespace stx {
 
+struct Equals;
+struct NotEquals;
+
+namespace detail {
+
+template<typename Iterator, typename BinaryPredicate = stx::Equals>
+struct EqualsPointee
+{
+	Iterator iter;
+	BinaryPredicate equals;
+
+	EqualsPointee(Iterator iter, BinaryPredicate equals)
+		:
+		iter(iter),
+		equals(equals)
+	{}
+
+	template<typename T>
+	bool operator()(const T& other)
+	{
+		return equals(*iter,  other);
+	}
+};
+
+}/*end of stx::detail namespace*/
+
 struct Equals
 {
 	template<typename T, typename U>
@@ -21,6 +47,6 @@ struct NotEquals
 	}
 };
 
-}
+}/*end of stx namespace*/
 
 #endif

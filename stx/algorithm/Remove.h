@@ -62,29 +62,6 @@ Iterator RemoveDuplicates(Iterator begin, Iterator end)
 	return RemoveDuplicates(begin, end, stx::Equals());
 }
 
-namespace detail {
-
-template<typename Iterator, typename BinaryPredicate = stx::Equals>
-struct EqualsPointee
-{
-	Iterator iter;
-	BinaryPredicate equals;
-
-	EqualsPointee(Iterator iter, BinaryPredicate equals)
-		:
-		iter(iter),
-		equals(equals)
-	{}
-
-	template<typename T>
-	bool operator()(T&& other)
-	{
-		return equals(*iter,  std::forward<T>(other));
-	}
-};
-
-}
-
 template<typename Iterator, typename BinaryPredicate>
 Iterator RemoveDuplicates(Iterator begin, Iterator end, BinaryPredicate equals)
 {
@@ -94,7 +71,8 @@ Iterator RemoveDuplicates(Iterator begin, Iterator end, BinaryPredicate equals)
 		if (next == end) {
 			break;
 		}
-		end = Remove(next, end, detail::EqualsPointee<Iterator, BinaryPredicate>(begin, equals));
+		detail::EqualsPointee<Iterator, BinaryPredicate> eq(begin, equals);
+		end = Remove(next, end, eq);
 		++begin;
 	}
 
