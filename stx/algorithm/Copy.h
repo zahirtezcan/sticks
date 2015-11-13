@@ -59,7 +59,7 @@ OutputIterator CopyReversed(Iterator begin, Iterator end,
 	return output;
 }
 
-template<typename Iterator, typename OutputIterator, typename BinaryPredicate>
+template<typename Iterator, typename OutputIterator>
 OutputIterator CopyDistinct(Iterator begin, Iterator end,
                             OutputIterator output)
 {
@@ -87,7 +87,7 @@ OutputIterator CopyDistinct(Iterator begin, Iterator end,
 	return output;
 }
 
-template<typename Iterator, typename OutputIterator, typename BinaryPredicate>
+template<typename Iterator, typename OutputIterator>
 OutputIterator CopyDistinctConsecutively(Iterator begin, Iterator end,
                                          OutputIterator output)
 {
@@ -102,12 +102,12 @@ OutputIterator CopyDistinctConsecutively(Iterator begin, Iterator end,
 	if (begin == end) {
 		return output;
 	}
-	while (begin !=end) {
+	while (begin != end) {
 		*output = *begin;
 		++output;
 
 		auto iter = begin;
-		while (++begin != end && equals(iter, begin)) {
+		while (++begin != end && equals(*iter, *begin)) {
 		}
 	}
 
