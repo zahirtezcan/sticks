@@ -59,6 +59,41 @@ OutputIterator CopyReversed(Iterator begin, Iterator end,
 	return output;
 }
 
+template<typename Iterator, typename OutputIterator, typename UnaryPredicate>
+OutputIterator CopyRemoved(Iterator begin, Iterator end,
+                           OutputIterator output,
+                           UnaryPredicate check)
+{
+	while (begin != end) {
+		if (!check(*begin)) {
+			*output = *begin;
+			++output;
+		}
+		++begin;
+	}
+
+	return output;
+}
+
+template<typename Iterator, typename OutputIterator, typename UnaryPredicate, typename T>
+OutputIterator CopyReplaced(Iterator begin, Iterator end,
+                            OutputIterator output,
+                            UnaryPredicate check,
+			    const T& newValue)
+{
+	while (begin != end) {
+		if (check(*begin)) {
+			*output = newValue;
+		} else {
+			*output = *begin;
+		}
+		++output;
+		++begin;
+	}
+
+	return output;
+}
+
 template<typename Iterator, typename OutputIterator>
 OutputIterator CopyDistinct(Iterator begin, Iterator end,
                             OutputIterator output)

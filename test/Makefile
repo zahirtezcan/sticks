@@ -109,7 +109,7 @@ TestRemove.o: ../stx/algorithm/Remove.h ../stx/utility/Equals.h
 
 TestCopy$(EXE): TestCopy.o
 TestCopy.o: algorithm/TestCopy.cpp
-TestCopy.o: ../stx/algorithm/Copy.h ../stx/utility/Equals.h
+TestCopy.o: ../stx/algorithm/Copy.h ../stx/utility/Equals.h ../stx/algorithm/Find.h
 
 
 clean:
