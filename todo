@@ -1,4 +1,4 @@
 
-move and fill algorithms (without type traits, just basically)
+fill (without type traits, just basically)
 partitioning
 type traits / tag dispatching etc

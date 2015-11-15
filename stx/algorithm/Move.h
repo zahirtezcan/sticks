@@ -2,8 +2,6 @@
 #define STX_ALGORITHM_MOVE_H
 
 #include <utility>
-/*#include <stx/algorithm/Find.h>
-#include <stx/utility/Equals.h>*/
 
 namespace stx {
 
