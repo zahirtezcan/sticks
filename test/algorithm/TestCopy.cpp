@@ -181,39 +181,6 @@ TEST(CopyReplaced, BasicOutputIterator)
 	EXPECT_EQ(v[2], output[2]);
 }
 
-TEST(CopyRemoved, Empty)
-{
-	std::vector<int> v;
-	std::vector<int> output(5, 0);
-	auto result = stx::CopyRemoved(v.begin(), v.end(), output.begin(),
-	                               [](int) { return true; });
-
-	EXPECT_EQ(output.begin(), result);
-}
-
-TEST(CopyRemoved, Basic)
-{
-	std::vector<int> v = { 1, 2, 3 };
-	std::vector<int> output(5, 0);
-	auto result = stx::CopyRemoved(v.begin(), v.end(), output.begin(),
-	                               [](int x) { return x % 2 == 1; });
-
-	EXPECT_EQ(output.begin() + 1, result);
-	EXPECT_EQ(v[1], output[0]);
-}
-
-TEST(CopyRemoved, BasicOutputIterator)
-{
-	std::vector<int> v = { 1, 2, 3 };
-	std::vector<int> output;
-        stx::CopyRemoved(v.begin(), v.end(), std::back_inserter(output),
-	                  [](int x) { return x % 2 == 0; });
-
-	EXPECT_EQ(v.size() - 1, output.size());
-	EXPECT_EQ(v[0], output[0]);
-	EXPECT_EQ(v[2], output[1]);
-}
-
 TEST(CopyRotated, EmptyBegin)
 {
 	std::vector<int> v;
