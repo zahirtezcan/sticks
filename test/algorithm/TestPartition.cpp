@@ -1,4 +1,4 @@
-#include <stx/algorithm/FindPartitionPoint.h>
+#include <stx/algorithm/Partition.h>
 #include <stx/algorithm/Rotate.h>
 #include <gtest/gtest.h>
 

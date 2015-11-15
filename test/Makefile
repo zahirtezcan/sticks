@@ -32,7 +32,7 @@ vpath %$(EXE) $(BinDir)
 
 all: tests
 
-tests: outputDirectories TestAllAlgorithms$(EXE) TestFindPartitionPoint$(EXE) TestCount$(EXE) TestGenerate$(EXE)
+tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
 tests: TestMove$(EXE)
@@ -47,7 +47,7 @@ outputDirectories:
 %.o : algorithm/%.cpp
 	$(COMPILE.cpp) $<
 
-TestAllAlgorithms$(EXE): TestFindPartitionPoint.o TestCount.o TestGenerate.o TestReverse.o
+TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
 TestAllAlgorithms$(EXE): TestMove.o
@@ -81,9 +81,9 @@ TestCount$(EXE): TestCount.o
 TestCount.o: algorithm/TestCount.cpp
 TestCount.o: ../stx/algorithm/Count.h ../stx/Iterator.h
 
-TestFindPartitionPoint$(EXE): TestFindPartitionPoint.o 
-TestFindPartitionPoint.o: algorithm/TestFindPartitionPoint.cpp
-TestFindPartitionPoint.o: ../stx/algorithm/FindPartitionPoint.h ../stx/algorithm/Rotate.h
+TestPartition$(EXE): TestPartition.o 
+TestPartition.o: algorithm/TestPartition.cpp
+TestPartition.o: ../stx/algorithm/Partition.h ../stx/algorithm/Rotate.h
 
 TestMismatch$(EXE): TestMismatch.o
 TestMismatch.o: algorithm/TestMismatch.cpp
