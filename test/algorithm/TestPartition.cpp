@@ -2,6 +2,59 @@
 #include <stx/algorithm/Rotate.h>
 #include <gtest/gtest.h>
 
+TEST(IsPartitioned, Empty)
+{
+	int a[] = {};
+	auto end = a;
+	bool result = stx::IsPartitioned(a, end, [](int) { return false; });
+
+	EXPECT_TRUE(result);
+}
+
+TEST(IsPartitioned, All)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	bool result = stx::IsPartitioned(a, end, [](int x) { return x < 999; });
+
+	EXPECT_TRUE(result);
+}
+
+TEST(IsPartitioned, None)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	bool result = stx::IsPartitioned(a, end, [](int x) { return x > 999; });
+
+	EXPECT_TRUE(result);
+}
+
+TEST(IsPartitioned, Basic)
+{
+	int a[] = { 1, 2, 3, -1, -2, -3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	bool result = stx::IsPartitioned(a, end, [](int x) { return x > 0; });
+
+	EXPECT_TRUE(result);
+}
+
+TEST(IsPartitioned, False)
+{
+	int a[] = { 1, 2, 3, -1, 2, -3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	bool result = stx::IsPartitioned(a, end, [](int x) { return x > 0; });
+
+	EXPECT_FALSE(result);
+}
+
 TEST(FindPartitionPoint, Empty)
 {
 	int a[] = {};

@@ -6,6 +6,34 @@
 namespace stx {
 
 template<typename Iterator, typename UnaryPredicate>
+bool IsPartitioned(Iterator begin, Iterator end, UnaryPredicate check)
+{
+	while (begin != end && check(*begin)) {
+		++begin;
+	}
+	
+	/*we could have returned the partition point as result, instead of a boolean
+	 *   but what would we have returned for false?
+	 *      end iterator is not an answer because it is also a valid partition point
+	 */
+	/*auto partitionPoint = begin;*/
+
+	if (begin == end) {
+		/*if we don't early exit here, we will apply predicate twice for current*/
+		return true;
+	}
+	++begin;
+	while (begin != end) {
+		if (check(*begin)) {
+			return false;
+		}
+		++begin;
+	}
+
+	return true;
+}
+
+template<typename Iterator, typename UnaryPredicate>
 Iterator FindPartitionPoint(Iterator begin, Iterator end, UnaryPredicate check)
 {
 	using std::distance;
