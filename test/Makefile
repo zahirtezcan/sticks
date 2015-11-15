@@ -35,7 +35,7 @@ all: tests
 tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
-tests: TestMove$(EXE)
+tests: TestMove$(EXE) TestFill$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -50,7 +50,7 @@ outputDirectories:
 TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
-TestAllAlgorithms$(EXE): TestMove.o
+TestAllAlgorithms$(EXE): TestMove.o TestFill.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -116,6 +116,10 @@ TestCopy.o: ../stx/algorithm/Copy.h ../stx/utility/Equals.h ../stx/algorithm/Fin
 TestMove$(EXE): TestMove.o
 TestMove.o: algorithm/TestMove.cpp
 TestMove.o: ../stx/algorithm/Move.h ../stx/utility/Equals.h ../stx/algorithm/Find.h
+
+TestFill$(EXE): TestFill.o
+TestFill.o: algorithm/TestFill.cpp
+TestFill.o: ../stx/algorithm/Fill.h ../stx/utility/Equals.h
 
 
 clean:
