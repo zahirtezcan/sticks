@@ -55,6 +55,61 @@ TEST(IsPartitioned, False)
 	EXPECT_FALSE(result);
 }
 
+TEST(Partition, Empty)
+{
+	int a[] = {};
+	auto end = a;
+
+	auto ppoint = stx::Partition(a, end, [](int) { return true; });
+	
+	EXPECT_EQ(end, ppoint);
+}
+
+TEST(Partition, All)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::Partition(a, end, [](int x) { return x < 999; });
+
+	EXPECT_EQ(end, result);
+	EXPECT_EQ(1, a[0]);
+	EXPECT_EQ(2, a[1]);
+	EXPECT_EQ(3, a[2]);
+}
+
+TEST(Partition, None)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::Partition(a, end, [](int x) { return x > 999; });
+
+	EXPECT_EQ(a, result);
+	EXPECT_EQ(1, a[0]);
+	EXPECT_EQ(2, a[1]);
+	EXPECT_EQ(3, a[2]);
+}
+
+TEST(Partition, Basic)
+{
+	int a[] = { -1, 1, -2, 2, -3, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::Partition(a, end, [](int x) { return x > 0; });
+
+	EXPECT_EQ(a + 3, result);
+	EXPECT_GT(a[0], 0);
+	EXPECT_GT(a[1], 0);
+	EXPECT_GT(a[2], 0);
+	EXPECT_LT(a[3], 0);
+	EXPECT_LT(a[4], 0);
+	EXPECT_LT(a[5], 0);
+}
+
 TEST(FindPartitionPoint, Empty)
 {
 	int a[] = {};

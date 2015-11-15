@@ -2,6 +2,7 @@
 #define STX_ALGORITHM_FINDPARTITIONPOINT_H
 
 #include <iterator>
+#include <stx/algorithm/SwapPointee.h>
 
 namespace stx {
 
@@ -31,6 +32,33 @@ bool IsPartitioned(Iterator begin, Iterator end, UnaryPredicate check)
 	}
 
 	return true;
+}
+
+template<typename Iterator, typename UnaryPredicate>
+Iterator Partition(Iterator begin, Iterator end, UnaryPredicate check)
+{
+	if (begin == end) {
+		return end;
+	}
+	auto ppoint = begin;
+	while (ppoint !=end && check(*ppoint)) {
+		++ppoint;
+	}
+	if (ppoint == end) {
+		return end;
+	}
+	begin = ppoint;
+
+	while (true) {
+		do {
+			++begin;
+		} while (begin != end && !check(*begin));
+		if (begin == end) {
+			return ppoint;
+		}
+		stx::SwapPointee(ppoint, begin);
+		++ppoint;
+	}
 }
 
 template<typename Iterator, typename UnaryPredicate>
