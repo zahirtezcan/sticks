@@ -166,6 +166,33 @@ Iterator FindRepitition(Iterator begin, Iterator end,
 	return end;
 }
 
+template<typename Iterator>
+Iterator FindAdjacent(Iterator begin, Iterator end)
+{
+	return FindAdjacent(begin, end, stx::Equals());
+}
+
+template<typename Iterator, typename BinaryPredicate>
+Iterator FindAdjacent(Iterator begin, Iterator end, BinaryPredicate equals)
+{
+	if (begin == end) {
+		return end;
+	}
+
+	auto next = begin;
+	++next;
+	while (next != end) {
+		if (equals(*begin, *next)) {
+			return begin;
+		}
+		++begin;
+		++next;
+	}
+
+	return end;
+}
+
+
 }/*end of stx namespace*/
 
 #endif
