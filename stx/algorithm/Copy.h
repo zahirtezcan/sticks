@@ -3,6 +3,7 @@
 
 #include <stx/algorithm/Find.h>
 #include <stx/utility/Equals.h>
+#include <utility>
 
 namespace stx {
 
@@ -72,6 +73,30 @@ OutputIterator CopyRotated(Iterator begin, Iterator newBegin, Iterator end,
 	output = stx::Copy(begin, newBegin, output);
 
 	return output;
+}
+
+template<
+	typename Iterator,
+	typename OutputIterator1,
+	typename OutputIterator2, 
+	typename UnaryPredicate
+	>
+std::pair<OutputIterator1, OutputIterator2>
+	CopyPartitioned(Iterator begin, Iterator end,
+	                OutputIterator1 trueOutput, OutputIterator2 falseOutput,
+	                UnaryPredicate check)
+{
+	while (begin != end) {
+		if (check(*begin)) {
+			*trueOutput = *begin;
+			++trueOutput;
+		} else {
+			*falseOutput = *begin;
+			++falseOutput;
+		}
+		++begin;
+	}
+	return { trueOutput, falseOutput };
 }
 
 template<typename Iterator, typename OutputIterator>

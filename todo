@@ -1,4 +1,5 @@
 
-partitioning
+copy partitioned
+stable partition
 swap ranges
 type traits / tag dispatching etc
