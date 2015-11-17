@@ -31,20 +31,48 @@ TEST(Rotate, Empty)
 {
 	int a[] = { 1, 2, 3 };
 	auto count = sizeof(a) / sizeof(a[0]);
-	
-	stx::Rotate(a, a, a + count);
+	auto end = a + count;
+
+	auto result = stx::Rotate(a, a, end);
 
 	EXPECT_TRUE(RangeEquals(a, { 1, 2, 3 }));
+	EXPECT_EQ(end, result);
+}
+
+TEST(Rotate, EmptyOne)
+{
+	int a[] = { 1 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::Rotate(a, a, end);
+
+	EXPECT_TRUE(RangeEquals(a, { 1 }));
+	EXPECT_EQ(end, result);
+}
+
+TEST(Rotate, ReverseEmptyOne)
+{
+	int a[] = { 1 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::Rotate(a, end, end);
+	
+	EXPECT_TRUE(RangeEquals(a, { 1 }));
+	EXPECT_EQ(a, result);
 }
 
 TEST(Rotate, ReverseEmpty)
 {
 	int a[] = { 1, 2, 3 };
 	auto count = sizeof(a) / sizeof(a[0]);
-	
-	stx::Rotate(a, a + count, a + count);
+	auto end = a + count;
+
+	auto result = stx::Rotate(a, end, end);
 	
 	EXPECT_TRUE(RangeEquals(a, { 1, 2, 3 }));
+	EXPECT_EQ(a, result);
 }
 
 TEST(Rotate, Basic)
@@ -52,9 +80,10 @@ TEST(Rotate, Basic)
 	int a[] = { 1, 2, 3 };
 	auto count = sizeof(a) / sizeof(a[0]);
 
-	stx::Rotate(a, a + 1, a + count);
+	auto result = stx::Rotate(a, a + 1, a + count);
 	
 	EXPECT_TRUE(RangeEquals(a, { 2, 3, 1 }));
+	EXPECT_EQ(a + 2, result);
 }
 
 TEST(Rotate, NTimes)
@@ -63,7 +92,8 @@ TEST(Rotate, NTimes)
 	auto count = sizeof(a) / sizeof(a[0]);
 	
 	for (auto i = count; i > 0; --i) {
-		stx::Rotate(a, a + 1, a + count);
+		auto result = stx::Rotate(a, a + 1, a + count);
+		EXPECT_EQ(a + count - 1, result);
 	}
 	
 	EXPECT_TRUE(RangeEquals(a, { 1, 2, 3 }));

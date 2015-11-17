@@ -110,6 +110,87 @@ TEST(Partition, Basic)
 	EXPECT_LT(a[5], 0);
 }
 
+TEST(StablePartition, Empty)
+{
+	int a[] = {};
+	auto end = a;
+
+	auto ppoint = stx::StablePartition(a, end, [](int) { return true; });
+	
+	EXPECT_EQ(end, ppoint);
+}
+
+TEST(StablePartition, All)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::StablePartition(a, end, [](int x) { return x < 999; });
+
+	EXPECT_EQ(end, result);
+	EXPECT_EQ(1, a[0]);
+	EXPECT_EQ(2, a[1]);
+	EXPECT_EQ(3, a[2]);
+}
+
+TEST(StablePartition, None)
+{
+	int a[] = { 1, 2, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::StablePartition(a, end, [](int x) { return x > 999; });
+
+	EXPECT_EQ(a, result);
+	EXPECT_EQ(1, a[0]);
+	EXPECT_EQ(2, a[1]);
+	EXPECT_EQ(3, a[2]);
+}
+
+TEST(StablePartition, Basic)
+{
+	int a[] = { -1, 1, -2, 2, -3, 3 };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::StablePartition(a, end, [](int x) { return x > 0; });
+
+	EXPECT_EQ(a + 3, result);
+	EXPECT_GT(a[0], 0);
+	EXPECT_GT(a[1], 0);
+	EXPECT_GT(a[2], 0);
+	EXPECT_LT(a[3], 0);
+	EXPECT_LT(a[4], 0);
+	EXPECT_LT(a[5], 0);
+}
+
+TEST(StablePartition, Stability)
+{
+	std::pair<int, int>  a[] = { {-1, 1}, {1, 1},
+	                             {1, 2}, {-1, 2},
+	                             {-1, 3}, {1, 3} };
+	auto count = sizeof(a) / sizeof(a[0]);
+	auto end = a + count;
+
+	auto result = stx::StablePartition(a, end, 
+	               [](const std::pair<int,int>& x) { return x.first > 0; });
+
+	EXPECT_EQ(a + 3, result);
+	EXPECT_EQ(1, a[0].first);
+	EXPECT_EQ(1, a[1].first);
+	EXPECT_EQ(1, a[2].first);
+	EXPECT_EQ(-1, a[3].first);
+	EXPECT_EQ(-1, a[4].first);
+	EXPECT_EQ(-1, a[5].first);
+	EXPECT_EQ(1, a[0].second);
+	EXPECT_EQ(2, a[1].second);
+	EXPECT_EQ(3, a[2].second);
+	EXPECT_EQ(1, a[3].second);
+	EXPECT_EQ(2, a[4].second);
+	EXPECT_EQ(3, a[5].second);
+}
+
 TEST(FindPartitionPoint, Empty)
 {
 	int a[] = {};

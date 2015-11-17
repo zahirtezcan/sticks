@@ -8,8 +8,11 @@ namespace stx {
 template<typename Iterator>
 Iterator Rotate(Iterator begin, Iterator newBegin, Iterator end)
 {
-	if (newBegin == end) {
+	if (begin == newBegin) {
 		return end;
+	}
+	if (newBegin == end) {
+		return begin;
 	}
 	auto result = end;
 	auto iter = newBegin;

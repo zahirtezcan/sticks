@@ -3,6 +3,7 @@
 
 #include <iterator>
 #include <stx/algorithm/SwapPointee.h>
+#include <stx/algorithm/Rotate.h>
 
 namespace stx {
 
@@ -59,6 +60,35 @@ Iterator Partition(Iterator begin, Iterator end, UnaryPredicate check)
 		stx::SwapPointee(ppoint, begin);
 		++ppoint;
 	}
+}
+
+template<typename Iterator, typename UnaryPredicate>
+Iterator StablePartition(Iterator begin, Iterator end, UnaryPredicate check)
+{
+	/* Using the algorithm from Sean Parent's CppCon2015 talk named
+	 * "Better Code: Data Structures" (www.youtube.com/watch?v=sWgDk-o-6ZE)
+	 */
+	using std::distance;
+	using std::advance;
+
+	if (begin == end) {
+		return end;
+	}
+
+	auto dist = distance(begin, end);
+
+	if (dist == 1) {
+		return check(*begin) ? end : begin;
+	}
+
+	auto mid = begin;
+	advance(mid, dist / 2);
+
+	auto part1 = stx::StablePartition(begin, mid, check);
+	auto part2 = stx::StablePartition(mid, end, check);
+	auto result = stx::Rotate(part1, mid, part2);
+	
+	return result;
 }
 
 template<typename Iterator, typename UnaryPredicate>
