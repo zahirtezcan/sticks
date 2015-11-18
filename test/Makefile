@@ -128,6 +128,7 @@ TestSwapRanges.o: ../stx/algorithm/SwapRanges.h ../stx/algorithm/SwapPointee.h
 TestBinarySearch$(EXE): TestBinarySearch.o
 TestBinarySearch.o: algorithm/TestBinarySearch.cpp
 TestBinarySearch.o: ../stx/algorithm/BinarySearch.h
+../stx/algorithm/BinarySearch.h: ../stx/Iterator.h ../stx/utility/Compare.h
 
 
 clean:
