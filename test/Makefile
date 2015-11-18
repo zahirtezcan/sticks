@@ -35,7 +35,7 @@ all: tests
 tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
-tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE)
+tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -50,7 +50,7 @@ outputDirectories:
 TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
-TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o
+TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -124,6 +124,10 @@ TestFill.o: ../stx/algorithm/Fill.h ../stx/utility/Equals.h
 TestSwapRanges$(EXE): TestSwapRanges.o
 TestSwapRanges.o: algorithm/TestSwapRanges.cpp
 TestSwapRanges.o: ../stx/algorithm/SwapRanges.h ../stx/algorithm/SwapPointee.h
+
+TestBinarySearch$(EXE): TestBinarySearch.o
+TestBinarySearch.o: algorithm/TestBinarySearch.cpp
+TestBinarySearch.o: ../stx/algorithm/BinarySearch.h
 
 
 clean:
