@@ -1,6 +1,7 @@
 #ifndef STX_ALGORITHM_BINARYSEARCH_H
 #define STX_ALGORITHM_BINARYSEARCH_H
 
+#include <utility>
 #include <stx/Iterator.h>
 #include <stx/utility/Compare.h>
 
@@ -81,7 +82,23 @@ Iterator UpperBound(Iterator begin, Iterator end, const T& value)
 	return stx::UpperBound(begin, end, value, stx::Less());
 }
 
+template<typename Iterator, typename T, typename Compare>
+std::pair<Iterator, Iterator> EqualRange(Iterator begin, Iterator end,
+                                         const T& value,
+                                         Compare compare)
+{
+	return { LowerBound(begin, end, value, compare),
+	         UpperBound(begin, end, value, compare) };
 }
+
+template<typename Iterator, typename T>
+std::pair<Iterator, Iterator> EqualRange(Iterator begin, Iterator end,
+                                         const T& value)
+{
+	return stx::EqualRange(begin, end, value, stx::Less());
+}
+
+}/*end of stx namespace*/
 
 #endif
 
