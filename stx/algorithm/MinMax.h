@@ -7,25 +7,25 @@
 namespace stx {
 
 template<typename T, typename Compare>
-T& Min(T& x, T& y, Compare compare)
+const T& Min(const T& x, const T& y, Compare compare)
 {
 	return compare(y, x) ? y : x;
 }
 
 template<typename T>
-T& Min(T& x, T& y)
+const T& Min(const T& x, const T& y)
 {
 	return Min(x, y, stx::Less());
 }
 
 template<typename T, typename Compare>
-T& Max(T& x, T& y, Compare compare)
+const T& Max(const T& x, const T& y, Compare compare)
 {
 	return compare(x, y) ? y : x;
 }
 
 template<typename T>
-T& Max(T& x, T& y)
+const T& Max(const T& x, const T& y)
 {
 	return Max(x, y, stx::Less());
 }
@@ -81,13 +81,17 @@ Iterator MaxElement(Iterator begin, Iterator end)
 }
 
 template<typename T, typename Compare>
-std::pair<T&, T&> MinMax(T& x, T& y, Compare compare)
+std::pair<const T&, const T&> MinMax(const T& x, const T& y, Compare compare)
 {
-	return compare(y, x) ? { y, x } : { x, y };
+	if (compare(y, x)) {
+		return { y, x };
+	} else {
+		return { x, y };
+	}
 }
 
 template<typename T>
-std::pair<T&, T&> MinMax(T& x, T& y)
+std::pair<const T&, const T&> MinMax(const T& x, const T& y)
 {
 	return stx::MinMax(x, y, stx::Less());
 }
@@ -96,15 +100,15 @@ template<typename Iterator, typename Compare>
 std::pair<Iterator, Iterator> MinMaxElement(Iterator begin, Iterator end,
                                             Compare compare)
 {
-	std::pair<Iterator, Iterator> result = { begin, begin };
+	std::pair<Iterator, Iterator> minmax = { begin, begin };
 	if (begin == end) {
 		return { end, end };
 	} else if (++begin == end) {
-		return result;
-	} else if (compare(*begin, result.first)) {
-		result.first = begin;
+		return minmax;
+	} else if (compare(*begin, minmax.first)) {
+		minmax.first = begin;
 	} else {
-		result.second = begin;
+		minmax.second = begin;
 	}
 
 	while (++begin != end) {
@@ -117,16 +121,16 @@ std::pair<Iterator, Iterator> MinMaxElement(Iterator begin, Iterator end,
 				minmax.second = current;
 			}
 			break;
-		} else if (compare(*current, *next)) {
+		} else if (compare(*current, *begin)) {
 			if (compare(*current, *minmax.first)) {
 				minmax.first = current;
 			}
-			if (!compare(*next, *minmax.second)) {
-				minmax.second = next;
+			if (!compare(*begin, *minmax.second)) {
+				minmax.second = begin;
 			}
 		} else {
-			if (compare(*next, *minmax.first)) {
-				minmax.first = next;
+			if (compare(*begin, *minmax.first)) {
+				minmax.first = begin;
 			}
 			if (!compare(*current, *minmax.second)) {
 				minmax.second = current;
@@ -134,11 +138,11 @@ std::pair<Iterator, Iterator> MinMaxElement(Iterator begin, Iterator end,
 		}
 	}
 
-	return result;
+	return minmax;
 }
 
 template<typename Iterator>
-std::pair<Iterator, Iterator> MinMaxElement(Iterator begin, Iterator end
+std::pair<Iterator, Iterator> MinMaxElement(Iterator begin, Iterator end)
 {
 	return stx::MinMaxElement(begin, end, stx::Less());
 }
