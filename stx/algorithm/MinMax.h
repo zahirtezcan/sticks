@@ -105,7 +105,7 @@ std::pair<Iterator, Iterator> MinMaxElement(Iterator begin, Iterator end,
 		return { end, end };
 	} else if (++begin == end) {
 		return minmax;
-	} else if (compare(*begin, minmax.first)) {
+	} else if (compare(*begin, *minmax.first)) {
 		minmax.first = begin;
 	} else {
 		minmax.second = begin;

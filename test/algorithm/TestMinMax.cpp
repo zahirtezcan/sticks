@@ -90,4 +90,66 @@ TEST(MaxElement, Basic)
 	EXPECT_EQ(v.end() - 2, result);
 }
 
+TEST(MinMax, BasicFirst)
+{
+	int x = 0;
+	int y = 1;
+	auto result = stx::MinMax(x, y);
+
+	EXPECT_EQ(0, result.first);
+	EXPECT_EQ(&x, &result.first);
+	EXPECT_EQ(1, result.second);
+	EXPECT_EQ(&y, &result.second);
+}
+
+TEST(MinMax, BasicSecond)
+{
+	int x = 0;
+	int y = 1;
+	auto result = stx::MinMax(y, x);
+
+	EXPECT_EQ(0, result.first);
+	EXPECT_EQ(&x, &result.first);
+	EXPECT_EQ(1, result.second);
+	EXPECT_EQ(&y, &result.second);
+}
+
+TEST(MinMax, Stable)
+{
+	int x = 0;
+	int y = 0;
+	auto result = stx::MinMax(x, y);
+
+	EXPECT_EQ(0, result.first);
+	EXPECT_EQ(&x, &result.first);
+	EXPECT_EQ(0, result.second);
+	EXPECT_EQ(&y, &result.second);
+}
+
+TEST(MinMaxElement, Empty)
+{
+	std::vector<int> v;
+	auto result = stx::MinMaxElement(v.begin(), v.end());
+
+	EXPECT_EQ(v.end(), result.first);
+	EXPECT_EQ(v.end(), result.second);
+}
+
+TEST(MinMaxElement, Basic)
+{
+	std::vector<int> v = { 1, 1, 2, 3, 3 };
+	auto result = stx::MinMaxElement(v.begin(), v.end());
+
+	EXPECT_EQ(v.begin(), result.first);
+	EXPECT_EQ(v.end() - 1, result.second);
+}
+
+TEST(MinMaxElement, Single)
+{
+	std::vector<int> v = { 1 };
+	auto result = stx::MinMaxElement(v.begin(), v.end());
+
+	EXPECT_EQ(v.begin(), result.first);
+	EXPECT_EQ(v.begin(), result.second);
+}
 
