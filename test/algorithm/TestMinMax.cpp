@@ -1,5 +1,6 @@
 #include <stx/algorithm/MinMax.h>
 #include <gtest/gtest.h>
+#include <vector>
 
 TEST(Min, BasicFirst)
 {
@@ -57,5 +58,36 @@ TEST(Max, Stable)
 	EXPECT_EQ(&x, &result);
 }
 
+TEST(MinElement, Empty)
+{
+	std::vector<int> v;
+	auto result = stx::MinElement(v.begin(), v.end());
+
+	EXPECT_EQ(v.end(), result);
+}
+
+TEST(MinElement, Basic)
+{
+	std::vector<int> v = { 1, 2, 1, 3 };
+	auto result = stx::MinElement(v.begin(), v.end());
+
+	EXPECT_EQ(v.begin(), result);
+}
+
+TEST(MaxElement, Empty)
+{
+	std::vector<int> v;
+	auto result = stx::MaxElement(v.begin(), v.end());
+
+	EXPECT_EQ(v.end(), result);
+}
+
+TEST(MaxElement, Basic)
+{
+	std::vector<int> v = { 1, 2, 3, 3 };
+	auto result = stx::MaxElement(v.begin(), v.end());
+
+	EXPECT_EQ(v.end() - 2, result);
+}
 
 
