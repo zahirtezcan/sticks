@@ -2,6 +2,7 @@
 #define STX_ALGORITHM_LEXICOGRAPHICALCOMPARE_H
 
 #include <stx/utility/Compare.h>
+#include <utility>
 
 namespace stx {
 
@@ -46,7 +47,7 @@ struct LexicographicallyLess
 		using std::begin;
 		using std::end;
 
-		return std::LexicographicalCompare(begin(r1), end(r1),
+		return stx::LexicographicalCompare(begin(r1), end(r1),
 		                                   begin(r2), end(r2),
 						   CompareElement());
 	}
