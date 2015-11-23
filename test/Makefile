@@ -36,7 +36,7 @@ tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
-tests: TestLexicographicalCompare$(EXE)
+tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -52,6 +52,7 @@ TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
+TestAllAlgorithms$(Exe): TestPermutation.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -141,6 +142,11 @@ TestLexicographicalCompare.o: algorithm/TestLexicographicalCompare.cpp
 TestLexicographicalCompare.o: ../stx/algorithm/LexicographicalCompare.h
 ../stx/algorithm/LexicographicalCompare.h: ../stx/utility/Compare.h
 
+TestPermutation$(EXE): TestPermutation.o
+TestPermutation.o: algorithm/TestPermutation.cpp
+TestPermutation.o: ../stx/algorithm/Permutation.h
+../stx/algorithm/Permutation.h: ../stx/Iterator.h ../stx/algorithm/SwapPointee.h
+../stx/algorithm/Permutation.h: ../stx/algorithm/Reverse.h ../stx/utility/Compare.h
 
 
 clean:
