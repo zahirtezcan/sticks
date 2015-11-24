@@ -25,7 +25,7 @@ bool NextPermutation(Iterator begin, Iterator end, Compare compare)
 	auto next = prev;
 	--prev;
 
-	while (begin != next && !compare(prev, next)) {
+	while (begin != next && !compare(*prev, *next)) {
 		--prev;
 		--next;
 	}
@@ -38,7 +38,7 @@ bool NextPermutation(Iterator begin, Iterator end, Compare compare)
 	auto iter = end;
 	--iter;
 
-	while (!compare(prev, iter)) {
+	while (!compare(*prev, *iter)) {
 		--iter;
 	}
 
@@ -52,6 +52,52 @@ template<typename Iterator>
 bool NextPermutation(Iterator begin, Iterator end)
 {
 	return stx::NextPermutation(begin, end, stx::Less());
+}
+
+template<typename Iterator, typename Compare>
+bool PreviousPermutation(Iterator begin, Iterator end, Compare compare)
+{
+	if (begin == end) {
+		return false;
+	}
+
+	auto prev = end;
+	--prev;
+
+	if (begin == prev) { /*single element*/
+		return false;
+	}
+
+	auto next = prev;
+	--prev;
+
+	while (begin != next && !compare(*next, *prev)) {
+		--prev;
+		--next;
+	}
+
+	if (begin == next) {
+		stx::Reverse(begin, end);
+		return false;
+	}
+
+	auto iter = end;
+	--iter;
+
+	while (!compare(*iter, *prev)) {
+		--iter;
+	}
+
+	stx::SwapPointee(prev, next);
+	stx::Reverse(next, end);
+
+	return true;
+}
+
+template<typename Iterator>
+bool PreviousPermutation(Iterator begin, Iterator end)
+{
+	return stx::PreviousPermutation(begin, end, stx::Less());
 }
 
 }/* end of stx namespace */

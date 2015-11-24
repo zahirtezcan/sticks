@@ -52,7 +52,7 @@ TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
-TestAllAlgorithms$(Exe): TestPermutation.o
+TestAllAlgorithms$(EXE): TestPermutation.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
