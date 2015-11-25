@@ -134,19 +134,15 @@ TestBinarySearch.o: ../stx/algorithm/BinarySearch.h
 
 TestMinMax$(EXE): TestMinMax.o
 TestMinMax.o: algorithm/TestMinMax.cpp
-TestMinMax.o: ../stx/algorithm/MinMax.h
-../stx/algorithm/MinMax.h: ../stx/utility/Compare.h
+TestMinMax.o: ../stx/algorithm/MinMax.h ../stx/utility/Compare.h
 
 TestLexicographicalCompare$(EXE): TestLexicographicalCompare.o
 TestLexicographicalCompare.o: algorithm/TestLexicographicalCompare.cpp
-TestLexicographicalCompare.o: ../stx/algorithm/LexicographicalCompare.h
-../stx/algorithm/LexicographicalCompare.h: ../stx/utility/Compare.h
+TestLexicographicalCompare.o: ../stx/algorithm/LexicographicalCompare.h ../stx/utility/Compare.h
 
 TestPermutation$(EXE): TestPermutation.o
 TestPermutation.o: algorithm/TestPermutation.cpp
-TestPermutation.o: ../stx/algorithm/Permutation.h
-../stx/algorithm/Permutation.h: ../stx/Iterator.h ../stx/algorithm/SwapPointee.h
-../stx/algorithm/Permutation.h: ../stx/algorithm/Reverse.h ../stx/utility/Compare.h
+TestPermutation.o: ../stx/algorithm/Permutation.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Reverse.h ../stx/utility/Compare.h ../stx/utility/Equals.h
 
 
 clean:

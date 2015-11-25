@@ -2,6 +2,7 @@
 #define STX_ALGORITHM_PERMUTATION_H
 
 #include <stx/Iterator.h>
+#include <stx/utility/Equals.h>
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/Reverse.h>
 #include <stx/algorithm/SwapPointee.h>
@@ -42,7 +43,7 @@ bool NextPermutation(Iterator begin, Iterator end, Compare compare)
 		--iter;
 	}
 
-	stx::SwapPointee(prev, next);
+	stx::SwapPointee(prev, iter);
 	stx::Reverse(next, end);
 
 	return true;
@@ -88,7 +89,7 @@ bool PreviousPermutation(Iterator begin, Iterator end, Compare compare)
 		--iter;
 	}
 
-	stx::SwapPointee(prev, next);
+	stx::SwapPointee(prev, iter);
 	stx::Reverse(next, end);
 
 	return true;
@@ -98,6 +99,21 @@ template<typename Iterator>
 bool PreviousPermutation(Iterator begin, Iterator end)
 {
 	return stx::PreviousPermutation(begin, end, stx::Less());
+}
+
+template<typename Iterator1, typename Iterator2, typename BinaryPredicate>
+bool IsPermutation(Iterator1 begin1, Iterator1 end1,
+                   Iterator2 begin2, Iterator2 end2,
+                   BinaryPredicate equals)
+{
+	return false;
+}
+
+template<typename Iterator1, typename Iterator2>
+bool IsPermutation(Iterator1 begin1, Iterator1 end1,
+                   Iterator2 begin2, Iterator2 end2)
+{
+	return stx::IsPermutation(begin1, end1, begin2, end2, stx::Equals());
 }
 
 }/* end of stx namespace */

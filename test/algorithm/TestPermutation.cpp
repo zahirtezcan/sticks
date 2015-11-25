@@ -38,6 +38,29 @@ TEST(NextPermutation, Basic)
 	EXPECT_EQ(2, v[1]);
 }
 
+#include <algorithm>
+
+TEST(NextPermutation, FiveElements)
+{
+	std::vector<int> v = { 1, 2, 3, 4, 5 };
+	std::vector<int> u = v;
+	int count = 1;
+	while (stx::NextPermutation(u.begin(), u.end())) {
+		auto isPerm = std::is_permutation(u.begin(), u.end(),
+		                                  v.begin());
+		EXPECT_TRUE(isPerm);
+		++count;
+	}
+
+	EXPECT_EQ(120, count);// 120 = 5!
+	EXPECT_EQ(1, v[0]);
+	EXPECT_EQ(2, v[1]);
+	EXPECT_EQ(3, v[2]);
+	EXPECT_EQ(4, v[3]);
+	EXPECT_EQ(5, v[4]);
+
+}
+
 TEST(PreviousPermutation, Empty)
 {
 	std::vector<int> v;
@@ -74,4 +97,25 @@ TEST(PreviousPermutation, Basic)
 	EXPECT_EQ(2, v[1]);
 }
 
-/*TODO: test next permutation with IsPermutation and loop around*/
+#include <algorithm>
+
+TEST(PreviousPermutation, FiveElements)
+{
+	std::vector<int> v = { 5, 4, 3, 2, 1 };
+	std::vector<int> u = v;
+	int count = 1;
+	while (stx::PreviousPermutation(u.begin(), u.end())) {
+		auto isPerm = std::is_permutation(u.begin(), u.end(),
+		                                  v.begin());
+		EXPECT_TRUE(isPerm);
+		++count;
+	}
+
+	EXPECT_EQ(120, count);// 120 = 5!
+	EXPECT_EQ(5, v[0]);
+	EXPECT_EQ(4, v[1]);
+	EXPECT_EQ(3, v[2]);
+	EXPECT_EQ(2, v[3]);
+	EXPECT_EQ(1, v[4]);
+
+}
