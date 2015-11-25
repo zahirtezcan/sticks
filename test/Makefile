@@ -142,7 +142,7 @@ TestLexicographicalCompare.o: ../stx/algorithm/LexicographicalCompare.h ../stx/u
 
 TestPermutation$(EXE): TestPermutation.o
 TestPermutation.o: algorithm/TestPermutation.cpp
-TestPermutation.o: ../stx/algorithm/Permutation.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Reverse.h ../stx/utility/Compare.h ../stx/utility/Equals.h
+TestPermutation.o: ../stx/algorithm/Permutation.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Reverse.h ../stx/utility/Compare.h ../stx/utility/Equals.h ../stx/algorithm/Count.h ../stx/algorithm/Find.h 
 
 
 clean:

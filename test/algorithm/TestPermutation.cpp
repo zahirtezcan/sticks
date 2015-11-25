@@ -38,16 +38,14 @@ TEST(NextPermutation, Basic)
 	EXPECT_EQ(2, v[1]);
 }
 
-#include <algorithm>
-
 TEST(NextPermutation, FiveElements)
 {
 	std::vector<int> v = { 1, 2, 3, 4, 5 };
 	std::vector<int> u = v;
 	int count = 1;
 	while (stx::NextPermutation(u.begin(), u.end())) {
-		auto isPerm = std::is_permutation(u.begin(), u.end(),
-		                                  v.begin());
+		auto isPerm = stx::IsPermutation(u.begin(), u.end(),
+		                                 v.begin(), v.end());
 		EXPECT_TRUE(isPerm);
 		++count;
 	}
@@ -97,16 +95,14 @@ TEST(PreviousPermutation, Basic)
 	EXPECT_EQ(2, v[1]);
 }
 
-#include <algorithm>
-
 TEST(PreviousPermutation, FiveElements)
 {
 	std::vector<int> v = { 5, 4, 3, 2, 1 };
 	std::vector<int> u = v;
 	int count = 1;
 	while (stx::PreviousPermutation(u.begin(), u.end())) {
-		auto isPerm = std::is_permutation(u.begin(), u.end(),
-		                                  v.begin());
+		auto isPerm = stx::IsPermutation(u.begin(), u.end(),
+		                                 v.begin(), v.end());
 		EXPECT_TRUE(isPerm);
 		++count;
 	}
@@ -119,3 +115,81 @@ TEST(PreviousPermutation, FiveElements)
 	EXPECT_EQ(1, v[4]);
 
 }
+
+TEST(IsPermutation, Empty)
+{
+	std::vector<int> v;
+	std::vector<int> u;
+
+	auto isp = stx::IsPermutation(v.begin(), v.end(), u.begin(), u.end());
+	
+	EXPECT_TRUE(isp);
+}
+
+TEST(IsPermutation, EmptyFirst)
+{
+	std::vector<int> v;
+	std::vector<int> u = { 1 };
+
+	auto isp = stx::IsPermutation(v.begin(), v.end(), u.begin(), u.end());
+	
+	EXPECT_FALSE(isp);
+}
+
+TEST(IsPermutation, EmptySecond)
+{
+	std::vector<int> v = { 1 };
+	std::vector<int> u;
+
+	auto isp = stx::IsPermutation(v.begin(), v.end(), u.begin(), u.end());
+	
+	EXPECT_FALSE(isp);
+}
+
+TEST(IsPermutation, Single)
+{
+	std::vector<int> v = { 1 };
+	std::vector<int> u = { 1 };
+
+	auto isp = stx::IsPermutation(v.begin(), v.end(), u.begin(), u.end());
+	
+	EXPECT_TRUE(isp);
+}
+
+TEST(IsPermutation, SingleDifferent)
+{
+	std::vector<int> v = { 1 };
+	std::vector<int> u = { 2 };
+
+	auto isp = stx::IsPermutation(v.begin(), v.end(), u.begin(), u.end());
+	
+	EXPECT_FALSE(isp);
+}
+
+TEST(IsPermutation, ThreeElements)
+{
+	std::vector<int> v = { 1, 2, 3 };
+	std::vector<int> u1 = { 1, 2, 3 };
+	std::vector<int> u2 = { 1, 2, 3 };
+	std::vector<int> u3 = { 1, 2, 3 };
+	std::vector<int> u4 = { 1, 2, 3 };
+	std::vector<int> u5 = { 1, 2, 3 };
+	std::vector<int> u6 = { 1, 2, 3 };
+	std::vector<int> y = { 3, 2, 3 };
+
+	auto isp = stx::IsPermutation(v.begin(), v.end(), u1.begin(), u1.end());
+	EXPECT_TRUE(isp);
+	isp = stx::IsPermutation(v.begin(), v.end(), u2.begin(), u2.end());
+	EXPECT_TRUE(isp);
+	isp = stx::IsPermutation(v.begin(), v.end(), u3.begin(), u3.end());
+	EXPECT_TRUE(isp);
+	isp = stx::IsPermutation(v.begin(), v.end(), u4.begin(), u4.end());
+	EXPECT_TRUE(isp);
+	isp = stx::IsPermutation(v.begin(), v.end(), u5.begin(), u5.end());
+	EXPECT_TRUE(isp);
+	isp = stx::IsPermutation(v.begin(), v.end(), u6.begin(), u6.end());
+	EXPECT_TRUE(isp);
+	isp = stx::IsPermutation(v.begin(), v.end(), y.begin(), y.end());
+	EXPECT_FALSE(isp);
+}
+

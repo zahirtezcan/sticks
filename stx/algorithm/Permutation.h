@@ -4,6 +4,8 @@
 #include <stx/Iterator.h>
 #include <stx/utility/Equals.h>
 #include <stx/utility/Compare.h>
+#include <stx/algorithm/Count.h>
+#include <stx/algorithm/Find.h>
 #include <stx/algorithm/Reverse.h>
 #include <stx/algorithm/SwapPointee.h>
 
@@ -106,7 +108,28 @@ bool IsPermutation(Iterator1 begin1, Iterator1 end1,
                    Iterator2 begin2, Iterator2 end2,
                    BinaryPredicate equals)
 {
-	return false;
+	auto iter1 = begin1;
+	auto iter2 = begin2;
+
+	while (iter1 != end1 && iter2 != end2) {
+		stx::detail::EqualsPointee<Iterator1, BinaryPredicate> eq(iter1, equals);
+
+		auto found = stx::Find(begin2, end2, eq);
+		if (found == end2) {
+			return false;
+		}
+
+		auto count1 = stx::Count(begin1, end1, eq);
+		auto count2 = stx::Count(found, end2, eq);
+		if (count1 != count2) {
+			return false;
+		}
+
+		++iter1;
+		++iter2;
+	}
+
+	return iter1 == end1 && iter2 == end2;
 }
 
 template<typename Iterator1, typename Iterator2>
