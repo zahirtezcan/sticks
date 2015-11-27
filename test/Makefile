@@ -151,11 +151,11 @@ TestAccumulate.o: ../stx/algorithm/Accumulate.h
 
 TestInnerProduct$(EXE): TestInnerProduct.o
 TestInnerProduct.o: algorithm/TestInnerProduct.cpp
-TestInnerProduct.o: ../stx/algorithm/InnerProduct.h
+TestInnerProduct.o: ../stx/algorithm/InnerProduct.h ../stx/utility/Arithmetic.h
 
 TestAdjacentDifference$(EXE): TestAdjacentDifference.o
 TestAdjacentDifference.o: algorithm/TestAdjacentDifference.cpp
-TestAdjacentDifference.o: ../stx/algorithm/AdjacentDifference.h
+TestAdjacentDifference.o: ../stx/algorithm/AdjacentDifference.h ../stx/utility/Arithmetic.h
 
 
 

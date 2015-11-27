@@ -1,16 +1,9 @@
 #ifndef STX_ALGORITHM_ADJACENTDIFFERENCE_H
 #define STX_ALGORITHM_ADJACENTDIFFERENCE_H
 
-namespace stx {
+#include <stx/utility/Arithmetic.h>
 
-struct Minus
-{
-	template<typename T, typename U>
-	auto operator()(const T& t, const U& u) const
-	{
-		return t - u;
-	}
-};
+namespace stx {
 
 template<typename Iterator, typename OutputIterator, typename BinaryDiff>
 OutputIterator AdjacentDifference(Iterator begin, Iterator end,
@@ -40,7 +33,7 @@ template<typename Iterator, typename OutputIterator>
 OutputIterator AdjacentDifference(Iterator begin, Iterator end,
                                   OutputIterator output)
 {
-	return stx::AdjacentDifference(begin, end, output, stx::Minus());
+	return stx::AdjacentDifference(begin, end, output, stx::Subtract());
 }
 
 }
