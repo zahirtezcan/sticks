@@ -13,12 +13,12 @@ struct Minus
 };
 
 template<typename Iterator, typename OutputIterator, typename BinaryDiff>
-void AdjacentDifference(Iterator begin, Iterator end,
-                        OutputIterator output,
-			BinaryDiff diff)
+OutputIterator AdjacentDifference(Iterator begin, Iterator end,
+                                  OutputIterator output,
+                                  BinaryDiff diff)
 {
 	if (begin == end) {
-		return;
+		return output;
 	}
 
 	*output = *begin;
@@ -32,11 +32,13 @@ void AdjacentDifference(Iterator begin, Iterator end,
 		++prev;
 		++output;
 	}
+
+	return output;
 }
 
 template<typename Iterator, typename OutputIterator>
-void AdjacentDifference(Iterator begin, Iterator end,
-                        OutputIterator output)
+OutputIterator AdjacentDifference(Iterator begin, Iterator end,
+                                  OutputIterator output)
 {
 	return stx::AdjacentDifference(begin, end, output, stx::Minus());
 }
