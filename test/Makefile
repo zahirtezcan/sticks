@@ -37,7 +37,7 @@ tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqu
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
-tests: TestAdjacentDifference$(EXE)
+tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -54,6 +54,7 @@ TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMis
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
+TestAllAlgorithms$(EXE): TestPartialSum.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -156,6 +157,10 @@ TestInnerProduct.o: ../stx/algorithm/InnerProduct.h ../stx/utility/Arithmetic.h
 TestAdjacentDifference$(EXE): TestAdjacentDifference.o
 TestAdjacentDifference.o: algorithm/TestAdjacentDifference.cpp
 TestAdjacentDifference.o: ../stx/algorithm/AdjacentDifference.h ../stx/utility/Arithmetic.h
+
+TestPartialSum$(EXE): TestPartialSum.o
+TestPartialSum.o: algorithm/TestPartialSum.cpp
+TestPartialSum.o: ../stx/algorithm/PartialSum.h ../stx/utility/Arithmetic.h
 
 
 
