@@ -2,7 +2,7 @@ CC=gcc
 CXX=$(CC)
 
 CPPFLAGS=-I"../" -I"../gtest/include/"
-CXXFLAGS=-std=gnu++11 -Wall -Wextra -Werror
+CXXFLAGS=-std=gnu++14 -Wall -Wextra -Werror
 COMPILER_OUTPUT=-o $(ObjDir)/$@
 COMPILE.cpp=$(CXX) -c $(COMPILER_OUTPUT) $(CPPFLAGS) $(CXXFLAGS)
 
@@ -36,7 +36,7 @@ tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
-tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE)
+tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -52,7 +52,7 @@ TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
-TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o
+TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -147,6 +147,10 @@ TestPermutation.o: ../stx/algorithm/Permutation.h ../stx/Iterator.h ../stx/algor
 TestAccumulate$(EXE): TestAccumulate.o
 TestAccumulate.o: algorithm/TestAccumulate.cpp
 TestAccumulate.o: ../stx/algorithm/Accumulate.h
+
+TestInnerProduct$(EXE): TestInnerProduct.o
+TestInnerProduct.o: algorithm/TestInnerProduct.cpp
+TestInnerProduct.o: ../stx/algorithm/InnerProduct.h
 
 
 
