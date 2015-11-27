@@ -37,6 +37,7 @@ tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqu
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
+tests: TestAdjacentDifference$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -52,7 +53,7 @@ TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
-TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o
+TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -151,6 +152,10 @@ TestAccumulate.o: ../stx/algorithm/Accumulate.h
 TestInnerProduct$(EXE): TestInnerProduct.o
 TestInnerProduct.o: algorithm/TestInnerProduct.cpp
 TestInnerProduct.o: ../stx/algorithm/InnerProduct.h
+
+TestAdjacentDifference$(EXE): TestAdjacentDifference.o
+TestAdjacentDifference.o: algorithm/TestAdjacentDifference.cpp
+TestAdjacentDifference.o: ../stx/algorithm/AdjacentDifference.h
 
 
 
