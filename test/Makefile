@@ -168,7 +168,7 @@ TestSortedIncludes.o: ../stx/algorithm/SortedIncludes.h ../stx/utility/Compare.h
 
 TestMerge$(EXE): TestMerge.o
 TestMerge.o: algorithm/TestMerge.cpp
-TestMerge.o: ../stx/algorithm/Merge.h ../stx/utility/Compare.h
+TestMerge.o: ../stx/algorithm/Merge.h ../stx/utility/Compare.h ../stx/algorithm/Copy.h
 
 
 

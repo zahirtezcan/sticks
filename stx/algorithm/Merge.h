@@ -2,6 +2,7 @@
 #define STX_ALGORITHM_MERGE_H
 
 #include <stx/utility/Compare.h>
+#include <stx/algorithm/Copy.h>
 
 namespace stx {
 
@@ -23,19 +24,11 @@ OutputIterator Merge(Iterator1 begin1, Iterator1 end1,
 		++output;
 	}
 
-	while (begin1 != end1) {
-		*output = *begin1;
-		++begin1;
-		++output;
+	if (begin1 == end1) {
+		return stx::Copy(begin2, end2, output);
+	} else {
+		return stx::Copy(begin1, end1, output);
 	}
-	
-	while (begin2 != end2) {
-		*output = *begin2;
-		++begin2;
-		++output;
-	}
-
-	return output;
 }
 
 template<typename Iterator1, typename Iterator2, typename OutputIterator>
