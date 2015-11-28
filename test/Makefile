@@ -37,7 +37,7 @@ tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqu
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
-tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE)
+tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -54,7 +54,7 @@ TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMis
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
-TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o
+TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -165,6 +165,10 @@ TestPartialSum.o: ../stx/algorithm/PartialSum.h ../stx/utility/Arithmetic.h
 TestSortedIncludes$(EXE): TestSortedIncludes.o
 TestSortedIncludes.o: algorithm/TestSortedIncludes.cpp
 TestSortedIncludes.o: ../stx/algorithm/SortedIncludes.h ../stx/utility/Compare.h
+
+TestMerge$(EXE): TestMerge.o
+TestMerge.o: algorithm/TestMerge.cpp
+TestMerge.o: ../stx/algorithm/Merge.h ../stx/utility/Compare.h
 
 
 
