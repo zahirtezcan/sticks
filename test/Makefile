@@ -38,7 +38,7 @@ tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) Tes
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
 tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
-tests: TestSortedDifference$(EXE) TestSortedIntersection$(EXE)
+tests: TestSortedDifference$(EXE) TestSortedIntersection$(EXE) TestSortedUnion$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -56,7 +56,7 @@ TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
 TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o TestSortedDifference.o
-TestAllAlgorithms$(EXE): TestSortedIntersection.o
+TestAllAlgorithms$(EXE): TestSortedIntersection.o TestSortedUnion.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -179,6 +179,10 @@ TestSortedDifference.o: ../stx/algorithm/SortedDifference.h ../stx/utility/Compa
 TestSortedIntersection$(EXE): TestSortedIntersection.o
 TestSortedIntersection.o: algorithm/TestSortedIntersection.cpp
 TestSortedIntersection.o: ../stx/algorithm/SortedIntersection.h ../stx/utility/Compare.h
+
+TestSortedUnion$(EXE): TestSortedUnion.o
+TestSortedUnion.o: algorithm/TestSortedUnion.cpp
+TestSortedUnion.o: ../stx/algorithm/SortedUnion.h ../stx/utility/Compare.h ../stx/algorithm/Copy.h
 
 
 
