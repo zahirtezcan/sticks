@@ -71,7 +71,7 @@ TEST(FindHeapEnd, BasicFalse)
 	
 	auto result = stx::FindHeapEnd(v.begin(), v.end());
 
-	EXPECT_EQ(v.end(), result);
+	EXPECT_EQ(v.begin() + 1, result);
 }
 
 TEST(PushHeap, Empty)

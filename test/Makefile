@@ -192,7 +192,7 @@ TestSortedSymmetricDifference.o: ../stx/algorithm/SortedSymmetricDifference.h ..
 
 TestHeap$(EXE): TestHeap.o
 TestHeap.o: algorithm/TestHeap.cpp
-TestHeap.o: ../stx/algorithm/Heap.h ../stx/utility/Compare.h
+TestHeap.o: ../stx/algorithm/Heap.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h
 
 
 
