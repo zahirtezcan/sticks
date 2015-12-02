@@ -130,7 +130,6 @@ TEST(PopHeap, Basic)
 	EXPECT_TRUE(stx::IsHeap(v.begin(), v.end()));
 	
 	stx::PopHeap(v.begin(), v.end());
-	
 	EXPECT_EQ(v.end() - 1, stx::FindHeapEnd(v.begin(), v.end()));
 	EXPECT_EQ(5, v.back());
 }
@@ -162,7 +161,7 @@ TEST(SortHeap, Basic)
 	
 	stx::SortHeap(v.begin(), v.end());
 	
-	EXPECT_EQ(v.begin(), stx::FindHeapEnd(v.begin(), v.end()));
+	EXPECT_EQ(v.begin() + 1, stx::FindHeapEnd(v.begin(), v.end()));
 	EXPECT_EQ(1, v[0]);
 	EXPECT_EQ(2, v[1]);
 	EXPECT_EQ(3, v[2]);

@@ -89,7 +89,6 @@ void PushHeap(Iterator begin, Iterator end, Compare compare)
 {
 	using std::distance;
 	using std::advance;
-	using Difference = stx::IteratorDifference<Iterator>;
 	
 	auto childDist = distance(begin, end);
 
@@ -99,7 +98,7 @@ void PushHeap(Iterator begin, Iterator end, Compare compare)
 
 	--childDist;
 	auto child = end;
-	advance(child, Difference(-1));
+	--child;
 
 	do {
 		auto parentDist = detail::HeapParent(childDist);
@@ -123,8 +122,57 @@ void PushHeap(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void PopHeap(Iterator /*begin*/, Iterator /*end*/, Compare /*compare*/)
+void PopHeap(Iterator begin, Iterator end, Compare compare)
 {
+	using std::distance;
+	using std::advance;
+	if (begin == end) {
+		return;
+	}
+	
+	--end;
+	if (begin == end) {
+		return;
+	}
+	stx::SwapPointee(begin, end);
+	
+	auto maxDist = distance(begin, end);
+	if (maxDist == 1) {
+		return;
+	}
+
+	auto lastParentIndex = detail::HeapParent(maxDist - 1);
+
+	auto parent = begin;
+	auto parentIndex = distance(begin, parent);
+	while (parentIndex <= lastParentIndex) {	
+		auto leftChildIndex = detail::HeapLeftChild(parentIndex);
+		auto leftChild = parent;
+		advance(leftChild, leftChildIndex - parentIndex);
+		
+		auto rightChild = leftChild;
+		++rightChild;
+		if (compare(*parent, *leftChild)) {
+			if (rightChild != end && compare(*leftChild, *rightChild)) {
+				stx::SwapPointee(parent, rightChild);
+				parent = rightChild;
+				parentIndex = leftChildIndex + 1;
+			}
+			else {
+				stx::SwapPointee(parent, leftChild);
+				parent = leftChild;
+				parentIndex = leftChildIndex;
+			}
+		} else {
+			if (rightChild != end && compare(*parent, *rightChild)) {
+				stx::SwapPointee(parent, rightChild);
+				parent = rightChild;
+				parentIndex = leftChildIndex + 1;
+			} else {
+				return;
+			}
+		}
+	}
 }
 
 template<typename Iterator>
