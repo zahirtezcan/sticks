@@ -9,19 +9,19 @@ namespace stx {
 namespace detail {
 
 template<typename Difference>
-inline Difference HeapLeftChild(Difference d)
+Difference HeapLeftChild(Difference d)
 {
 	return 2 * d + 1;
 }
 
 template<typename Difference>
-inline Difference HeapRightChild(Difference d)
+Difference HeapRightChild(Difference d)
 {
 	return 2 * d + 2;
 }
 
 template<typename Difference>
-inline Difference HeapParent(Difference d)
+Difference HeapParent(Difference d)
 {
 	return (d - 1) / 2;
 }
