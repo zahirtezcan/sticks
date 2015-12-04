@@ -169,4 +169,43 @@ TEST(SortHeap, Basic)
 	EXPECT_EQ(5, v[4]);
 }
 
+TEST(MakeHeap, Empty)
+{
+	std::vector<int> v;
+	
+	stx::MakeHeap(v.begin(), v.end());
+
+	EXPECT_TRUE(v.empty());
+}
+
+TEST(MakeHeap, One)
+{
+	std::vector<int> v = { 1 };
+	
+	stx::MakeHeap(v.begin(), v.end());
+
+	EXPECT_EQ(std::vector<int>::size_type(1), v.size());
+	EXPECT_EQ(1, v[0]);
+}
+
+TEST(MakeHeap, Two)
+{
+	std::vector<int> v = { 1, 2 };
+	
+	stx::MakeHeap(v.begin(), v.end());
+
+	EXPECT_EQ(2, v[0]);
+	EXPECT_EQ(1, v[1]);
+}
+
+TEST(MakeHeap, Basic)
+{
+	std::vector<int> v = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+	
+	EXPECT_FALSE(stx::IsHeap(v.begin(), v.end()));
+
+	stx::MakeHeap(v.begin(), v.end());
+	
+	EXPECT_TRUE(stx::IsHeap(v.begin(), v.end()));
+}
 

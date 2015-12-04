@@ -26,6 +26,46 @@ Difference HeapParent(Difference d)
 	return (d - 1) / 2;
 }
 
+template<typename Difference, typename Iterator, typename Compare>
+void HeapSiftDown(Difference lastParentIndex,
+                  Difference parentIndex, Iterator parent,
+                  Compare compare)
+{
+	using std::advance;
+	using std::distance;
+	using stx::SwapPointee;
+	
+	while (parentIndex <= lastParentIndex) {
+		auto leftChildIndex = HeapLeftChild(parentIndex);
+		auto leftChild = parent;
+		advance(leftChild, leftChildIndex - parentIndex);
+	
+		auto rightChildIndex = leftChildIndex + 1;
+		auto rightChild = leftChild;
+		++rightChild;
+
+		if (compare(*parent, *leftChild)) {
+			if (compare(*leftChild, *rightChild)) {
+				SwapPointee(parent, rightChild);
+				parentIndex = rightChildIndex;
+				parent = rightChild;
+			} else {
+				SwapPointee(parent, leftChild);
+				parentIndex = leftChildIndex;
+				parent = leftChild;
+			}
+		} else {
+			if (compare(*parent, *rightChild)) {
+				SwapPointee(parent, rightChild);
+				parentIndex = rightChildIndex;
+				parent = rightChild;
+			} else {
+				break;
+			}
+		}
+	}
+}
+
 } /* end of detail namespace */
 
 template<typename Iterator, typename Compare>
@@ -74,8 +114,36 @@ bool IsHeap(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void MakeHeap(Iterator /*begin*/, Iterator /*end*/, Compare /*compare*/)
+void MakeHeap(Iterator begin, Iterator end, Compare compare)
 {
+	using std::distance;
+	using std::advance;
+	if (begin == end) {
+		return;
+	}
+	
+	--end;
+	if (begin == end) {
+		return;
+	}
+	auto lastIndex = distance(begin, end);
+	auto lastParentIndex = detail::HeapParent(lastIndex);
+
+	auto parent = begin;
+	advance(parent, lastParentIndex);
+	auto parentIndex = lastParentIndex;
+	
+	while (true) {
+		detail::HeapSiftDown(lastParentIndex,
+		                     parentIndex, parent,
+				     compare);
+
+		if (parent == begin) {
+			break;
+		}
+		--parent;
+		--parentIndex;
+	}
 }
 
 template<typename Iterator>
