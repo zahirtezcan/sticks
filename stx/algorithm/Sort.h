@@ -8,9 +8,13 @@ namespace stx {
 template<typename Iterator, typename Compare>
 Iterator FindSortedEnd(Iterator begin, Iterator end, Compare compare)
 {
+	if (begin == end) {
+		return end;
+	}
+
 	auto next = begin;
 	++next;
-	while (begin != end && next != end) {
+	while (next != end) {
 		if (compare(*next, *begin)) {
 			return next;
 		}
