@@ -92,17 +92,6 @@ void StableSort(Iterator begin, Iterator end)
 	stx::StableSort(begin, end, stx::Less());
 }
 
-template<typename Iterator, typename Compare>
-void NthElement(Iterator begin, Iterator middle, Iterator end, Compare compare)
-{
-}
-
-template<typename Iterator>
-void NthElement(Iterator begin, Iterator middle, Iterator end)
-{
-	stx::NthElement(begin, end, stx::Less());
-}
-
 } /*end of stx namespace */
 
 #endif

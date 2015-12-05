@@ -39,7 +39,7 @@ tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
 tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
 tests: TestSortedDifference$(EXE) TestSortedIntersection$(EXE) TestSortedUnion$(EXE) TestSortedSymmetricDifference$(EXE)
-tests: TestHeap$(EXE) TestSort$(EXE)
+tests: TestHeap$(EXE) TestSort$(EXE) TestNthElement$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -58,7 +58,7 @@ TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
 TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o TestSortedDifference.o
 TestAllAlgorithms$(EXE): TestSortedIntersection.o TestSortedUnion.o TestSortedSymmetricDifference.o
-TestAllAlgorithms$(EXE): TestHeap.o TestSort.o
+TestAllAlgorithms$(EXE): TestHeap.o TestSort.o TestNthElement.o
 	$(LINK.o)
 
 TestAllEqual$(EXE): TestAllEqual.o
@@ -197,6 +197,10 @@ TestHeap.o: ../stx/algorithm/Heap.h ../stx/utility/Compare.h ../stx/Iterator.h .
 TestSort$(EXE): TestSort.o
 TestSort.o: algorithm/TestSort.cpp
 TestSort.o: ../stx/algorithm/Sort.h ../stx/utility/Compare.h
+
+TestNthElement$(EXE): TestNthElement.o
+TestNthElement.o: algorithm/TestNthElement.cpp
+TestNthElement.o: ../stx/algorithm/NthElement.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/MinMax.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Partition.h
 
 
 
