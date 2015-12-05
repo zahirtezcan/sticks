@@ -8,7 +8,17 @@ namespace stx {
 template<typename Iterator, typename Compare>
 Iterator FindSortedEnd(Iterator begin, Iterator end, Compare compare)
 {
-	return begin;
+	auto next = begin;
+	++next;
+	while (begin != end && next != end) {
+		if (compare(*next, *begin)) {
+			return next;
+		}
+		++next;
+		++begin;
+	}
+
+	return end;
 }
 
 template<typename Iterator>
@@ -63,8 +73,8 @@ template<typename Iterator1, typename Iterator2>
 Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
                               Iterator2 outBegin, Iterator2 outEnd)
 {
-	return stx::CopyPartiallSorted(begin, end, outBegin, outEnd,
-	                               stx::Less());
+	return stx::CopyPartiallySorted(begin, end, outBegin, outEnd,
+	                                stx::Less());
 }
 
 template<typename Iterator, typename Compare>
