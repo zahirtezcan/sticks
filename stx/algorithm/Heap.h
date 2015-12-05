@@ -26,46 +26,6 @@ Difference HeapParent(Difference d)
 	return (d - 1) / 2;
 }
 
-template<typename Difference, typename Iterator, typename Compare>
-void HeapSiftDown(Difference lastParentIndex,
-                  Difference parentIndex, Iterator parent,
-                  Compare compare)
-{
-	using std::advance;
-	using std::distance;
-	using stx::SwapPointee;
-	
-	while (parentIndex <= lastParentIndex) {
-		auto leftChildIndex = HeapLeftChild(parentIndex);
-		auto leftChild = parent;
-		advance(leftChild, leftChildIndex - parentIndex);
-	
-		auto rightChildIndex = leftChildIndex + 1;
-		auto rightChild = leftChild;
-		++rightChild;
-
-		if (compare(*parent, *leftChild)) {
-			if (compare(*leftChild, *rightChild)) {
-				SwapPointee(parent, rightChild);
-				parentIndex = rightChildIndex;
-				parent = rightChild;
-			} else {
-				SwapPointee(parent, leftChild);
-				parentIndex = leftChildIndex;
-				parent = leftChild;
-			}
-		} else {
-			if (compare(*parent, *rightChild)) {
-				SwapPointee(parent, rightChild);
-				parentIndex = rightChildIndex;
-				parent = rightChild;
-			} else {
-				break;
-			}
-		}
-	}
-}
-
 } /* end of detail namespace */
 
 template<typename Iterator, typename Compare>
@@ -134,9 +94,38 @@ void MakeHeap(Iterator begin, Iterator end, Compare compare)
 	auto parentIndex = lastParentIndex;
 	
 	while (true) {
-		detail::HeapSiftDown(lastParentIndex,
-		                     parentIndex, parent,
-				     compare);
+		auto currentIndex = parentIndex;
+		auto current = parent;
+		/* sift down current */
+		while (currentIndex <= lastParentIndex) {
+			auto leftChildIndex = detail::HeapLeftChild(currentIndex);
+			auto leftChild = current;
+			advance(leftChild, leftChildIndex - currentIndex);
+		
+			auto rightChildIndex = leftChildIndex + 1;
+			auto rightChild = leftChild;
+			++rightChild;
+
+			if (compare(*current, *leftChild)) {
+				if (compare(*leftChild, *rightChild)) {
+					stx::SwapPointee(current, rightChild);
+					currentIndex = rightChildIndex;
+					current = rightChild;
+				} else {
+					stx::SwapPointee(current, leftChild);
+					currentIndex = leftChildIndex;
+					current = leftChild;
+				}
+			} else {
+				if (compare(*current, *rightChild)) {
+					stx::SwapPointee(current, rightChild);
+					currentIndex = rightChildIndex;
+					current = rightChild;
+				} else {
+					break;
+				}
+			}
+		}
 
 		if (parent == begin) {
 			break;
@@ -213,6 +202,7 @@ void PopHeap(Iterator begin, Iterator end, Compare compare)
 
 	auto parent = begin;
 	auto parentIndex = distance(begin, parent);
+	/* sift down parent */
 	while (parentIndex <= lastParentIndex) {	
 		auto leftChildIndex = detail::HeapLeftChild(parentIndex);
 		auto leftChild = parent;
@@ -241,6 +231,12 @@ void PopHeap(Iterator begin, Iterator end, Compare compare)
 			}
 		}
 	}
+	/* instead of inlining the sift operation we might have used a method
+	 * but copying compare may be costly. We can use a reference to
+	 * compare object as well but will that be a usual reference or
+	 * are we allowed to use const reference etc.
+	 *     Same thing applies for MakeHeap function template too.
+	 */
 }
 
 template<typename Iterator>

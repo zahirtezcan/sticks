@@ -1,5 +1,4 @@
 
-heap algorithms
 sort algorithms
 
 type traits / tag dispatching etc (i don't think it is worth doing, libcxx would just be fine:)
