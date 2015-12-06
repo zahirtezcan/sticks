@@ -200,7 +200,7 @@ TestSort.o: ../stx/algorithm/Sort.h ../stx/utility/Compare.h
 
 TestNthElement$(EXE): TestNthElement.o
 TestNthElement.o: algorithm/TestNthElement.cpp
-TestNthElement.o: ../stx/algorithm/NthElement.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/MinMax.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Partition.h
+TestNthElement.o: ../stx/algorithm/NthElement.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Partition.h
 
 
 
