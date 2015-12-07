@@ -1,7 +1,9 @@
 #ifndef STX_ALGORITHM_SORT_H
 #define STX_ALGORITHM_SORT_H
 
+#include <stx/Iterator.h>
 #include <stx/utility/Compare.h>
+#include <stx/algorithm/SwapPointee.h>
 
 namespace stx {
 
@@ -46,6 +48,46 @@ bool IsSorted(Iterator begin, Iterator end)
 template<typename Iterator, typename Compare>
 void Sort(Iterator begin, Iterator end, Compare compare)
 {
+	using std::advance;
+	using std::distance;
+
+	auto dist = distance(begin, end);
+	if (dist < 2) {
+		return;
+	}
+	
+	auto mid = begin;
+	advance(mid, dist / 2);
+	stx::SwapPointee(begin, mid);
+
+	auto b = begin;
+	++b;
+	auto e = end;
+	--e;
+
+	while (b != e) {
+		while (b != e && compare(*b, *begin)) {
+			++b;
+		}
+		while (b != e && !compare(*e, *begin)) {
+			--e;
+		}
+
+		if (b != e) {
+			stx::SwapPointee(b, e);
+			++b;
+			if (b == e) {
+				break;
+			}
+			--e;
+		}
+	}
+	if (compare(*b, *begin)) {
+		++b;
+	}
+
+	stx::Sort(begin, b, compare);
+	stx::Sort(b, end, compare);
 }
 
 template<typename Iterator>
