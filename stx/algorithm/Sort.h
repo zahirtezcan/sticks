@@ -102,6 +102,7 @@ void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare compare)
 {
 	using std::distance;
 	using std::advance;
+
 	stx::MakeHeap(begin, middle, compare);
 	auto heapDistance = distance(begin, middle);
 	auto lastParentIndex = detail::HeapParent(heapDistance - 1);
@@ -161,7 +162,64 @@ Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
                               Iterator2 outBegin, Iterator2 outEnd,
                               Compare compare)
 {
-	return outBegin;
+	using std::distance;
+	using std::advance;
+	/*TODO: tag dispatching for copy*/
+	auto iter1 = begin;
+	auto iter2 = outBegin;
+	while (iter1 != end && iter2 != outEnd) {
+		*iter2 = *iter1;
+		++iter1;
+		++iter2;
+	}
+	outEnd = iter2;
+
+	stx::MakeHeap(outBegin, outEnd, compare);
+	auto heapDistance = distance(outBegin, outEnd);
+	auto lastParentIndex = detail::HeapParent(heapDistance - 1);
+
+	while (iter1 != end) {
+		if (compare(*iter1, *outBegin)) {
+			stx::SwapPointee(iter1, outBegin);
+			/*sift 'outBegin' down*/
+			stx::IteratorDifference<Iterator2> currentIndex = 0;
+			Iterator2 current = outBegin;
+			/* sift down current */
+			while (currentIndex <= lastParentIndex) {
+				auto leftChildIndex = detail::HeapLeftChild(currentIndex);
+				auto leftChild = current;
+				advance(leftChild, leftChildIndex - currentIndex);
+			
+				auto rightChildIndex = leftChildIndex + 1;
+				auto rightChild = leftChild;
+				++rightChild;
+
+				if (compare(*current, *leftChild)) {
+					if (compare(*leftChild, *rightChild)) {
+						stx::SwapPointee(current, rightChild);
+						currentIndex = rightChildIndex;
+						current = rightChild;
+					} else {
+						stx::SwapPointee(current, leftChild);
+						currentIndex = leftChildIndex;
+						current = leftChild;
+					}
+				} else {
+					if (compare(*current, *rightChild)) {
+						stx::SwapPointee(current, rightChild);
+						currentIndex = rightChildIndex;
+						current = rightChild;
+					} else {
+						break;
+					}
+				}
+			}
+		}
+		++iter1;
+	}
+
+	stx::SortHeap(outBegin, outEnd, compare);
+	return outEnd;
 }
 
 template<typename Iterator1, typename Iterator2>
