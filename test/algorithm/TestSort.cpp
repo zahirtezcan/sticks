@@ -187,6 +187,7 @@ TEST(CopyPartiallySorted, Empty)
 TEST(CopyPartiallySorted, One)
 {
 	std::vector<int> v = { 1 };
+	std::vector<int> original = v;
 	std::vector<int> o(v.size(), 0);
 	
 	auto result = stx::CopyPartiallySorted(v.begin(), v.end(),
@@ -194,12 +195,14 @@ TEST(CopyPartiallySorted, One)
 
 	EXPECT_TRUE(stx::IsSorted(o.begin(), o.end()));
 	EXPECT_EQ(v[0], o[0]);
+	EXPECT_EQ(original[0], v[0]);
 	EXPECT_EQ(o.end(), result);
 }
 
 TEST(CopyPartiallySorted, Basic)
 {
 	std::vector<int> v = { 5, 4, 3, 2, 2, 1 };
+	std::vector<int> original = v;
 	std::vector<int> o(3, 0);
 
 	auto result = stx::CopyPartiallySorted(v.begin(), v.end(),
@@ -210,11 +213,18 @@ TEST(CopyPartiallySorted, Basic)
 	EXPECT_EQ(1, o[0]);
 	EXPECT_EQ(2, o[1]);
 	EXPECT_EQ(2, o[2]);
+	EXPECT_EQ(original[0], v[0]);
+	EXPECT_EQ(original[1], v[1]);
+	EXPECT_EQ(original[2], v[2]);
+	EXPECT_EQ(original[3], v[3]);
+	EXPECT_EQ(original[4], v[4]);
+	EXPECT_EQ(original[5], v[5]);
 }
 
 TEST(CopyPartiallySorted, BasicLessInput)
 {
 	std::vector<int> v = { 5, 4, 3 };
+	std::vector<int> original = v;
 	std::vector<int> o(6, 0);
 	
 	auto result = stx::CopyPartiallySorted(v.begin(), v.end(),
@@ -225,5 +235,8 @@ TEST(CopyPartiallySorted, BasicLessInput)
 	EXPECT_EQ(3, o[0]);
 	EXPECT_EQ(4, o[1]);
 	EXPECT_EQ(5, o[2]);
+	EXPECT_EQ(original[0], v[0]);
+	EXPECT_EQ(original[1], v[1]);
+	EXPECT_EQ(original[2], v[2]);
 }
 

@@ -180,7 +180,7 @@ Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
 
 	while (iter1 != end) {
 		if (compare(*iter1, *outBegin)) {
-			stx::SwapPointee(iter1, outBegin);
+			*outBegin = *iter1;
 			/*sift 'outBegin' down*/
 			stx::IteratorDifference<Iterator2> currentIndex = 0;
 			Iterator2 current = outBegin;
