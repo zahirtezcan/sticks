@@ -4,6 +4,7 @@
 #include <stx/Iterator.h>
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/SwapPointee.h>
+#include <stx/algorithm/Heap.h>
 
 namespace stx {
 
@@ -99,12 +100,60 @@ void Sort(Iterator begin, Iterator end)
 template<typename Iterator, typename Compare>
 void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare compare)
 {
+	using std::distance;
+	using std::advance;
+	stx::MakeHeap(begin, middle, compare);
+	auto heapDistance = distance(begin, middle);
+	auto lastParentIndex = detail::HeapParent(heapDistance - 1);
+
+	auto iter = middle;
+	while (iter != end) {
+		if (compare(*iter, *begin)) {
+			stx::SwapPointee(iter, begin);
+			/*sift 'begin' down*/
+			stx::IteratorDifference<Iterator> currentIndex = 0;
+			Iterator current = begin;
+			/* sift down current */
+			while (currentIndex <= lastParentIndex) {
+				auto leftChildIndex = detail::HeapLeftChild(currentIndex);
+				auto leftChild = current;
+				advance(leftChild, leftChildIndex - currentIndex);
+			
+				auto rightChildIndex = leftChildIndex + 1;
+				auto rightChild = leftChild;
+				++rightChild;
+
+				if (compare(*current, *leftChild)) {
+					if (compare(*leftChild, *rightChild)) {
+						stx::SwapPointee(current, rightChild);
+						currentIndex = rightChildIndex;
+						current = rightChild;
+					} else {
+						stx::SwapPointee(current, leftChild);
+						currentIndex = leftChildIndex;
+						current = leftChild;
+					}
+				} else {
+					if (compare(*current, *rightChild)) {
+						stx::SwapPointee(current, rightChild);
+						currentIndex = rightChildIndex;
+						current = rightChild;
+					} else {
+						break;
+					}
+				}
+			}
+		}
+		++iter;
+	}
+
+	stx::SortHeap(begin, middle, compare);
 }
 
 template<typename Iterator>
 void PartialSort(Iterator begin, Iterator middle, Iterator end)
 {
-	stx::PartialSort(begin, end, stx::Less());
+	stx::PartialSort(begin, middle, end, stx::Less());
 }
 
 template<typename Iterator1, typename Iterator2, typename Compare>

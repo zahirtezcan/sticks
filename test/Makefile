@@ -196,7 +196,7 @@ TestHeap.o: ../stx/algorithm/Heap.h ../stx/utility/Compare.h ../stx/Iterator.h .
 
 TestSort$(EXE): TestSort.o
 TestSort.o: algorithm/TestSort.cpp
-TestSort.o: ../stx/algorithm/Sort.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h
+TestSort.o: ../stx/algorithm/Sort.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Heap.h
 
 TestNthElement$(EXE): TestNthElement.o
 TestNthElement.o: algorithm/TestNthElement.cpp
