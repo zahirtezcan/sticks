@@ -57,9 +57,11 @@ TEST(InsertionSort, BasicSorted)
 
 TEST(InsertionSort, Stability)
 {
-	std::vector<std::pair<int, int>> v = { { 4, 1 }, { 4, 2 },
-	                                       { 2, 2 }, { 2, 1 },
-					       { 3, 2 }, { 3, 1 } };
+	std::vector<std::pair<int, int>> v;
+	for (int i = 1; i < 36; ++i)
+	{
+		v.push_back({ i % 5, i % 2 });
+	}
 
 	auto secondLess = [] (auto x, auto y) { return x.second < y.second; };
 	auto firstLess = [] (auto x, auto y) { return x.first < y.first; };
