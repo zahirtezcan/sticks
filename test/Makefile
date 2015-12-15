@@ -46,6 +46,7 @@ tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EX
 tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
 tests: TestSortedDifference$(EXE) TestSortedIntersection$(EXE) TestSortedUnion$(EXE) TestSortedSymmetricDifference$(EXE)
 tests: TestHeap$(EXE) TestSort$(EXE) TestNthElement$(EXE) TestMergeInplace$(EXE) TestInsertionSort$(EXE)
+tests: TestStableSortInplace$(EXE)
 
 outputDirectories:
 	@$(MKDIR) $(ObjDir)
@@ -59,6 +60,7 @@ TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o T
 TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o TestSortedDifference.o
 TestAllAlgorithms$(EXE): TestSortedIntersection.o TestSortedUnion.o TestSortedSymmetricDifference.o
 TestAllAlgorithms$(EXE): TestHeap.o TestSort.o TestNthElement.o TestMergeInplace.o TestInsertionSort.o
+TestAllAlgorithms$(EXE): TestStableSortInplace.o
 	$(LINK.o)
 
 TestAllEqual.o: ../stx/algorithm/AllEqual.h
@@ -135,6 +137,7 @@ TestMergeInplace.o: ../stx/algorithm/MergeInplace.h ../stx/utility/Compare.h ../
 
 TestInsertionSort.o: ../stx/algorithm/InsertionSort.h ../stx/algorithm/Sort.h ../stx/utility/Compare.h  ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/SwapPointee.h
 
+TestStableSortInplace.o: ../stx/algorithm/StableSortInplace.h ../stx/algorithm/MergeInplace.h ../stx/algorithm/InsertionSort.h ../stx/algorithm/Sort.h ../stx/utility/Compare.h  ../stx/algorithm/Rotate.h ../stx/algorithm/Reverse.h ../stx/algorithm/SwapPointee.h
 
 
 clean:
