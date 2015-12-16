@@ -4,18 +4,6 @@
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/Rotate.h>
 
-#include <iostream>
-
-template<typename I>
-void Print(I begin, I end)
-{
-	for (I i = begin; i != end; ++i)
-	{
-		std::cout << *i << ", ";
-	}
-	std::cout << std::endl;
-}
-
 namespace stx {
 
 template<typename Iterator, typename Compare>
@@ -30,14 +18,27 @@ void MergeInplace(Iterator begin, Iterator middle, Iterator end,
 	auto minFirst = middle;
 	--minFirst;
 
-	while (compare(*maxSecond, *minFirst)) {
-		++maxSecond;
-
-		if (minFirst == begin || maxSecond == end) {
+	while (minFirst != begin && maxSecond != end) {
+		if (compare(*maxSecond, *minFirst)) {
+			--minFirst;
+			++maxSecond;
+		} else {
 			break;
 		}
+	}
 
-		--minFirst;
+	if (maxSecond != end) {
+		if (minFirst == begin) {
+			if (!compare(*maxSecond, *minFirst)) {
+				++minFirst;
+			} else {
+				++maxSecond;
+			}
+		} else {
+			++minFirst;
+		}
+	} else {
+		++minFirst;
 	}
 
 	stx::Rotate(minFirst, middle, maxSecond);
