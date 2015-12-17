@@ -6,7 +6,7 @@ namespace stx {
 struct Add
 {
 	template<typename T, typename U>
-	auto operator()(const T& t, const U& u) const
+	constexpr auto operator()(const T& t, const U& u) const
 	{
 		return t + u;
 	}
@@ -15,7 +15,7 @@ struct Add
 struct Subtract
 {
 	template<typename T, typename U>
-	auto operator()(const T& t, const U& u) const
+	constexpr auto operator()(const T& t, const U& u) const
 	{
 		return t - u;
 	}
@@ -24,18 +24,36 @@ struct Subtract
 struct Multiply
 {
 	template<typename T, typename U>
-	auto operator()(const T& t, const U& u) const
+	constexpr auto operator()(const T& t, const U& u) const
 	{
 		return t * u;
 	}
 };
 
-struct Divide 
+struct Divide
 {
 	template<typename T, typename U>
-	auto operator()(const T& t, const U& u) const
+	constexpr auto operator()(const T& t, const U& u) const
 	{
 		return t / u;
+	}
+};
+
+struct Modulus
+{
+	template<typename T, typename U>
+	constexpr auto operator()(const T& t, const U& u) const
+	{
+		return t % u;
+	}
+};
+
+struct Negate
+{
+	template<typename T>
+	constexpr auto operator()(const T& t) const
+	{
+		return -t;
 	}
 };
 

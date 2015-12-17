@@ -6,7 +6,7 @@ namespace stx {
 struct Less
 {
 	template<typename T, typename U>
-	bool operator()(const T& t, const U& u) const
+	constexpr bool operator()(const T& t, const U& u) const
 	{
 		return t < u;
 	}
@@ -15,7 +15,7 @@ struct Less
 struct LessOrEqual
 {
 	template<typename T, typename U>
-	bool operator()(const T& t, const U& u) const
+	constexpr bool operator()(const T& t, const U& u) const
 	{
 		return t <= u;
 	}
@@ -24,7 +24,7 @@ struct LessOrEqual
 struct Greater
 {
 	template<typename T, typename U>
-	bool operator()(const T& t, const U& u) const
+	constexpr bool operator()(const T& t, const U& u) const
 	{
 		return t > u;
 	}
@@ -33,7 +33,7 @@ struct Greater
 struct GreaterOrEqual
 {
 	template<typename T, typename U>
-	bool operator()(const T& t, const U& u) const
+	constexpr bool operator()(const T& t, const U& u) const
 	{
 		return t >= u;
 	}
