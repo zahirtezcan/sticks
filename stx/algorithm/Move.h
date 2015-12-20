@@ -50,10 +50,10 @@ BidirectionalIterator MoveBackward(Iterator begin, Iterator end,
 template<typename Iterator, typename OutputIterator, typename UnaryPredicate>
 OutputIterator MoveIf(Iterator begin, Iterator end,
                       OutputIterator output,
-                      UnaryPredicate check)
+                      UnaryPredicate&& check)
 {
 	while (begin != end) {
-		if (check(*begin)) {
+		if (std::forward<UnaryPredicate>(check)(*begin)) {
 			*output = std::move(*begin);
 			++output;
 		}
@@ -89,11 +89,11 @@ OutputIterator MoveReversed(Iterator begin, Iterator end,
 template<typename Iterator, typename OutputIterator, typename UnaryPredicate, typename T>
 OutputIterator MoveReplaced(Iterator begin, Iterator end,
                             OutputIterator output,
-                            UnaryPredicate check,
+                            UnaryPredicate&& check,
 			    const T& newValue)
 {
 	while (begin != end) {
-		if (check(*begin)) {
+		if (std::forward<UnaryPredicate>(check)(*begin)) {
 			*output = newValue;
 		} else {
 			*output = std::move(*begin);
