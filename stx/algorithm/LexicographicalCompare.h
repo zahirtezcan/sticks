@@ -9,13 +9,13 @@ namespace stx {
 template<typename Iterator1, typename Iterator2, typename Compare>
 bool LexicographicalCompare(Iterator1 begin1, Iterator1 end1,
                             Iterator2 begin2, Iterator2 end2,
-                            Compare compare)
+                            Compare&& compare)
 {
 	while (begin1 != end1 && begin2 != end2) {
-		if (compare(*begin1, *begin2)) {
+		if (std::forward<Compare>(compare)(*begin1, *begin2)) {
 			return true;
 		}
-		if (compare(*begin2, *begin1)) {
+		if (std::forward<Compare>(compare)(*begin2, *begin1)) {
 			return false;
 		}
 		++begin1;
