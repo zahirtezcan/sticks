@@ -52,10 +52,10 @@ BidirectionalIterator CopyBackward(Iterator begin, Iterator end,
 template<typename Iterator, typename OutputIterator, typename UnaryPredicate>
 OutputIterator CopyIf(Iterator begin, Iterator end,
                       OutputIterator output,
-                      UnaryPredicate check)
+                      UnaryPredicate&& check)
 {
 	while (begin != end) {
-		if (check(*begin)) {
+		if (std::forward<UnaryPredicate>(check)(*begin)) {
 			*output = *begin;
 			++output;
 		}
@@ -84,10 +84,10 @@ template<
 std::pair<OutputIterator1, OutputIterator2>
 	CopyPartitioned(Iterator begin, Iterator end,
 	                OutputIterator1 trueOutput, OutputIterator2 falseOutput,
-	                UnaryPredicate check)
+	                UnaryPredicate&& check)
 {
 	while (begin != end) {
-		if (check(*begin)) {
+		if (std::forward<UnaryPredicate>(check)(*begin)) {
 			*trueOutput = *begin;
 			++trueOutput;
 		} else {
@@ -115,11 +115,11 @@ OutputIterator CopyReversed(Iterator begin, Iterator end,
 template<typename Iterator, typename OutputIterator, typename UnaryPredicate, typename T>
 OutputIterator CopyReplaced(Iterator begin, Iterator end,
                             OutputIterator output,
-                            UnaryPredicate check,
+                            UnaryPredicate&& check,
 			    const T& newValue)
 {
 	while (begin != end) {
-		if (check(*begin)) {
+		if (std::forward<UnaryPredicate>(check)(*begin)) {
 			*output = newValue;
 		} else {
 			*output = *begin;
@@ -141,13 +141,14 @@ OutputIterator CopyDistinct(Iterator begin, Iterator end,
 template<typename Iterator, typename OutputIterator, typename BinaryPredicate>
 OutputIterator CopyDistinct(Iterator begin, Iterator end,
                             OutputIterator output,
-			    BinaryPredicate equals)
+			    BinaryPredicate&& equals)
 {
 	/*We need to have that output iterator be a forward iterator*/
 	auto outputBegin = output;
 	while (begin != end) {
-		detail::EqualsPointee<Iterator, BinaryPredicate> eq(begin, equals);
-		auto found = stx::Find(outputBegin, output, eq);
+		auto found = stx::Find(outputBegin, output, [&](auto& item) {
+			return std::forward<BinaryPredicate>(equals)(*begin, item);
+		});
 	
 		if (found == output) {
 			*output = *begin;
@@ -169,7 +170,7 @@ OutputIterator CopyDistinctConsecutively(Iterator begin, Iterator end,
 template<typename Iterator, typename OutputIterator, typename BinaryPredicate>
 OutputIterator CopyDistinctConsecutively(Iterator begin, Iterator end,
                                          OutputIterator output,
-					 BinaryPredicate equals)
+					 BinaryPredicate&& equals)
 {
 	if (begin == end) {
 		return output;
@@ -179,7 +180,8 @@ OutputIterator CopyDistinctConsecutively(Iterator begin, Iterator end,
 		++output;
 
 		auto iter = begin;
-		while (++begin != end && equals(*iter, *begin)) {
+		while (++begin != end
+		    && std::forward<BinaryPredicate>(equals)(*iter, *begin)) {
 		}
 	}
 

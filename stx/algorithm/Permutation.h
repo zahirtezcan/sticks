@@ -12,7 +12,7 @@
 namespace stx {
 
 template<typename Iterator, typename Compare>
-bool NextPermutation(Iterator begin, Iterator end, Compare compare)
+bool NextPermutation(Iterator begin, Iterator end, Compare&& compare)
 {
 	if (begin == end) {
 		return false;
@@ -28,7 +28,7 @@ bool NextPermutation(Iterator begin, Iterator end, Compare compare)
 	auto next = prev;
 	--prev;
 
-	while (begin != next && !compare(*prev, *next)) {
+	while (begin != next && !std::forward<Compare>(compare)(*prev, *next)) {
 		--prev;
 		--next;
 	}
@@ -41,7 +41,7 @@ bool NextPermutation(Iterator begin, Iterator end, Compare compare)
 	auto iter = end;
 	--iter;
 
-	while (!compare(*prev, *iter)) {
+	while (!std::forward<Compare>(compare)(*prev, *iter)) {
 		--iter;
 	}
 
@@ -58,7 +58,7 @@ bool NextPermutation(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-bool PreviousPermutation(Iterator begin, Iterator end, Compare compare)
+bool PreviousPermutation(Iterator begin, Iterator end, Compare&& compare)
 {
 	if (begin == end) {
 		return false;
@@ -74,7 +74,7 @@ bool PreviousPermutation(Iterator begin, Iterator end, Compare compare)
 	auto next = prev;
 	--prev;
 
-	while (begin != next && !compare(*next, *prev)) {
+	while (begin != next && !std::forward<Compare>(compare)(*next, *prev)) {
 		--prev;
 		--next;
 	}
@@ -87,7 +87,7 @@ bool PreviousPermutation(Iterator begin, Iterator end, Compare compare)
 	auto iter = end;
 	--iter;
 
-	while (!compare(*iter, *prev)) {
+	while (!std::forward<Compare>(compare)(*iter, *prev)) {
 		--iter;
 	}
 
@@ -106,21 +106,24 @@ bool PreviousPermutation(Iterator begin, Iterator end)
 template<typename Iterator1, typename Iterator2, typename BinaryPredicate>
 bool IsPermutation(Iterator1 begin1, Iterator1 end1,
                    Iterator2 begin2, Iterator2 end2,
-                   BinaryPredicate equals)
+                   BinaryPredicate&& equals)
 {
 	auto iter1 = begin1;
 	auto iter2 = begin2;
 
 	while (iter1 != end1 && iter2 != end2) {
-		stx::detail::EqualsPointee<Iterator1, BinaryPredicate> eq(iter1, equals);
+		auto&& eqIter1 = [&](auto& item) {
+			return std::forward<BinaryPredicate>(equals)(*iter1, item);
+		};
 
-		auto found = stx::Find(begin2, end2, eq);
+		auto found = stx::Find(begin2, end2, eqIter1);
+
 		if (found == end2) {
 			return false;
 		}
 
-		auto count1 = stx::Count(begin1, end1, eq);
-		auto count2 = stx::Count(found, end2, eq);
+		auto count1 = stx::Count(begin1, end1, eqIter1);
+		auto count2 = stx::Count(found, end2, eqIter1);
 		if (count1 != count2) {
 			return false;
 		}

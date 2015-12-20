@@ -7,9 +7,9 @@
 namespace stx {
 
 template<typename Iterator, typename UnaryPredicate>
-Iterator Remove(Iterator begin, Iterator end, UnaryPredicate check)
+Iterator Remove(Iterator begin, Iterator end, UnaryPredicate&& check)
 {
-	while (begin != end && !check(*begin)) {
+	while (begin != end && !std::forward<UnaryPredicate>(check)(*begin)) {
 		++begin;
 	}
 
@@ -20,7 +20,7 @@ Iterator Remove(Iterator begin, Iterator end, UnaryPredicate check)
 	auto iter = begin;
 	++begin;
 	while (begin != end) {
-		if (!check(*begin)) {
+		if (!std::forward<UnaryPredicate>(check)(*begin)) {
 			/*TODO: what about std::move*/
 			*iter = *begin;
 			++iter;
@@ -63,7 +63,8 @@ Iterator RemoveDuplicates(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename BinaryPredicate>
-Iterator RemoveDuplicates(Iterator begin, Iterator end, BinaryPredicate equals)
+Iterator RemoveDuplicates(Iterator begin, Iterator end,
+                          BinaryPredicate&& equals)
 {
 	while (begin != end) {
 		auto next = begin;
@@ -71,8 +72,10 @@ Iterator RemoveDuplicates(Iterator begin, Iterator end, BinaryPredicate equals)
 		if (next == end) {
 			break;
 		}
-		detail::EqualsPointee<Iterator, BinaryPredicate> eq(begin, equals);
-		end = Remove(next, end, eq);
+
+		end = Remove(next, end, [&](auto& item) {
+			return std::forward<BinaryPredicate>(equals)(*begin, item);
+		});
 		++begin;
 	}
 
@@ -86,7 +89,8 @@ Iterator RemoveConsecutiveDuplicates(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename BinaryPredicate>
-Iterator RemoveConsecutiveDuplicates(Iterator begin, Iterator end, BinaryPredicate equals)
+Iterator RemoveConsecutiveDuplicates(Iterator begin, Iterator end,
+                                     BinaryPredicate&& equals)
 {
 	if (begin == end) {
 		return end;
@@ -94,7 +98,8 @@ Iterator RemoveConsecutiveDuplicates(Iterator begin, Iterator end, BinaryPredica
 
 	auto iter = begin;
 	while (true) {
-		while (++begin != end && equals(*iter, *begin)) {
+		while (++begin != end
+		    && std::forward<BinaryPredicate>(equals)(*iter, *begin)) {
 		}
 
 		++iter;
@@ -108,7 +113,6 @@ Iterator RemoveConsecutiveDuplicates(Iterator begin, Iterator end, BinaryPredica
 	}
 
 	return iter;
-
 }
 
 } /*end of stx namespace*/
