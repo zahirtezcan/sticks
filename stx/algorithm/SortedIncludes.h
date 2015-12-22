@@ -1,6 +1,7 @@
 #ifndef STX_ALGORITHM_SORTEDINCLUDES_H
 #define STX_ALGORITHM_SORTEDINCLUDES_H
 
+#include <utility>
 #include <stx/utility/Compare.h>
 
 namespace stx {
@@ -8,11 +9,12 @@ namespace stx {
 template<typename Iterator1, typename Iterator2, typename Compare>
 bool SortedIncludes(Iterator1 begin1, Iterator1 end1,
                     Iterator2 begin2, Iterator2 end2,
-                    Compare compare)
+                    Compare&& compare)
 {
 	while (begin2 != end2) {
 		/* using binary search will reduce asymptotic cost*/
-		while (begin1 != end1 && compare(*begin1, *begin2)) {
+		while (begin1 != end1
+		    && std::forward<Compare>(compare)(*begin1, *begin2)) {
 			++begin1;
 		}
 
@@ -20,7 +22,7 @@ bool SortedIncludes(Iterator1 begin1, Iterator1 end1,
 			return false;
 		}
 
-		if (compare(*begin2, *begin1)) {
+		if (std::forward<Compare>(compare)(*begin2, *begin1)) {
 			return false;
 		}
 

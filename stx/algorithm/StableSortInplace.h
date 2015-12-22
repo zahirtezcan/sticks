@@ -9,7 +9,7 @@
 namespace stx {
 
 template<typename Iterator, typename Compare>
-void StableSortInplace(Iterator begin, Iterator end, Compare compare)
+void StableSortInplace(Iterator begin, Iterator end, Compare&& compare)
 {
 	using std::distance;
 	using std::advance;
@@ -24,9 +24,9 @@ void StableSortInplace(Iterator begin, Iterator end, Compare compare)
 	auto mid = begin;
 	advance(mid, length / 2);
 
-	stx::StableSortInplace(begin, mid, compare);
-	stx::StableSortInplace(mid, end, compare);
-	stx::MergeInplace(begin, mid, end, compare);
+	stx::StableSortInplace(begin, mid, std::forward<Compare>(compare));
+	stx::StableSortInplace(mid, end, std::forward<Compare>(compare));
+	stx::MergeInplace(begin, mid, end, std::forward<Compare>(compare));
 }
 
 template<typename Iterator>

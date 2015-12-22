@@ -1,6 +1,7 @@
 #ifndef STX_ALGORITHM_HEAP_H
 #define STX_ALGORITHM_HEAP_H
 
+#include <utility>
 #include <stx/Iterator.h>
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/SwapPointee.h>
@@ -29,7 +30,7 @@ Difference HeapParent(Difference d)
 } /* end of detail namespace */
 
 template<typename Iterator, typename Compare>
-Iterator FindHeapEnd(Iterator begin, Iterator end, Compare compare)
+Iterator FindHeapEnd(Iterator begin, Iterator end, Compare&& compare)
 {
 	if (begin == end) {
 		return end;
@@ -40,12 +41,15 @@ Iterator FindHeapEnd(Iterator begin, Iterator end, Compare compare)
 	++child;
 
 	while (child != end) {
-		if (compare(*parent, *child)) { /*left child*/
+		if (std::forward<Compare>(compare)(*parent, *child)) {
+			/*left child*/
 			return child;
 		}
 		++child;
 
-		if (child == end || compare(*parent, *child)) {/*right child*/
+		if (child == end
+		 || std::forward<Compare>(compare)(*parent, *child)) {
+			/*right child*/
 			return child;
 		}
 		++child;/*move to next parent's child*/
@@ -62,9 +66,9 @@ Iterator FindHeapEnd(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-bool IsHeap(Iterator begin, Iterator end, Compare compare)
+bool IsHeap(Iterator begin, Iterator end, Compare&& compare)
 {
-	return stx::FindHeapEnd(begin, end, compare) == end;
+	return stx::FindHeapEnd(begin, end, std::forward<Compare>(compare)) == end;
 }
 
 template<typename Iterator>
@@ -74,7 +78,7 @@ bool IsHeap(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void MakeHeap(Iterator begin, Iterator end, Compare compare)
+void MakeHeap(Iterator begin, Iterator end, Compare&& compare)
 {
 	using std::distance;
 	using std::advance;
@@ -106,8 +110,8 @@ void MakeHeap(Iterator begin, Iterator end, Compare compare)
 			auto rightChild = leftChild;
 			++rightChild;
 
-			if (compare(*current, *leftChild)) {
-				if (compare(*leftChild, *rightChild)) {
+			if (std::forward<Compare>(compare)(*current, *leftChild)) {
+				if (std::forward<Compare>(compare)(*leftChild, *rightChild)) {
 					stx::SwapPointee(current, rightChild);
 					currentIndex = rightChildIndex;
 					current = rightChild;
@@ -117,7 +121,7 @@ void MakeHeap(Iterator begin, Iterator end, Compare compare)
 					current = leftChild;
 				}
 			} else {
-				if (compare(*current, *rightChild)) {
+				if (std::forward<Compare>(compare)(*current, *rightChild)) {
 					stx::SwapPointee(current, rightChild);
 					currentIndex = rightChildIndex;
 					current = rightChild;
@@ -142,7 +146,7 @@ void MakeHeap(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void PushHeap(Iterator begin, Iterator end, Compare compare)
+void PushHeap(Iterator begin, Iterator end, Compare&& compare)
 {
 	using std::distance;
 	using std::advance;
@@ -162,7 +166,7 @@ void PushHeap(Iterator begin, Iterator end, Compare compare)
 		auto parent = child;
 		advance(parent, parentDist - childDist);
 
-		if (compare(*parent, *child)) {
+		if (std::forward<Compare>(compare)(*parent, *child)) {
 			stx::SwapPointee(parent, child);
 			child = parent;
 			childDist = parentDist;
@@ -179,7 +183,7 @@ void PushHeap(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void PopHeap(Iterator begin, Iterator end, Compare compare)
+void PopHeap(Iterator begin, Iterator end, Compare&& compare)
 {
 	using std::distance;
 	using std::advance;
@@ -210,8 +214,9 @@ void PopHeap(Iterator begin, Iterator end, Compare compare)
 		
 		auto rightChild = leftChild;
 		++rightChild;
-		if (compare(*parent, *leftChild)) {
-			if (rightChild != end && compare(*leftChild, *rightChild)) {
+		if (std::forward<Compare>(compare)(*parent, *leftChild)) {
+			if (rightChild != end
+			 && std::forward<Compare>(compare)(*leftChild, *rightChild)) {
 				stx::SwapPointee(parent, rightChild);
 				parent = rightChild;
 				parentIndex = leftChildIndex + 1;
@@ -222,7 +227,8 @@ void PopHeap(Iterator begin, Iterator end, Compare compare)
 				parentIndex = leftChildIndex;
 			}
 		} else {
-			if (rightChild != end && compare(*parent, *rightChild)) {
+			if (rightChild != end
+			 && std::forward<Compare>(compare)(*parent, *rightChild)) {
 				stx::SwapPointee(parent, rightChild);
 				parent = rightChild;
 				parentIndex = leftChildIndex + 1;
@@ -246,10 +252,10 @@ void PopHeap(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void SortHeap(Iterator begin, Iterator end, Compare compare)
+void SortHeap(Iterator begin, Iterator end, Compare&& compare)
 {
 	while (begin != end) {
-		stx::PopHeap(begin, end, compare);
+		stx::PopHeap(begin, end, std::forward<Compare>(compare));
 		--end;
 	}
 }
