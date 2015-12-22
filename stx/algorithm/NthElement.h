@@ -10,7 +10,7 @@ namespace stx {
 
 template<typename Iterator, typename Compare>
 void NthElement(Iterator begin, Iterator nth, Iterator end,
-                Compare compare)
+                Compare&& compare)
 {
 	using std::distance;
 	using std::advance;
@@ -36,7 +36,7 @@ void NthElement(Iterator begin, Iterator nth, Iterator end,
 		auto iter = pbegin;
 		++iter;
 		auto ppoint = stx::Partition(iter, pend, [&](auto& x) {
-			return compare(x, *pbegin);
+			return std::forward<Compare>(compare)(x, *pbegin);
 		});
 		--ppoint;
 		stx::SwapPointee(pbegin, ppoint);
