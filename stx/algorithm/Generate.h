@@ -6,16 +6,16 @@
 namespace stx {
 
 template<typename Iterator, typename Generator>
-void Generate(Iterator begin, Iterator end, Generator generate)
+void Generate(Iterator begin, Iterator end, Generator&& generate)
 {
 	while (begin != end) {
-		*begin = generate();
+		*begin = std::forward<Generator>(generate)();
 		++begin;
 	}
 }
 
 template<typename Iterator, typename IndexedGenerator>
-void GenerateIndexed(Iterator begin, Iterator end, IndexedGenerator generate)
+void GenerateIndexed(Iterator begin, Iterator end, IndexedGenerator&& generate)
 {
 	//We can hold another iterator and check for distance to begin instead of index variable.
 	//  But such strategy only works good for random iterators.
@@ -26,7 +26,7 @@ void GenerateIndexed(Iterator begin, Iterator end, IndexedGenerator generate)
 	stx::IteratorDifference<Iterator> index = 0;
 	
 	while (begin != end) {
-		*begin = generate(index);
+		*begin = std::forward<IndexedGenerator>(generate)(index);
 		++begin;
 		++index;
 	}
