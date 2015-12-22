@@ -1,6 +1,7 @@
 #ifndef STX_ALGORITHM_ADJACENTDIFFERENCE_H
 #define STX_ALGORITHM_ADJACENTDIFFERENCE_H
 
+#include <utility>
 #include <stx/utility/Arithmetic.h>
 
 namespace stx {
@@ -8,7 +9,7 @@ namespace stx {
 template<typename Iterator, typename OutputIterator, typename BinaryDiff>
 OutputIterator AdjacentDifference(Iterator begin, Iterator end,
                                   OutputIterator output,
-                                  BinaryDiff diff)
+                                  BinaryDiff&& diff)
 {
 	if (begin == end) {
 		return output;
@@ -20,7 +21,7 @@ OutputIterator AdjacentDifference(Iterator begin, Iterator end,
 	++begin;
 
 	while (begin != end) {
-		*output = diff(*begin, *prev);
+		*output = std::forward<BinaryDiff>(diff)(*begin, *prev);
 		++begin;
 		++prev;
 		++output;
@@ -36,6 +37,6 @@ OutputIterator AdjacentDifference(Iterator begin, Iterator end,
 	return stx::AdjacentDifference(begin, end, output, stx::Subtract());
 }
 
-}
+}/*end of stx namespace*/
 
 #endif
