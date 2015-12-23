@@ -2,13 +2,14 @@
 #define STX_ALGORITHM_FINDPARTITIONPOINT_H
 
 #include <iterator>
+#include <utility>
 #include <stx/algorithm/SwapPointee.h>
 #include <stx/algorithm/Rotate.h>
 
 namespace stx {
 
 template<typename Iterator, typename UnaryPredicate>
-bool IsPartitioned(Iterator begin, Iterator end, UnaryPredicate check)
+bool IsPartitioned(Iterator begin, Iterator end, UnaryPredicate&& check)
 {
 	while (begin != end && check(*begin)) {
 		++begin;
@@ -26,7 +27,7 @@ bool IsPartitioned(Iterator begin, Iterator end, UnaryPredicate check)
 	}
 	++begin;
 	while (begin != end) {
-		if (check(*begin)) {
+		if (std::forward<UnaryPredicate>(check)(*begin)) {
 			return false;
 		}
 		++begin;
@@ -36,13 +37,13 @@ bool IsPartitioned(Iterator begin, Iterator end, UnaryPredicate check)
 }
 
 template<typename Iterator, typename UnaryPredicate>
-Iterator Partition(Iterator begin, Iterator end, UnaryPredicate check)
+Iterator Partition(Iterator begin, Iterator end, UnaryPredicate&& check)
 {
 	if (begin == end) {
 		return end;
 	}
 	auto ppoint = begin;
-	while (ppoint !=end && check(*ppoint)) {
+	while (ppoint !=end && std::forward<UnaryPredicate>(check)(*ppoint)) {
 		++ppoint;
 	}
 	if (ppoint == end) {
@@ -53,7 +54,7 @@ Iterator Partition(Iterator begin, Iterator end, UnaryPredicate check)
 	while (true) {
 		do {
 			++begin;
-		} while (begin != end && !check(*begin));
+		} while (begin != end && !std::forward<UnaryPredicate>(check)(*begin));
 		if (begin == end) {
 			return ppoint;
 		}
@@ -63,7 +64,7 @@ Iterator Partition(Iterator begin, Iterator end, UnaryPredicate check)
 }
 
 template<typename Iterator, typename UnaryPredicate>
-Iterator StablePartition(Iterator begin, Iterator end, UnaryPredicate check)
+Iterator StablePartition(Iterator begin, Iterator end, UnaryPredicate&& check)
 {
 	/* Using the algorithm from Sean Parent's CppCon2015 talk named
 	 * "Better Code: Data Structures" (www.youtube.com/watch?v=sWgDk-o-6ZE)
@@ -78,21 +79,21 @@ Iterator StablePartition(Iterator begin, Iterator end, UnaryPredicate check)
 	auto dist = distance(begin, end);
 
 	if (dist == 1) {
-		return check(*begin) ? end : begin;
+		return std::forward<UnaryPredicate>(check)(*begin) ? end : begin;
 	}
 
 	auto mid = begin;
 	advance(mid, dist / 2);
 
-	auto part1 = stx::StablePartition(begin, mid, check);
-	auto part2 = stx::StablePartition(mid, end, check);
+	auto part1 = stx::StablePartition(begin, mid, std::forward<UnaryPredicate>(check));
+	auto part2 = stx::StablePartition(mid, end, std::forward<UnaryPredicate>(check));
 	auto result = stx::Rotate(part1, mid, part2);
 	
 	return result;
 }
 
 template<typename Iterator, typename UnaryPredicate>
-Iterator FindPartitionPoint(Iterator begin, Iterator end, UnaryPredicate check)
+Iterator FindPartitionPoint(Iterator begin, Iterator end, UnaryPredicate&& check)
 {
 	using std::distance;
 	using std::advance;
@@ -102,7 +103,7 @@ Iterator FindPartitionPoint(Iterator begin, Iterator end, UnaryPredicate check)
 		auto mid = begin;
 		advance(mid, dist / 2);
 
-		if (check(*mid)) {
+		if (std::forward<UnaryPredicate>(check)(*mid)) {
 			advance(mid, 1);
 			begin = mid;
 		} else {

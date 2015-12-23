@@ -63,7 +63,7 @@ TestAllAlgorithms$(EXE): TestHeap.o TestSort.o TestNthElement.o TestMergeInplace
 TestAllAlgorithms$(EXE): TestStableSortInplace.o
 	$(LINK.o)
 
-TestAllEqual.o: ../stx/algorithm/AllEqual.h
+TestAllEqual.o: ../stx/algorithm/AllEqual.h ../stx/utility/Equals.h
 
 TestAny.o: ../stx/algorithm/Any.h
 

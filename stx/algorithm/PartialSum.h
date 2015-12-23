@@ -1,6 +1,7 @@
 #ifndef STX_ALGORITHM_PARTIALSUM_H
 #define STX_ALGORITHM_PARTIALSUM_H
 
+#include <utility>
 #include <stx/Iterator.h>
 #include <stx/utility/Arithmetic.h>
 
@@ -9,7 +10,7 @@ namespace stx {
 template<typename Iterator, typename OutputIterator, typename BinaryAdd>
 OutputIterator PartialSum(Iterator begin, Iterator end,
                           OutputIterator output,
-                          BinaryAdd add)
+                          BinaryAdd&& add)
 {
 	if (begin == end) {
 		return output;
@@ -21,7 +22,7 @@ OutputIterator PartialSum(Iterator begin, Iterator end,
 	++output;
 
 	while (begin != end) {
-		sum = add(sum, *begin);
+		sum = std::forward<BinaryAdd>(add)(sum, *begin);
 		*output = sum;
 
 		++begin;

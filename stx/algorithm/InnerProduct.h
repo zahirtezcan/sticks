@@ -12,11 +12,15 @@ template<typename Iterator1, typename Iterator2,
 T InnerProduct(Iterator1 begin1, Iterator1 end1,
                Iterator2 begin2, Iterator2 end2,
                T&& initial,
-               BinarySum sum, BinaryProduct product)
+               BinarySum&& sum,
+	       BinaryProduct&& product)
 {
 	T result(std::forward<T>(initial));
 	while (begin1 != end1 && begin2 != end2) {
-		result = sum(result, product(*begin1, *begin2));
+		result = std::forward<BinarySum>(sum)(
+			result,
+			std::forward<BinaryProduct>(product)(*begin1, *begin2)
+		);
 		++begin1;
 		++begin2;
 	}
