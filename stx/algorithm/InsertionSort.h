@@ -7,7 +7,7 @@
 namespace stx {
 
 template<typename Iterator, typename Compare>
-void InsertionSort(Iterator begin, Iterator end, Compare compare)
+void InsertionSort(Iterator begin, Iterator end, Compare&& compare)
 {
 	if (begin == end) {
 		return;
@@ -22,14 +22,14 @@ void InsertionSort(Iterator begin, Iterator end, Compare compare)
 
 		while (pos != begin)
 		{
-			if (compare(*iter, *pos)) {
+			if (std::forward<Compare>(compare)(*iter, *pos)) {
 				--pos;
 			} else {
 				break;
 			}
 		}
 
-		if (pos != begin || !compare(*iter, *pos)) {
+		if (pos != begin || !std::forward<Compare>(compare)(*iter, *pos)) {
 			++pos;
 		}
 
@@ -47,6 +47,6 @@ void InsertionSort(Iterator begin, Iterator end)
 	stx::InsertionSort(begin, end, stx::Less());
 }
 
-}
+}/*end of stx namespace*/
 
 #endif

@@ -8,10 +8,10 @@ namespace stx {
 template<typename InputIterator, typename OutputIterator, typename UnaryFunction>
 OutputIterator Transform(InputIterator begin, InputIterator end,
                          OutputIterator output,
-                         UnaryFunction transform)
+                         UnaryFunction&& transform)
 {
 	while (begin != end) {
-		*output = transform(*begin);
+		*output = std::forward<UnaryFunction>(transform)(*begin);
 		++begin;
 		++output;
 	}
@@ -31,12 +31,12 @@ OutputIterator Transform(InputIterator begin, InputIterator end,
 template<typename InputIterator, typename OutputIterator, typename UnaryIndexedFunction>
 OutputIterator TransformIndexed(InputIterator begin, InputIterator end,
                                 OutputIterator output,
-                                UnaryIndexedFunction transform)
+                                UnaryIndexedFunction&& transform)
 {
 	stx::IteratorDifference<InputIterator> index = 0;
 
 	while (begin != end) {
-		*output = transform(*begin, index);
+		*output = std::forward<UnaryIndexedFunction>(transform)(*begin, index);
 		++begin;
 		++index;
 		++output;

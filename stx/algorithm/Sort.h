@@ -9,7 +9,7 @@
 namespace stx {
 
 template<typename Iterator, typename Compare>
-Iterator FindSortedEnd(Iterator begin, Iterator end, Compare compare)
+Iterator FindSortedEnd(Iterator begin, Iterator end, Compare&& compare)
 {
 	if (begin == end) {
 		return end;
@@ -18,7 +18,7 @@ Iterator FindSortedEnd(Iterator begin, Iterator end, Compare compare)
 	auto next = begin;
 	++next;
 	while (next != end) {
-		if (compare(*next, *begin)) {
+		if (std::forward<Compare>(compare)(*next, *begin)) {
 			return next;
 		}
 		++next;
@@ -35,9 +35,9 @@ Iterator FindSortedEnd(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-bool IsSorted(Iterator begin, Iterator end, Compare compare)
+bool IsSorted(Iterator begin, Iterator end, Compare&& compare)
 {
-	return stx::FindSortedEnd(begin, end, compare) == end;
+	return stx::FindSortedEnd(begin, end, std::forward<Compare>(compare)) == end;
 }
 
 template<typename Iterator>
@@ -47,7 +47,7 @@ bool IsSorted(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void Sort(Iterator begin, Iterator end, Compare compare)
+void Sort(Iterator begin, Iterator end, Compare&& compare)
 {
 	using std::advance;
 	using std::distance;
@@ -67,10 +67,10 @@ void Sort(Iterator begin, Iterator end, Compare compare)
 	--e;
 
 	while (b != e) {
-		while (b != e && compare(*b, *begin)) {
+		while (b != e && std::forward<Compare>(compare)(*b, *begin)) {
 			++b;
 		}
-		while (b != e && !compare(*e, *begin)) {
+		while (b != e && !std::forward<Compare>(compare)(*e, *begin)) {
 			--e;
 		}
 
@@ -83,12 +83,13 @@ void Sort(Iterator begin, Iterator end, Compare compare)
 			--e;
 		}
 	}
-	if (compare(*b, *begin)) {
+
+	if (std::forward<Compare>(compare)(*b, *begin)) {
 		++b;
 	}
 
-	stx::Sort(begin, b, compare);
-	stx::Sort(b, end, compare);
+	stx::Sort(begin, b, std::forward<Compare>(compare));
+	stx::Sort(b, end, std::forward<Compare>(compare));
 }
 
 template<typename Iterator>
@@ -98,7 +99,7 @@ void Sort(Iterator begin, Iterator end)
 }
 
 template<typename Iterator, typename Compare>
-void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare compare)
+void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare&& compare)
 {
 	using std::distance;
 	using std::advance;
@@ -109,7 +110,7 @@ void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare compare)
 
 	auto iter = middle;
 	while (iter != end) {
-		if (compare(*iter, *begin)) {
+		if (std::forward<Compare>(compare)(*iter, *begin)) {
 			stx::SwapPointee(iter, begin);
 			/*sift 'begin' down*/
 			stx::IteratorDifference<Iterator> currentIndex = 0;
@@ -124,8 +125,8 @@ void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare compare)
 				auto rightChild = leftChild;
 				++rightChild;
 
-				if (compare(*current, *leftChild)) {
-					if (compare(*leftChild, *rightChild)) {
+				if (std::forward<Compare>(compare)(*current, *leftChild)) {
+					if (std::forward<Compare>(compare)(*leftChild, *rightChild)) {
 						stx::SwapPointee(current, rightChild);
 						currentIndex = rightChildIndex;
 						current = rightChild;
@@ -135,7 +136,7 @@ void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare compare)
 						current = leftChild;
 					}
 				} else {
-					if (compare(*current, *rightChild)) {
+					if (std::forward<Compare>(compare)(*current, *rightChild)) {
 						stx::SwapPointee(current, rightChild);
 						currentIndex = rightChildIndex;
 						current = rightChild;
@@ -160,7 +161,7 @@ void PartialSort(Iterator begin, Iterator middle, Iterator end)
 template<typename Iterator1, typename Iterator2, typename Compare>
 Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
                               Iterator2 outBegin, Iterator2 outEnd,
-                              Compare compare)
+                              Compare&& compare)
 {
 	using std::distance;
 	using std::advance;
@@ -179,7 +180,7 @@ Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
 	auto lastParentIndex = detail::HeapParent(heapDistance - 1);
 
 	while (iter1 != end) {
-		if (compare(*iter1, *outBegin)) {
+		if (std::forward<Compare>(compare)(*iter1, *outBegin)) {
 			*outBegin = *iter1;
 			/*sift 'outBegin' down*/
 			stx::IteratorDifference<Iterator2> currentIndex = 0;
@@ -194,8 +195,8 @@ Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
 				auto rightChild = leftChild;
 				++rightChild;
 
-				if (compare(*current, *leftChild)) {
-					if (compare(*leftChild, *rightChild)) {
+				if (std::forward<Compare>(compare)(*current, *leftChild)) {
+					if (std::forward<Compare>(compare)(*leftChild, *rightChild)) {
 						stx::SwapPointee(current, rightChild);
 						currentIndex = rightChildIndex;
 						current = rightChild;
@@ -205,7 +206,7 @@ Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
 						current = leftChild;
 					}
 				} else {
-					if (compare(*current, *rightChild)) {
+					if (std::forward<Compare>(compare)(*current, *rightChild)) {
 						stx::SwapPointee(current, rightChild);
 						currentIndex = rightChildIndex;
 						current = rightChild;
@@ -231,7 +232,7 @@ Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
 }
 
 template<typename Iterator, typename Compare>
-void StableSort(Iterator begin, Iterator end, Compare compare)
+void StableSort(Iterator begin, Iterator end, Compare&& compare)
 {
 }
 

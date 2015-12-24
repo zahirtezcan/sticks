@@ -1,15 +1,16 @@
 #ifndef STX_ALGORITHM_FIND_H
 #define STX_ALGORITHM_FIND_H
 
+#include <utility>
 #include <stx/utility/Equals.h>
 
 namespace stx {
 
 template<typename Iterator, typename UnaryPredicate>
-Iterator Find(Iterator begin, Iterator end, UnaryPredicate check)
+Iterator Find(Iterator begin, Iterator end, UnaryPredicate&& check)
 {
 	while (begin != end) {
-		if (check(*begin)) {
+		if (std::forward<UnaryPredicate>(check)(*begin)) {
 			return begin;
 		}
 
@@ -33,6 +34,26 @@ Iterator FindValue(Iterator begin, Iterator end, const T& value)
 	return end;
 }
 
+template<typename Iterator, typename ValueIterator, typename BinaryPredicate>
+Iterator FindAny(Iterator begin, Iterator end,
+                 ValueIterator valueBegin, ValueIterator valueEnd,
+                 BinaryPredicate&& equals)
+{
+	while (begin != end) {
+		auto valueIter = valueBegin;
+		while (valueIter != valueEnd) {
+			if (std::forward<BinaryPredicate>(equals)(*begin, *valueIter)) {
+				return begin;
+			}
+			++valueIter;
+		}
+
+		++begin;
+	}
+
+	return end;
+}
+
 template<typename Iterator, typename ValueIterator>
 Iterator FindAny(Iterator begin, Iterator end,
                  ValueIterator valueBegin, ValueIterator valueEnd)
@@ -41,17 +62,25 @@ Iterator FindAny(Iterator begin, Iterator end,
 }
 
 template<typename Iterator, typename ValueIterator, typename BinaryPredicate>
-Iterator FindAny(Iterator begin, Iterator end,
-                 ValueIterator valueBegin, ValueIterator valueEnd,
-                 BinaryPredicate equals)
+Iterator FindSequence(Iterator begin, Iterator end,
+                      ValueIterator seqBegin, ValueIterator seqEnd,
+                      BinaryPredicate&& equals)
 {
 	while (begin != end) {
-		auto valueIter = valueBegin;
-		while (valueIter != valueEnd) {
-			if (equals(*begin, *valueIter)) {
+		auto srcIter = begin;
+		
+		auto seqIter = seqBegin;
+		while (true) {
+			if (seqIter == seqEnd) {
 				return begin;
+			} else if (srcIter == end) {
+				return end;
+			} else if (!std::forward<BinaryPredicate>(equals)(*srcIter, *seqIter)) {
+				break;
 			}
-			++valueIter;
+
+			++seqIter;
+			++srcIter;
 		}
 
 		++begin;
@@ -69,44 +98,9 @@ Iterator FindSequence(Iterator begin, Iterator end,
 }
 
 template<typename Iterator, typename ValueIterator, typename BinaryPredicate>
-Iterator FindSequence(Iterator begin, Iterator end,
-                      ValueIterator seqBegin, ValueIterator seqEnd,
-                      BinaryPredicate equals)
-{
-	while (begin != end) {
-		auto srcIter = begin;
-		
-		auto seqIter = seqBegin;
-		while (true) {
-			if (seqIter == seqEnd) {
-				return begin;
-			} else if (srcIter == end) {
-				return end;
-			} else if (!equals(*srcIter, *seqIter)) {
-				break;
-			}
-
-			++seqIter;
-			++srcIter;
-		}
-
-		++begin;
-	}
-
-	return end;
-}
-
-template<typename Iterator, typename ValueIterator>
-Iterator FindLastSequence(Iterator begin, Iterator end,
-                          ValueIterator seqBegin, ValueIterator seqEnd)
-{
-	return FindLastSequence(begin, end, seqBegin, seqEnd, stx::Equals());
-}
-
-template<typename Iterator, typename ValueIterator, typename BinaryPredicate>
 Iterator FindLastSequence(Iterator begin, Iterator end,
                           ValueIterator seqBegin, ValueIterator seqEnd,
-                          BinaryPredicate equals)
+                          BinaryPredicate&& equals)
 {
 	/*TODO: If iterators are bidirectional, we can just use one FindSequence with reverese iterators*/
 	if (seqBegin == seqEnd) {
@@ -116,7 +110,8 @@ Iterator FindLastSequence(Iterator begin, Iterator end,
 	auto result = end;
 
 	while (true) {
-		auto current = FindSequence(begin, end, seqBegin, seqEnd, equals);
+		auto current = FindSequence(begin, end, seqBegin, seqEnd,
+		                            std::forward<BinaryPredicate>(equals));
 
 		if (current == end) {
 			break;
@@ -130,17 +125,17 @@ Iterator FindLastSequence(Iterator begin, Iterator end,
 	return result;
 }
 
-template<typename Iterator, typename Size, typename T>
-Iterator FindRepitition(Iterator begin, Iterator end,
-                        Size count, const T& value)
+template<typename Iterator, typename ValueIterator>
+Iterator FindLastSequence(Iterator begin, Iterator end,
+                          ValueIterator seqBegin, ValueIterator seqEnd)
 {
-	return FindRepitition(begin, end, count, value, stx::Equals());
+	return FindLastSequence(begin, end, seqBegin, seqEnd, stx::Equals());
 }
 
 template<typename Iterator, typename Size, typename T, typename BinaryPredicate>
 Iterator FindRepitition(Iterator begin, Iterator end,
                         Size count, const T& value,
-			BinaryPredicate equals)
+			BinaryPredicate&& equals)
 {
 	while (begin != end) {
 		auto srcIter = begin;
@@ -151,7 +146,7 @@ Iterator FindRepitition(Iterator begin, Iterator end,
 				return begin;
 			} else if (srcIter == end) {
 				return end;
-			} else if (!equals(*srcIter, value)) {
+			} else if (!std::forward<BinaryPredicate>(equals)(*srcIter, value)) {
 				begin = srcIter;
 				break;
 			}
@@ -166,14 +161,15 @@ Iterator FindRepitition(Iterator begin, Iterator end,
 	return end;
 }
 
-template<typename Iterator>
-Iterator FindAdjacent(Iterator begin, Iterator end)
+template<typename Iterator, typename Size, typename T>
+Iterator FindRepitition(Iterator begin, Iterator end,
+                        Size count, const T& value)
 {
-	return FindAdjacent(begin, end, stx::Equals());
+	return FindRepitition(begin, end, count, value, stx::Equals());
 }
 
 template<typename Iterator, typename BinaryPredicate>
-Iterator FindAdjacent(Iterator begin, Iterator end, BinaryPredicate equals)
+Iterator FindAdjacent(Iterator begin, Iterator end, BinaryPredicate&& equals)
 {
 	if (begin == end) {
 		return end;
@@ -182,7 +178,7 @@ Iterator FindAdjacent(Iterator begin, Iterator end, BinaryPredicate equals)
 	auto next = begin;
 	++next;
 	while (next != end) {
-		if (equals(*begin, *next)) {
+		if (std::forward<BinaryPredicate>(equals)(*begin, *next)) {
 			return begin;
 		}
 		++begin;
@@ -192,6 +188,11 @@ Iterator FindAdjacent(Iterator begin, Iterator end, BinaryPredicate equals)
 	return end;
 }
 
+template<typename Iterator>
+Iterator FindAdjacent(Iterator begin, Iterator end)
+{
+	return FindAdjacent(begin, end, stx::Equals());
+}
 
 }/*end of stx namespace*/
 
