@@ -115,36 +115,11 @@ void PartialSort(Iterator begin, Iterator middle, Iterator end, Compare&& compar
 			/*sift 'begin' down*/
 			stx::IteratorDifference<Iterator> currentIndex = 0;
 			Iterator current = begin;
-			/* sift down current */
-			while (currentIndex <= lastParentIndex) {
-				auto leftChildIndex = detail::HeapLeftChild(currentIndex);
-				auto leftChild = current;
-				advance(leftChild, leftChildIndex - currentIndex);
-			
-				auto rightChildIndex = leftChildIndex + 1;
-				auto rightChild = leftChild;
-				++rightChild;
 
-				if (std::forward<Compare>(compare)(*current, *leftChild)) {
-					if (std::forward<Compare>(compare)(*leftChild, *rightChild)) {
-						stx::SwapPointee(current, rightChild);
-						currentIndex = rightChildIndex;
-						current = rightChild;
-					} else {
-						stx::SwapPointee(current, leftChild);
-						currentIndex = leftChildIndex;
-						current = leftChild;
-					}
-				} else {
-					if (std::forward<Compare>(compare)(*current, *rightChild)) {
-						stx::SwapPointee(current, rightChild);
-						currentIndex = rightChildIndex;
-						current = rightChild;
-					} else {
-						break;
-					}
-				}
-			}
+			detail::SiftDown(current, currentIndex,
+			                 lastParentIndex,
+					 middle,
+					 std::forward<Compare>(compare));	
 		}
 		++iter;
 	}
@@ -185,36 +160,11 @@ Iterator2 CopyPartiallySorted(Iterator1 begin, Iterator1 end,
 			/*sift 'outBegin' down*/
 			stx::IteratorDifference<Iterator2> currentIndex = 0;
 			Iterator2 current = outBegin;
-			/* sift down current */
-			while (currentIndex <= lastParentIndex) {
-				auto leftChildIndex = detail::HeapLeftChild(currentIndex);
-				auto leftChild = current;
-				advance(leftChild, leftChildIndex - currentIndex);
-			
-				auto rightChildIndex = leftChildIndex + 1;
-				auto rightChild = leftChild;
-				++rightChild;
 
-				if (std::forward<Compare>(compare)(*current, *leftChild)) {
-					if (std::forward<Compare>(compare)(*leftChild, *rightChild)) {
-						stx::SwapPointee(current, rightChild);
-						currentIndex = rightChildIndex;
-						current = rightChild;
-					} else {
-						stx::SwapPointee(current, leftChild);
-						currentIndex = leftChildIndex;
-						current = leftChild;
-					}
-				} else {
-					if (std::forward<Compare>(compare)(*current, *rightChild)) {
-						stx::SwapPointee(current, rightChild);
-						currentIndex = rightChildIndex;
-						current = rightChild;
-					} else {
-						break;
-					}
-				}
-			}
+			detail::SiftDown(current, currentIndex,
+			                 lastParentIndex,
+					 outEnd,
+					 std::forward<Compare>(compare));
 		}
 		++iter1;
 	}
