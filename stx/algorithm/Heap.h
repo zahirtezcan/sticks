@@ -27,6 +27,49 @@ Difference HeapParent(Difference d)
 	return (d - 1) / 2;
 }
 
+template<typename Iterator, typename Difference, typename Compare>
+void SiftDown(Iterator item, Difference itemIndex,
+              Difference lastParentIndex,
+	      Iterator end,
+	      Compare&& compare)
+{
+	using std::advance;
+
+	auto currentIndex = itemIndex;
+	auto current = item;
+	while (currentIndex <= lastParentIndex) {
+		auto leftChildIndex = HeapLeftChild(currentIndex);
+		auto leftChild = current;
+		advance(leftChild, leftChildIndex - currentIndex);
+	
+		auto rightChildIndex = leftChildIndex + 1;
+		auto rightChild = leftChild;
+		++rightChild;
+
+		if (std::forward<Compare>(compare)(*current, *leftChild)) {
+			if (rightChild != end
+			 && std::forward<Compare>(compare)(*leftChild, *rightChild)) {
+				stx::SwapPointee(current, rightChild);
+				currentIndex = rightChildIndex;
+				current = rightChild;
+			} else {
+				stx::SwapPointee(current, leftChild);
+				currentIndex = leftChildIndex;
+				current = leftChild;
+			}
+		} else {
+			if (rightChild != end
+			 && std::forward<Compare>(compare)(*current, *rightChild)) {
+				stx::SwapPointee(current, rightChild);
+				currentIndex = rightChildIndex;
+				current = rightChild;
+			} else {
+				break;
+			}
+		}
+	}
+}
+
 } /* end of detail namespace */
 
 template<typename Iterator, typename Compare>
@@ -86,50 +129,22 @@ void MakeHeap(Iterator begin, Iterator end, Compare&& compare)
 		return;
 	}
 	
-	--end;
-	if (begin == end) {
+	auto length = distance(begin, end);
+	if (length == 1) {
 		return;
 	}
-	auto lastIndex = distance(begin, end);
-	auto lastParentIndex = detail::HeapParent(lastIndex);
+
+	auto lastParentIndex = detail::HeapParent(length - 1);
 
 	auto parent = begin;
 	advance(parent, lastParentIndex);
 	auto parentIndex = lastParentIndex;
 	
 	while (true) {
-		auto currentIndex = parentIndex;
-		auto current = parent;
-		/* sift down current */
-		while (currentIndex <= lastParentIndex) {
-			auto leftChildIndex = detail::HeapLeftChild(currentIndex);
-			auto leftChild = current;
-			advance(leftChild, leftChildIndex - currentIndex);
-		
-			auto rightChildIndex = leftChildIndex + 1;
-			auto rightChild = leftChild;
-			++rightChild;
-
-			if (std::forward<Compare>(compare)(*current, *leftChild)) {
-				if (std::forward<Compare>(compare)(*leftChild, *rightChild)) {
-					stx::SwapPointee(current, rightChild);
-					currentIndex = rightChildIndex;
-					current = rightChild;
-				} else {
-					stx::SwapPointee(current, leftChild);
-					currentIndex = leftChildIndex;
-					current = leftChild;
-				}
-			} else {
-				if (std::forward<Compare>(compare)(*current, *rightChild)) {
-					stx::SwapPointee(current, rightChild);
-					currentIndex = rightChildIndex;
-					current = rightChild;
-				} else {
-					break;
-				}
-			}
-		}
+		detail::SiftDown(parent, parentIndex,
+		                 lastParentIndex,
+				 end,
+				 std::forward<Compare>(compare));
 
 		if (parent == begin) {
 			break;
@@ -206,37 +221,11 @@ void PopHeap(Iterator begin, Iterator end, Compare&& compare)
 
 	auto parent = begin;
 	auto parentIndex = distance(begin, parent);
-	/* sift down parent */
-	while (parentIndex <= lastParentIndex) {	
-		auto leftChildIndex = detail::HeapLeftChild(parentIndex);
-		auto leftChild = parent;
-		advance(leftChild, leftChildIndex - parentIndex);
-		
-		auto rightChild = leftChild;
-		++rightChild;
-		if (std::forward<Compare>(compare)(*parent, *leftChild)) {
-			if (rightChild != end
-			 && std::forward<Compare>(compare)(*leftChild, *rightChild)) {
-				stx::SwapPointee(parent, rightChild);
-				parent = rightChild;
-				parentIndex = leftChildIndex + 1;
-			}
-			else {
-				stx::SwapPointee(parent, leftChild);
-				parent = leftChild;
-				parentIndex = leftChildIndex;
-			}
-		} else {
-			if (rightChild != end
-			 && std::forward<Compare>(compare)(*parent, *rightChild)) {
-				stx::SwapPointee(parent, rightChild);
-				parent = rightChild;
-				parentIndex = leftChildIndex + 1;
-			} else {
-				return;
-			}
-		}
-	}
+	detail::SiftDown(parent, parentIndex,
+	                 lastParentIndex,
+			 end,
+			 std::forward<Compare>(compare));
+
 	/* instead of inlining the sift operation we might have used a method
 	 * but copying compare may be costly. We can use a reference to
 	 * compare object as well but will that be a usual reference or
