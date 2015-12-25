@@ -1,5 +1,4 @@
 
-centralize sift-down operation for heap related algorithms (functions in heap.h and sort.h)
 stable sort
 nlogn merge-inplace 
 

@@ -225,13 +225,6 @@ void PopHeap(Iterator begin, Iterator end, Compare&& compare)
 	                 lastParentIndex,
 			 end,
 			 std::forward<Compare>(compare));
-
-	/* instead of inlining the sift operation we might have used a method
-	 * but copying compare may be costly. We can use a reference to
-	 * compare object as well but will that be a usual reference or
-	 * are we allowed to use const reference etc.
-	 *     Same thing applies for MakeHeap function template too.
-	 */
 }
 
 template<typename Iterator>
