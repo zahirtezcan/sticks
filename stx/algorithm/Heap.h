@@ -2,7 +2,7 @@
 #define STX_ALGORITHM_HEAP_H
 
 #include <utility>
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/SwapPointee.h>
 

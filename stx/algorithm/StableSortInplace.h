@@ -1,7 +1,7 @@
 #ifndef STX_ALGORITHM_STABLESORTINPLACE_H
 #define STX_ALGORITHM_STABLESORTINPLACE_H
 
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/InsertionSort.h>
 #include <stx/algorithm/MergeInplace.h>

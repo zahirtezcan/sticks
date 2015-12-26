@@ -1,7 +1,7 @@
 #ifndef STX_ALGORITHM_REMOVE_H
 #define STX_ALGORITHM_REMOVE_H
 
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 #include <stx/utility/Equals.h>
 
 namespace stx {

@@ -2,7 +2,7 @@
 #define STX_ALGORITHM_COUNT_H
 
 #include <utility>
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 
 namespace stx {
 

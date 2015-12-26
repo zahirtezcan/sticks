@@ -75,7 +75,7 @@ TestReverse.o: ../stx/algorithm/Reverse.h ../stx/algorithm/SwapPointee.h
 
 TestGenerate.o: ../stx/algorithm/Generate.h
 
-TestCount.o: ../stx/algorithm/Count.h ../stx/Iterator.h
+TestCount.o: ../stx/algorithm/Count.h ../stx/utility/Iterator.h
 
 TestPartition.o: ../stx/algorithm/Partition.h ../stx/algorithm/Rotate.h
 
@@ -85,9 +85,9 @@ TestFind.o: ../stx/algorithm/Find.h
 
 TestReplace.o: ../stx/algorithm/Replace.h
 
-TestForEach.o: ../stx/algorithm/ForEach.h ../stx/Iterator.h
+TestForEach.o: ../stx/algorithm/ForEach.h ../stx/utility/Iterator.h
 
-TestTransform.o: ../stx/algorithm/Transform.h ../stx/Iterator.h
+TestTransform.o: ../stx/algorithm/Transform.h ../stx/utility/Iterator.h
 
 TestRemove.o: ../stx/algorithm/Remove.h ../stx/utility/Equals.h
 
@@ -99,13 +99,13 @@ TestFill.o: ../stx/algorithm/Fill.h ../stx/utility/Equals.h
 
 TestSwapRanges.o: ../stx/algorithm/SwapRanges.h ../stx/algorithm/SwapPointee.h
 
-TestBinarySearch.o: ../stx/algorithm/BinarySearch.h ../stx/Iterator.h ../stx/utility/Compare.h
+TestBinarySearch.o: ../stx/algorithm/BinarySearch.h ../stx/utility/Iterator.h ../stx/utility/Compare.h
 
 TestMinMax.o: ../stx/algorithm/MinMax.h ../stx/utility/Compare.h
 
 TestLexicographicalCompare.o: ../stx/algorithm/LexicographicalCompare.h ../stx/utility/Compare.h
 
-TestPermutation.o: ../stx/algorithm/Permutation.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Reverse.h ../stx/utility/Compare.h ../stx/utility/Equals.h ../stx/algorithm/Count.h ../stx/algorithm/Find.h 
+TestPermutation.o: ../stx/algorithm/Permutation.h ../stx/utility/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Reverse.h ../stx/utility/Compare.h ../stx/utility/Equals.h ../stx/algorithm/Count.h ../stx/algorithm/Find.h 
 
 TestAccumulate.o: ../stx/algorithm/Accumulate.h
 
@@ -127,11 +127,11 @@ TestSortedUnion.o: ../stx/algorithm/SortedUnion.h ../stx/utility/Compare.h ../st
 
 TestSortedSymmetricDifference.o: ../stx/algorithm/SortedSymmetricDifference.h ../stx/utility/Compare.h ../stx/algorithm/Copy.h
 
-TestHeap.o: ../stx/algorithm/Heap.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h
+TestHeap.o: ../stx/algorithm/Heap.h ../stx/utility/Compare.h ../stx/utility/Iterator.h ../stx/algorithm/SwapPointee.h
 
-TestSort.o: ../stx/algorithm/Sort.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Heap.h
+TestSort.o: ../stx/algorithm/Sort.h ../stx/utility/Compare.h ../stx/utility/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Heap.h
 
-TestNthElement.o: ../stx/algorithm/NthElement.h ../stx/utility/Compare.h ../stx/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Partition.h
+TestNthElement.o: ../stx/algorithm/NthElement.h ../stx/utility/Compare.h ../stx/utility/Iterator.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Partition.h
 
 TestMergeInplace.o: ../stx/algorithm/MergeInplace.h ../stx/utility/Compare.h ../stx/algorithm/Rotate.h ../stx/algorithm/SwapPointee.h ../stx/algorithm/Sort.h
 

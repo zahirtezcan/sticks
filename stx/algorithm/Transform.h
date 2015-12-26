@@ -1,7 +1,7 @@
 #ifndef STX_ALGORITHM_TRANSFORM_H
 #define STX_ALGORITHM_TRANSFORM_H
 
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 
 namespace stx {
 

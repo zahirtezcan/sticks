@@ -1,7 +1,7 @@
 #ifndef STX_ALGORITHM_NTHELEMENT_H
 #define STX_ALGORITHM_NTHELEMENT_H
 
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/SwapPointee.h>
 #include <stx/algorithm/Partition.h>

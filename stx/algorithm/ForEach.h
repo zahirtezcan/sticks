@@ -1,7 +1,7 @@
 #ifndef STX_ALGORITHM_FOREACH_H
 #define STX_ALGORITHM_FOREACH_H
 
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 
 namespace stx {
 

@@ -1,7 +1,7 @@
 #ifndef STX_ALGORITHM_GENERATE_H
 #define STX_ALGORITHM_GENERATE_H
 
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 
 namespace stx {
 

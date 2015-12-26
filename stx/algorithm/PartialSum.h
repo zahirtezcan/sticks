@@ -2,7 +2,7 @@
 #define STX_ALGORITHM_PARTIALSUM_H
 
 #include <utility>
-#include <stx/Iterator.h>
+#include <stx/utility/Iterator.h>
 #include <stx/utility/Arithmetic.h>
 
 namespace stx {
