@@ -40,7 +40,8 @@ all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
-tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE) TestCopy$(EXE)
+tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
+tests: TestCopy$(EXE) TestCopyDistinct$(EXE)
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
 tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
@@ -54,7 +55,8 @@ outputDirectories:
 
 TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.o TestMinMax.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
-TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o TestCopy.o 
+TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o
+TestAllAlgorithms$(EXE): TestCopy.o TestCopyDistinct.o
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
 TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o TestSortedDifference.o
@@ -91,7 +93,8 @@ TestTransform.o: ../stx/algorithm/Transform.h ../stx/utility/Iterator.h
 
 TestRemove.o: ../stx/algorithm/Remove.h ../stx/utility/Equals.h
 
-TestCopy.o: ../stx/algorithm/Copy.h ../stx/utility/Equals.h ../stx/algorithm/Find.h
+TestCopy.o: ../stx/algorithm/Copy.h ../stx/utility/Equals.h 
+TestCopyDistinct.o: ../stx/algorithm/CopyDistinct.h ../stx/utility/Equals.h ../stx/algorithm/Find.h
 
 TestMove.o: ../stx/algorithm/Move.h ../stx/utility/Equals.h ../stx/algorithm/Find.h
 
