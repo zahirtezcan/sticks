@@ -1,5 +1,5 @@
-#ifndef STX_ALGORITHM_COPY_H
-#define STX_ALGORITHM_COPY_H
+#ifndef STX_ALGORITHM_COPYDISTINCT_H
+#define STX_ALGORITHM_COPYDISTINCT_H
 
 #include <stx/algorithm/Find.h>
 #include <stx/utility/Equals.h>

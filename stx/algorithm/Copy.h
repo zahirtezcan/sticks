@@ -98,38 +98,6 @@ std::pair<OutputIterator1, OutputIterator2>
 	return { trueOutput, falseOutput };
 }
 
-template<typename Iterator, typename OutputIterator>
-OutputIterator CopyReversed(Iterator begin, Iterator end,
-                            OutputIterator output)
-{
-	while (begin != end) {
-		--end;
-		*output = *end;
-		++output;
-	}
-
-	return output;
-}
-
-template<typename Iterator, typename OutputIterator, typename UnaryPredicate, typename T>
-OutputIterator CopyReplaced(Iterator begin, Iterator end,
-                            OutputIterator output,
-                            UnaryPredicate&& check,
-			    const T& newValue)
-{
-	while (begin != end) {
-		if (std::forward<UnaryPredicate>(check)(*begin)) {
-			*output = newValue;
-		} else {
-			*output = *begin;
-		}
-		++output;
-		++begin;
-	}
-
-	return output;
-}
-
 }/*end of stx namespace*/
 
 #endif
