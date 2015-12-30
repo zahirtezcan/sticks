@@ -42,6 +42,7 @@ tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
 tests: TestCopy$(EXE) TestCopyDistinct$(EXE) TestCopyReplaced$(EXE) TestCopyReversed$(EXE) TestCopyPartitioned$(EXE)
+tests: TestCopyRotated$(EXE)
 tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
 tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
@@ -57,6 +58,7 @@ TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o
 TestAllAlgorithms$(EXE): TestCopy.o TestCopyDistinct.o TestCopyReplaced.o TestCopyReversed.o TestCopyPartitioned.o
+TestAllAlgorithms$(EXE): TestCopyRotated.o
 TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
 TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o TestSortedDifference.o
@@ -98,6 +100,7 @@ TestCopyDistinct.o: ../stx/algorithm/CopyDistinct.h ../stx/utility/Equals.h ../s
 TestCopyReplaced.o: ../stx/algorithm/CopyReplaced.h ../stx/utility/Equals.h 
 TestCopyReversed.o: ../stx/algorithm/CopyReversed.h
 TestCopyPartitioned.o: ../stx/algorithm/CopyPartitioned.h
+TestCopyRotated.o: ../stx/algorithm/CopyRotated.h ../stx/algorithm/Copy.h ../stx/utility/Equals.h
 
 TestMove.o: ../stx/algorithm/Move.h ../stx/utility/Equals.h ../stx/algorithm/Find.h
 

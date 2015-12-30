@@ -64,16 +64,6 @@ OutputIterator CopyIf(Iterator begin, Iterator end,
 	return output;
 }
 
-template<typename Iterator, typename OutputIterator>
-OutputIterator CopyRotated(Iterator begin, Iterator newBegin, Iterator end,
-                           OutputIterator output)
-{
-	output = stx::Copy(newBegin, end, output);
-	output = stx::Copy(begin, newBegin, output);
-
-	return output;
-}
-
 }/*end of stx namespace*/
 
 #endif
