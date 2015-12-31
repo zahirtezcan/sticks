@@ -1,6 +1,7 @@
 #ifndef STX_ALGORITHM_SORTEDDIFFERENCE_H
 #define STX_ALGORITHM_SORTEDDIFFERENCE_H
 
+#include <utility>
 #include <stx/utility/Compare.h>
 #include <stx/algorithm/Copy.h>
 
