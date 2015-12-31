@@ -1,7 +1,6 @@
 #ifndef STX_ALGORITHM_COPY_H
 #define STX_ALGORITHM_COPY_H
 
-#include <stx/utility/Equals.h>
 #include <utility>
 
 namespace stx {
@@ -46,22 +45,6 @@ BidirectionalIterator CopyBackward(Iterator begin, Iterator end,
 	}
 
 	return outputEnd;
-}
-
-template<typename Iterator, typename OutputIterator, typename UnaryPredicate>
-OutputIterator CopyIf(Iterator begin, Iterator end,
-                      OutputIterator output,
-                      UnaryPredicate&& check)
-{
-	while (begin != end) {
-		if (std::forward<UnaryPredicate>(check)(*begin)) {
-			*output = *begin;
-			++output;
-		}
-		++begin;
-	}
-
-	return output;
 }
 
 }/*end of stx namespace*/
