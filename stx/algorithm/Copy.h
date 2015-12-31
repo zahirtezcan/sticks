@@ -34,19 +34,6 @@ OutputIterator CopyN(Iterator begin, Size count, OutputIterator output)
 	return output;
 }
 
-template<typename Iterator, typename BidirectionalIterator>
-BidirectionalIterator CopyBackward(Iterator begin, Iterator end,
-                                   BidirectionalIterator outputEnd)
-{
-	while (begin != end) {
-		--end;
-		--outputEnd;
-		*outputEnd = *end;
-	}
-
-	return outputEnd;
-}
-
 }/*end of stx namespace*/
 
 #endif
