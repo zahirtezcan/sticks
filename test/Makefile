@@ -43,8 +43,8 @@ tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqu
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
 tests: TestCopy$(EXE) TestCopyDistinct$(EXE) TestCopyReplaced$(EXE) TestCopyReversed$(EXE) TestCopyPartitioned$(EXE)
 tests: TestCopyRotated$(EXE) TestCopyIf$(EXE) TestCopyBackward$(EXE) TestCopyN$(EXE)
-tests: TestEqualRange$(EXE) TestUpperBound$(EXE)
-tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestBinarySearch$(EXE) TestMinMax$(EXE)
+tests: TestEqualRange$(EXE) TestUpperBound$(EXE) TestLowerBound$(EXE) TestBinarySearch$(EXE)
+tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
 tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
 tests: TestSortedDifference$(EXE) TestSortedIntersection$(EXE) TestSortedUnion$(EXE) TestSortedSymmetricDifference$(EXE)
@@ -60,8 +60,8 @@ TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMis
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o
 TestAllAlgorithms$(EXE): TestCopy.o TestCopyDistinct.o TestCopyReplaced.o TestCopyReversed.o TestCopyPartitioned.o
 TestAllAlgorithms$(EXE): TestCopyRotated.o TestCopyIf.o TestCopyBackward.o TestCopyN.o
-TestAllAlgorithms$(EXE): TestEqualRange.o TestUpperBound.o
-TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestBinarySearch.o TestLexicographicalCompare.o
+TestAllAlgorithms$(EXE): TestEqualRange.o TestUpperBound.o TestLowerBound.o TestBinarySearch.o
+TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestLexicographicalCompare.o
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
 TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o TestSortedDifference.o
 TestAllAlgorithms$(EXE): TestSortedIntersection.o TestSortedUnion.o TestSortedSymmetricDifference.o
@@ -113,9 +113,10 @@ TestFill.o: ../stx/algorithm/Fill.h ../stx/utility/Equals.h
 
 TestSwapRanges.o: ../stx/algorithm/SwapRanges.h ../stx/algorithm/SwapPointee.h
 
-TestBinarySearch.o: ../stx/algorithm/BinarySearch.h ../stx/utility/Iterator.h ../stx/utility/Compare.h
+TestBinarySearch.o: ../stx/algorithm/BinarySearch.h ../stx/algorithm/LowerBound.h ../stx/utility/Compare.h
 TestEqualRange.o: ../stx/algorithm/EqualRange.h ../stx/algorithm/UpperBound.h ../stx/algorithm/BinarySearch.h ../stx/utility/Compare.h
 TestUpperBound.o: ../stx/algorithm/UpperBound.h ../stx/utility/Iterator.h ../stx/utility/Compare.h
+TestLowerBound.o: ../stx/algorithm/LowerBound.h ../stx/utility/Iterator.h ../stx/utility/Compare.h
 
 TestMinMax.o: ../stx/algorithm/MinMax.h ../stx/utility/Compare.h
 

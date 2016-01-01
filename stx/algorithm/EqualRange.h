@@ -3,7 +3,7 @@
 
 #include <utility>
 #include <stx/utility/Compare.h>
-#include <stx/algorithm/BinarySearch.h>
+#include <stx/algorithm/LowerBound.h>
 #include <stx/algorithm/UpperBound.h>
 
 namespace stx {
