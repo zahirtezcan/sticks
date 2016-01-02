@@ -38,7 +38,7 @@ all: tests
 %.o : algorithm/%.cpp
 	$(COMPILE.cpp) $<
 
-tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestGenerate$(EXE)
+tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestCountValue$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
 tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
 tests: TestCopy$(EXE) TestCopyDistinct$(EXE) TestCopyReplaced$(EXE) TestCopyReversed$(EXE) TestCopyPartitioned$(EXE)
@@ -55,7 +55,7 @@ outputDirectories:
 	@$(MKDIR) $(ObjDir)
 	@$(MKDIR) $(BinDir)
 
-TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestGenerate.o TestReverse.o TestMinMax.o
+TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestCountValue.o TestGenerate.o TestReverse.o TestMinMax.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o
 TestAllAlgorithms$(EXE): TestCopy.o TestCopyDistinct.o TestCopyReplaced.o TestCopyReversed.o TestCopyPartitioned.o
@@ -82,6 +82,7 @@ TestReverse.o: ../stx/algorithm/Reverse.h ../stx/algorithm/SwapPointee.h
 TestGenerate.o: ../stx/algorithm/Generate.h
 
 TestCount.o: ../stx/algorithm/Count.h ../stx/utility/Iterator.h
+TestCountValue.o: ../stx/algorithm/CountValue.h ../stx/algorithm/Count.h
 
 TestPartition.o: ../stx/algorithm/Partition.h ../stx/algorithm/Rotate.h
 

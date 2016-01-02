@@ -23,14 +23,6 @@ stx::IteratorDifference<Iterator> Count(Iterator begin, Iterator end,
 	return count;
 }
 
-template<typename Iterator, typename T>
-stx::IteratorDifference<Iterator> CountValue(Iterator begin, Iterator end,
-                                             const T& value)
-{
-	using ValueType = stx::IteratorValue<Iterator>;
-	return Count(begin, end, [&] (const ValueType& iv) { return iv == value; });
-}
-
-}
+} /* end of stx namespace */
 
 #endif
