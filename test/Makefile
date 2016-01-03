@@ -44,7 +44,7 @@ tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) Tes
 tests: TestCopy$(EXE) TestCopyDistinct$(EXE) TestCopyReplaced$(EXE) TestCopyReversed$(EXE) TestCopyPartitioned$(EXE)
 tests: TestCopyRotated$(EXE) TestCopyIf$(EXE) TestCopyBackward$(EXE) TestCopyN$(EXE)
 tests: TestEqualRange$(EXE) TestUpperBound$(EXE) TestLowerBound$(EXE) TestBinarySearch$(EXE)
-tests: TestMove$(EXE) TestFill$(EXE) TestSwapRanges$(EXE) TestMinMax$(EXE)
+tests: TestMove$(EXE) TestFill$(EXE) TestFillN$(EXE) TestSwapRanges$(EXE) TestMinMax$(EXE)
 tests: TestLexicographicalCompare$(EXE) TestPermutation$(EXE) TestAccumulate$(EXE) TestInnerProduct$(EXE)
 tests: TestAdjacentDifference$(EXE) TestPartialSum$(EXE) TestSortedIncludes$(EXE) TestMerge$(EXE)
 tests: TestSortedDifference$(EXE) TestSortedIntersection$(EXE) TestSortedUnion$(EXE) TestSortedSymmetricDifference$(EXE)
@@ -61,7 +61,7 @@ TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.
 TestAllAlgorithms$(EXE): TestCopy.o TestCopyDistinct.o TestCopyReplaced.o TestCopyReversed.o TestCopyPartitioned.o
 TestAllAlgorithms$(EXE): TestCopyRotated.o TestCopyIf.o TestCopyBackward.o TestCopyN.o
 TestAllAlgorithms$(EXE): TestEqualRange.o TestUpperBound.o TestLowerBound.o TestBinarySearch.o
-TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestSwapRanges.o TestLexicographicalCompare.o
+TestAllAlgorithms$(EXE): TestMove.o TestFill.o TestFillN.o TestSwapRanges.o TestLexicographicalCompare.o
 TestAllAlgorithms$(EXE): TestPermutation.o TestAccumulate.o TestInnerProduct.o TestAdjacentDifference.o
 TestAllAlgorithms$(EXE): TestPartialSum.o TestSortedIncludes.o TestMerge.o TestSortedDifference.o
 TestAllAlgorithms$(EXE): TestSortedIntersection.o TestSortedUnion.o TestSortedSymmetricDifference.o
@@ -110,7 +110,8 @@ TestCopyN.o: ../stx/algorithm/CopyN.h
 
 TestMove.o: ../stx/algorithm/Move.h ../stx/utility/Equals.h ../stx/algorithm/Find.h
 
-TestFill.o: ../stx/algorithm/Fill.h ../stx/utility/Equals.h
+TestFill.o: ../stx/algorithm/Fill.h
+TestFillN.o: ../stx/algorithm/FillN.h
 
 TestSwapRanges.o: ../stx/algorithm/SwapRanges.h ../stx/algorithm/SwapPointee.h
 
