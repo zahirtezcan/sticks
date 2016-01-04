@@ -40,7 +40,8 @@ all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestCountValue$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
-tests: TestFind$(EXE) TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
+tests: TestFind$(EXE) TestFindAdjacent$(EXE)
+tests: TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
 tests: TestCopy$(EXE) TestCopyDistinct$(EXE) TestCopyReplaced$(EXE) TestCopyReversed$(EXE) TestCopyPartitioned$(EXE)
 tests: TestCopyRotated$(EXE) TestCopyIf$(EXE) TestCopyBackward$(EXE) TestCopyN$(EXE)
 tests: TestEqualRange$(EXE) TestUpperBound$(EXE) TestLowerBound$(EXE) TestBinarySearch$(EXE)
@@ -56,7 +57,8 @@ outputDirectories:
 	@$(MKDIR) $(BinDir)
 
 TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestCountValue.o TestGenerate.o TestReverse.o TestMinMax.o
-TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o TestFind.o
+TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o
+TestAllAlgorithms$(EXE): TestFind.o TestFindAdjacent.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o
 TestAllAlgorithms$(EXE): TestCopy.o TestCopyDistinct.o TestCopyReplaced.o TestCopyReversed.o TestCopyPartitioned.o
 TestAllAlgorithms$(EXE): TestCopyRotated.o TestCopyIf.o TestCopyBackward.o TestCopyN.o
@@ -88,7 +90,8 @@ TestPartition.o: ../stx/algorithm/Partition.h ../stx/algorithm/Rotate.h
 
 TestMismatch.o: ../stx/algorithm/Mismatch.h
 
-TestFind.o: ../stx/algorithm/Find.h
+TestFind.o: ../stx/algorithm/Find.h ../stx/utility/Equals.h
+TestFindAdjacent.o: ../stx/algorithm/FindAdjacent.h ../stx/utility/Equals.h
 
 TestReplace.o: ../stx/algorithm/Replace.h
 
