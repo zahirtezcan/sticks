@@ -3,7 +3,7 @@
 
 #include <utility>
 #include <stx/utility/Equals.h>
-#include <stx/algorithm/Find.h>
+#include <stx/algorithm/FindSequence.h>
 
 namespace stx {
 
@@ -20,8 +20,8 @@ Iterator FindLastSequence(Iterator begin, Iterator end,
 	auto result = end;
 
 	while (true) {
-		auto current = FindSequence(begin, end, seqBegin, seqEnd,
-		                            std::forward<BinaryPredicate>(equals));
+		auto current = stx::FindSequence(begin, end, seqBegin, seqEnd,
+		                                 std::forward<BinaryPredicate>(equals));
 
 		if (current == end) {
 			break;

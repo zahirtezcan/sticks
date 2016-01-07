@@ -40,7 +40,7 @@ all: tests
 
 tests: outputDirectories TestAllAlgorithms$(EXE) TestPartition$(EXE) TestCount$(EXE) TestCountValue$(EXE) TestGenerate$(EXE)
 tests: TestReverse$(EXE) TestRotate$(EXE) TestAll$(EXE) TestAny$(EXE) TestAllEqual$(EXE) TestMismatch$(EXE)
-tests: TestFind$(EXE) TestFindAdjacent$(EXE) TestFindRepitition$(EXE) TestFindLastSequence$(EXE)
+tests: TestFind$(EXE) TestFindAdjacent$(EXE) TestFindRepitition$(EXE) TestFindLastSequence$(EXE) TestFindSequence$(EXE)
 tests: TestForEach$(EXE) TestTransform$(EXE) TestRemove$(EXE) TestReplace$(EXE)
 tests: TestCopy$(EXE) TestCopyDistinct$(EXE) TestCopyReplaced$(EXE) TestCopyReversed$(EXE) TestCopyPartitioned$(EXE)
 tests: TestCopyRotated$(EXE) TestCopyIf$(EXE) TestCopyBackward$(EXE) TestCopyN$(EXE)
@@ -58,7 +58,7 @@ outputDirectories:
 
 TestAllAlgorithms$(EXE): TestPartition.o TestCount.o TestCountValue.o TestGenerate.o TestReverse.o TestMinMax.o
 TestAllAlgorithms$(EXE): TestRotate.o TestAll.o TestAny.o TestAllEqual.o TestMismatch.o
-TestAllAlgorithms$(EXE): TestFind.o TestFindAdjacent.o TestFindRepitition.o TestFindLastSequence.o
+TestAllAlgorithms$(EXE): TestFind.o TestFindAdjacent.o TestFindRepitition.o TestFindLastSequence.o TestFindSequence.o
 TestAllAlgorithms$(EXE): TestForEach.o TestTransform.o TestRemove.o TestReplace.o
 TestAllAlgorithms$(EXE): TestCopy.o TestCopyDistinct.o TestCopyReplaced.o TestCopyReversed.o TestCopyPartitioned.o
 TestAllAlgorithms$(EXE): TestCopyRotated.o TestCopyIf.o TestCopyBackward.o TestCopyN.o
@@ -93,7 +93,8 @@ TestMismatch.o: ../stx/algorithm/Mismatch.h
 TestFind.o: ../stx/algorithm/Find.h ../stx/utility/Equals.h
 TestFindAdjacent.o: ../stx/algorithm/FindAdjacent.h ../stx/utility/Equals.h
 TestFindRepitition.o: ../stx/algorithm/FindRepitition.h ../stx/utility/Equals.h
-TestFindLastSequence.o: ../stx/algorithm/FindLastSequence.h  ../stx/algorithm/Find.h ../stx/utility/Equals.h
+TestFindLastSequence.o: ../stx/algorithm/FindLastSequence.h  ../stx/algorithm/FindSequence.h ../stx/utility/Equals.h
+TestFindSequence.o: ../stx/algorithm/FindSequence.h ../stx/utility/Equals.h
 
 TestReplace.o: ../stx/algorithm/Replace.h
 
