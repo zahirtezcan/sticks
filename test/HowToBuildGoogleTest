@@ -1,0 +1,11 @@
+# 1- go into googletest directory
+#	"cd $(STICKS_DIR)/googletest/googletest"
+# 2- make a new dir for generating makefiles and libs
+#	"mkdir -p sticks_build"
+# 3- enter into that build dir
+# 	"cd sticks_build"
+# 4- run cmake (generates makefiles in current directory(sticks_build)
+#	"cmake $(STICKS_DIR)/googletest/googletest"
+# 5- run make (compiles google test files and generates libs)
+#	"make"
+

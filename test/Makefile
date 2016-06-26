@@ -1,7 +1,7 @@
 CC=gcc
 CXX=$(CC)
 
-CPPFLAGS=-I"../" -I"../gtest/include/"
+CPPFLAGS=-I"../" -I"../googletest/googletest/include/"
 CXXFLAGS=-std=gnu++14 -Wall -Wextra -Werror
 COMPILER_OUTPUT=-o $(ObjDir)/$@
 COMPILE.cpp=$(CXX) -c $(COMPILER_OUTPUT) $(CPPFLAGS) $(CXXFLAGS)
@@ -17,7 +17,9 @@ LINKER_OUTPUT=-o $(BinDir)/$@
 LDLIBS+=-lgtest_main
 LDLIBS+=-lgtest
 LDLIBS+=-lstdc++
-LDFLAGS=-L"../gtest/lib/"
+LDLIBS+=-lpthread
+LDLIBS+=-lm
+LDFLAGS=-L"../googletest/googletest/sticks_build/"
 LINK.o=$(CC) $(LINKER_OUTPUT) $(LINKER_INPUT) $(LDLIBS) $(LDFLAGS)
 
 MKDIR=mkdir -p

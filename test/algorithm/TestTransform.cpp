@@ -1,6 +1,7 @@
 #include <stx/algorithm/Transform.h>
 #include <gtest/gtest.h>
 #include <vector>
+#include <cmath>
 
 TEST(Transform, Empty)
 {
@@ -81,7 +82,7 @@ TEST(TransformIndexed, Power)
 	std::vector<int> v = { 1, 2, 3 };
 	std::vector<double> output(100, 0.0);
 
-	auto result = stx::TransformIndexed(v.begin(), v.end(), output.begin(), [](int x, int index) { return pow(x, index); });
+	auto result = stx::TransformIndexed(v.begin(), v.end(), output.begin(), [](int x, int index) { return std::pow(x, index); });
 
 	EXPECT_EQ(1, output[0]);
 	EXPECT_EQ(2, output[1]);
